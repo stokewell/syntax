@@ -1,0 +1,71 @@
+/* Feature Cards */
+.feature-card {
+  padding: 2rem;
+  background-color: rgba(var(--color-bg-rgb), 0.6);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  border: 1px solid rgba(var(--color-text-rgb), 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Modern SVG icon styling */
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
+  background-color: rgba(var(--color-primary-rgb), 0.08);
+  border-radius: 12px;
+  transition: all 0.3s var(--ease-out);
+}
+
+/* Update SVG stroke styling */
+.feature-icon svg {
+  color: var(--color-primary);
+  transition: all 0.3s var(--ease-out);
+}
+
+/* Animation when card is hovered */
+.feature-card:hover .feature-icon {
+  background-color: rgba(var(--color-primary-rgb), 0.12);
+  transform: scale(1.05);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .feature-card {
+  background-color: rgba(30, 30, 34, 0.4);
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .feature-icon {
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* Feature card title */
+.feature-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Feature card description */
+.feature-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}

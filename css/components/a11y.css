@@ -1,0 +1,53 @@
+/* 
+ * Accessibility Styles
+ * Refined focus and interactive element styles that maintain accessibility while being visually subtle 
+ */
+
+/* Remove default focus outlines for all elements */
+*:focus {
+  outline: none;
+}
+
+/* Apply custom focus styles when using keyboard navigation */
+:focus-visible {
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Buttons, links, and other interactive elements */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  /* Subtle inner glow instead of outline */
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.15), 
+              inset 0 0 0 1px rgba(var(--color-primary-rgb), 0.2);
+  /* Subtle color change */
+  color: var(--color-primary);
+}
+
+/* Input fields - more visible but still refined */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: rgba(var(--color-primary-rgb), 0.5);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+
+/* Refined focus for buttons that already have background colors */
+.btn:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  /* Add a subtle ring with slight opacity */
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.25);
+}
+
+/* Only apply custom focus styles when keyboard navigation is being used */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+  box-shadow: none;
+}

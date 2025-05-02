@@ -1,0 +1,163 @@
+/* ============================================
+   Button Styles - Modern Redesign
+   ============================================ */
+
+/* Common button properties */
+.btn,
+.btn-secondary,
+.btn-outline,
+.btn-contrast {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.25rem;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  gap: 0.5rem;
+}
+
+/* Add nice focus state for all buttons */
+.btn:focus,
+.btn-secondary:focus, 
+.btn-outline:focus,
+.btn-contrast:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.25);
+}
+
+/* Primary Button - main call-to-action */
+.btn {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 1px 2px rgba(var(--color-primary-rgb), 0.15), 
+              0 -1px 0px rgba(0, 0, 0, 0.08) inset;
+}
+
+.btn:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.9);
+  box-shadow: 0 3px 8px rgba(var(--color-primary-rgb), 0.25);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 0px 1px rgba(var(--color-primary-rgb), 0.2);
+}
+
+/* Secondary Button - alternate action */
+.btn-secondary {
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  color: var(--color-primary);
+  box-shadow: 0 1px 2px rgba(var(--color-primary-rgb), 0.08);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+  box-shadow: 0 3px 8px rgba(var(--color-primary-rgb), 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Outline Button - subtle action */
+.btn-outline {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: rgba(var(--color-primary-rgb), 0.04);
+  box-shadow: inset 0 0 0 1.5px var(--color-primary), 
+              0 3px 8px rgba(var(--color-primary-rgb), 0.12);
+  transform: translateY(-1px);
+}
+
+.btn-outline:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 0 0 1.5px var(--color-primary);
+}
+
+/* Contrast Button - for use on colored backgrounds */
+.btn-contrast {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-contrast:hover {
+  background-color: var(--color-bg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15),
+              0 0 0 1px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.btn-contrast:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Button sizes */
+.btn-sm {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+.btn-lg {
+  padding: 0.8rem 1.8rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
+
+/* Icon buttons */
+.btn-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon.btn-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.btn-icon.btn-lg {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .btn-contrast {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+              0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .btn-contrast:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+

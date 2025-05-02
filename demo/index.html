@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Typography-First Website Template</title>
+  
+  <!-- SEO and Open Graph metadata -->
+  <meta name="description" content="A handcrafted, modern website template with a strong focus on typography, modular layout, visual clarity, and performance.">
+  <meta name="keywords" content="typography, web design, template, css, responsive, design system">
+  <meta name="author" content="Typography-First Template">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stokewell.github.io/base/demo/">
+  <meta property="og:title" content="Typography-First Website Template">
+  <meta property="og:description" content="A handcrafted, modern website template focused on typography, modular layout, and visual clarity.">
+  <meta property="og:image" content="https://stokewell.github.io/base/demo/og-image.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://stokewell.github.io/base/demo/">
+  <meta property="twitter:title" content="Typography-First Website Template">
+  <meta property="twitter:description" content="A handcrafted, modern website template focused on typography, modular layout, and visual clarity.">
+  <meta property="twitter:image" content="https://stokewell.github.io/base/demo/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  
+  <!-- Base styles - force latest version -->
+  <link rel="stylesheet" href="../css/style.css?v=20230428">
+  <link rel="stylesheet" href="../css/layouts.css?v=20230428">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="dynamic-fonts-live" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap">
+  
+  
+  <!-- Original theme toggle implementation -->
+</head>
+<body id="top">
+  <!-- [REMOVED DUPLICATE FIXED CONTROLS] -->
+  
+  <header class="header" id="main-header" data-nav-style="style1">
+    <div class="container header-container">
+      <!-- Logo container -->
+      <div class="logo-container">
+        <a href="index.html" class="logo" aria-label="Syntax Home">
+          <span class="logo-text">Syn<span class="logo-accent">tax</span></span>
+        </a>
+      </div>
+      
+      <!-- Main navigation -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <!-- Desktop Navigation -->
+        <ul class="nav-list">
+          <!-- Nav Style Switcher -->
+          <li class="nav-item nav-style-switcher">
+            <div class="style-switcher-controls" aria-label="Navigation style switcher">
+              <button class="switcher-btn switcher-up" aria-label="Previous navigation style" disabled>
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 8l-6 6 1.5 1.5L12 11l4.5 4.5L18 14z" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="switcher-btn switcher-down" aria-label="Next navigation style">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 16l-6-6 1.5-1.5L12 13l4.5-4.5L18 10z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="index.html" class="nav-link active">Home</a>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="#web-components" class="nav-link dropdown-parent">Components</a>
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="components-dropdown">
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14">
+                <path d="M12 15.5l-6-6 1.5-1.5L12 12.5l4.5-4.5L18 9.5l-6 6z" fill="currentColor"></path>
+              </svg>
+              <span class="sr-only">Show components menu</span>
+            </button>
+            <div class="dropdown-content" id="components-dropdown">
+              <ul class="dropdown-menu-list">
+                <li class="dropdown-menu-item">
+                  <a href="#typography" class="dropdown-menu-link">Typography</a>
+                </li>
+                <li class="dropdown-menu-item">
+                  <a href="#web-components-tab" class="dropdown-menu-link">Web Components</a>
+                </li>
+                <li class="dropdown-menu-item">
+                  <a href="#layout-variants" class="dropdown-menu-link">Layout</a>
+                </li>
+                <li class="dropdown-menu-item">
+                  <a href="#animations" class="dropdown-menu-link">Animations</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="https://github.com/stokewell/base" class="nav-link" target="_blank" rel="noopener">Documentation</a>
+          </li>
+        </ul>
+
+        <!-- Font Selection (Hidden) -->
+        <div style="display:none">
+          <select id="font-pairing-select">
+            <option value="EB Garamond|Plus Jakarta Sans" selected>EB Garamond + Plus Jakarta Sans</option>
+            <option value="DM Serif Display|Inter">DM Serif Display + Inter</option>
+            <option value="Merriweather|Work Sans">Merriweather + Work Sans</option>
+            <option value="Cormorant Garamond|Raleway">Cormorant Garamond + Raleway</option>
+            <option value="Lora|Source Sans Pro">Lora + Source Sans Pro</option>
+            <option value="Vollkorn|Noto Sans">Vollkorn + Noto Sans</option>
+            <option value="Outfit|Inter">Outfit + Inter (Modern Futuristic)</option>
+            <option value="Montserrat|Roboto">Montserrat + Roboto (Modern Sans)</option>
+          </select>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button type="button" class="menu-toggle" aria-expanded="false" aria-label="Toggle mobile menu" aria-controls="mobile-navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-navigation" aria-hidden="true">
+      <ul class="mobile-nav-list">
+        <li class="mobile-nav-item">
+          <a href="index.html" class="mobile-nav-link active">Home</a>
+        </li>
+        <li class="mobile-nav-item mobile-nav-dropdown">
+          <a href="#web-components" class="mobile-nav-link mobile-dropdown-parent">Components</a>
+          <span class="mobile-dropdown-toggle"></span>
+          <ul class="mobile-submenu">
+            <li class="mobile-submenu-item">
+              <a href="#typography" class="mobile-submenu-link">Typography</a>
+            </li>
+            <li class="mobile-submenu-item">
+              <a href="#web-components-tab" class="mobile-submenu-link">Web Components</a>
+            </li>
+            <li class="mobile-submenu-item">
+              <a href="#layout-variants" class="mobile-submenu-link">Layout</a>
+            </li>
+            <li class="mobile-submenu-item">
+              <a href="#animations" class="mobile-submenu-link">Animations</a>
+            </li>
+          </ul>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="https://github.com/stokewell/base" class="mobile-nav-link" target="_blank" rel="noopener">Documentation</a>
+        </li>
+      </ul>
+      <!-- Github link -->
+      <div class="mobile-nav-actions">
+        <a href="https://github.com/stokewell/base" class="mobile-github-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.09.682-.217.682-.48 0-.236-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+        </a>
+      </div>
+      <div class="mobile-nav-footer">
+        <p>Syntax v1.0 — Modern Web Framework</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="grid-container">
+        <div class="grid-col-full">
+          <h1 class="hero-title">
+            <span class="gradient-text">Syntax</span>
+            <span class="hero-subtitle">Modern Web Framework</span>
+          </h1>
+          
+          <p class="hero-description">
+            A handcrafted, design-led framework built with attention to typography, 
+            modular layout, and visual clarity. Created for developers who care about quality and performance.
+          </p>
+          
+          <div class="hero-actions">
+            <a href="https://github.com/stokewell/base/generate" class="btn-primary btn-large">Get Started</a>
+            <div class="tip-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="tip-icon">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v4m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Use the typography and theme toggles in the bottom-right corner to customize the look.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Key Features</h2>
+        <p class="section-subtitle">Designed for developers who value clean code and typography</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 7V4H20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 20H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Typography-First Design</h3>
+          <p>Focused on optimal readability with carefully crafted font pairings, fluid typography, and attention to line height, spacing, and hierarchy.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4L12 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 12L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Zero Dependencies</h3>
+          <p>No external frameworks, libraries, or build tools required. Pure HTML, CSS, and vanilla JavaScript for optimal performance and simplicity.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Modular Components</h3>
+          <p>Native Web Components with shadow DOM encapsulation, plus CSS modules organized with progressive enhancement in mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Component Library Showcase Section -->
+  <section id="web-components" class="showcase-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Component Library</h2>
+        <p class="section-subtitle">Explore our carefully crafted components, layouts, typography system, and&nbsp;animations</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+  
+    <!-- Custom tabs implementation -->
+    <div class="custom-tabs">
+      <div class="custom-tabs-nav">
+        <button class="custom-tab-button active" data-tab="web-components-tab">Web Components</button>
+        <button class="custom-tab-button" data-tab="layout-variants">Layout Variants</button>
+        <button class="custom-tab-button" data-tab="typography">Typography</button>
+        <button class="custom-tab-button" data-tab="animations">Animations</button>
+      </div>
+      
+      <!-- Web Components Tab -->
+      <div id="web-components-tab" class="custom-tab-content active" style="opacity: 1; transform: translateY(0);">
+        <p class="tab-description">Custom elements built with the Web Components API alongside standard HTML/CSS&nbsp;components.</p>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Responsive Image Component</span>
+          </div>
+          <div class="component-demo-body">
+            <responsive-image 
+              src="../demo-images/geese.jpg" 
+              alt="Geese in flight" 
+              aspect-ratio="16:9" 
+              lazy>
+              <span slot="caption">Geese flying in formation captured at sunset</span>
+            </responsive-image>
+            
+            <div class="code-block">
+              &lt;responsive-image 
+                src="../demo-images/geese.jpg" 
+                alt="Geese in flight" 
+                aspect-ratio="16:9" 
+                lazy&gt;
+                &lt;span slot="caption"&gt;Geese flying in formation captured at sunset&lt;/span&gt;
+              &lt;/responsive-image&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Card Component</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="grid-2">
+              <custom-card 
+                title="Basic Card"
+                shadow-level="1">
+                <p>This is a simple card component with title and content.</p>
+                <div slot="footer">
+                  <button class="btn-outline-sm">Learn More</button>
+                </div>
+              </custom-card>
+              
+              <custom-card 
+                title="Card with Image"
+                image="../demo-images/dolphins.jpg"
+                shadow-level="2"
+                clickable>
+                <p>This card has an image and is clickable. It also uses shadow level 2.</p>
+                <div slot="footer">
+                  <button class="btn-outline-sm">View Details</button>
+                </div>
+              </custom-card>
+            </div>
+            
+            <div class="code-block">
+              &lt;custom-card 
+                title="Card Title"
+                image="../demo-images/dolphins.jpg"
+                shadow-level="1"
+                clickable&gt;
+                &lt;p&gt;Card content goes here.&lt;/p&gt;
+                &lt;div slot="footer"&gt;
+                  &lt;button class="btn-outline-sm"&gt;Button&lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/custom-card&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Toggle Switch Component</span>
+          </div>
+          <div class="component-demo-body">
+            <h3 class="demo-section-heading">Toggle Switch Variants</h3>
+            <p class="demo-description">Toggle switches provide an intuitive way to turn options on or off.</p>
+            
+            <div class="toggle-demo-container">
+              <div class="toggle-examples">
+                <div class="toggle-example-item">
+                  <div class="toggle-label">Default State</div>
+                  <toggle-switch label="Default Toggle"></toggle-switch>
+                </div>
+                
+                <div class="toggle-example-item">
+                  <div class="toggle-label">Pre-checked</div>
+                  <toggle-switch label="Pre-checked Toggle" checked></toggle-switch>
+                </div>
+                
+                <div class="toggle-example-item">
+                  <div class="toggle-label">Disabled</div>
+                  <toggle-switch label="Disabled Toggle" disabled></toggle-switch>
+                </div>
+              </div>
+              
+              <div class="toggle-interactive">
+                <div class="toggle-label">Interactive Example</div>
+                <div id="toggle-demo-output" class="toggle-output">Toggle state: OFF</div>
+                <toggle-switch 
+                  id="demo-toggle" 
+                  label="Try toggling me"
+                  checked>
+                </toggle-switch>
+                <p class="toggle-help-text">Click the toggle to see the state change</p>
+              </div>
+            </div>
+            
+            <h4 class="code-block-heading">Implementation</h4>
+            <div class="code-block">
+              <pre><code>&lt;toggle-switch label="Default Toggle"&gt;&lt;/toggle-switch&gt;
+
+&lt;toggle-switch label="Pre-checked Toggle" checked&gt;&lt;/toggle-switch&gt;
+
+&lt;toggle-switch label="Disabled Toggle" disabled&gt;&lt;/toggle-switch&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Tabs Component</span>
+          </div>
+          <div class="component-demo-body">
+            <tabs-container>
+              <tab-item label="First Tab">
+                <h3>First Tab Content</h3>
+                <p>This is the content for the first tab. Tabs are fully accessible with keyboard navigation.</p>
+              </tab-item>
+              <tab-item label="Second Tab">
+                <h3>Second Tab Content</h3>
+                <p>Content for the second tab. You can navigate between tabs using the arrow keys.</p>
+              </tab-item>
+              <tab-item label="Third Tab">
+                <h3>Third Tab Content</h3>
+                <p>Here's the third tab content. These tabs are built with the native Web Components API.</p>
+              </tab-item>
+            </tabs-container>
+            
+            <div class="code-block">
+              &lt;tabs-container&gt;
+                &lt;tab-item label="First Tab"&gt;
+                  &lt;h3&gt;First Tab Content&lt;/h3&gt;
+                  &lt;p&gt;Content for the first tab.&lt;/p&gt;
+                &lt;/tab-item&gt;
+                &lt;tab-item label="Second Tab"&gt;
+                  &lt;h3&gt;Second Tab Content&lt;/h3&gt;
+                  &lt;p&gt;Content for the second tab.&lt;/p&gt;
+                &lt;/tab-item&gt;
+              &lt;/tabs-container&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Modal Component</span>
+          </div>
+          <div class="component-demo-body">
+            <p class="my-3">A lightweight, accessible modal with keyboard navigation, focus trapping, and smooth animations.</p>
+            
+            <div class="my-4">
+              <button class="btn" data-modal-target="demo-modal">Open Modal</button>
+            </div>
+            
+            <!-- Modal is fixed-positioned and doesn't affect document flow -->
+            <div id="demo-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+              <div class="modal-content">
+                <button class="modal-close" data-modal-close aria-label="Close modal">&times;</button>
+                <h2 id="modal-title">Modal Title</h2>
+                <p>This is a modal dialog window. It's centered on the screen and can be closed by clicking the X button, pressing Escape, or clicking outside the modal.</p>
+                <p>Modals trap focus for better accessibility, ensuring keyboard users can navigate within the modal without accidentally focusing on elements outside it.</p>
+                <div class="modal-actions">
+                  <button class="btn-secondary" data-modal-close>Cancel</button>
+                  <button class="btn" data-modal-close>Confirm</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Code example -->
+            <div class="code-block my-4">
+              <pre><code>&lt;button data-modal-target="demo-modal"&gt;Open Modal&lt;/button&gt;
+
+&lt;div id="demo-modal" class="modal" role="dialog" aria-labelledby="modal-title"&gt;
+  &lt;div class="modal-content"&gt;
+    &lt;button class="modal-close" data-modal-close&gt;&times;&lt;/button&gt;
+    &lt;h2 id="modal-title"&gt;Modal Title&lt;/h2&gt;
+    &lt;p&gt;Modal content here...&lt;/p&gt;
+    &lt;div class="modal-actions"&gt;
+      &lt;button data-modal-close&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Standard UI Components</span>
+          </div>
+          <div class="component-demo-body">
+            <h3>Buttons</h3>
+            <div class="flex gap-2 flex-wrap my-3">
+              <button class="btn">Primary Button</button>
+              <button class="btn-secondary">Secondary Button</button>
+              <button class="btn-outline">Outline Button</button>
+              <button class="btn-contrast">Contrast Button</button>
+            </div>
+            
+            <div class="my-4"></div>
+            
+            <h3>Alerts</h3>
+            <div class="my-3">
+              <div class="alert alert-success">
+                <strong>Success!</strong> Your changes have been saved.
+              </div>
+              
+              <div class="alert alert-warning">
+                <strong>Warning!</strong> This action cannot be undone.
+              </div>
+              
+              <div class="alert alert-error">
+                <strong>Error!</strong> Something went wrong. Please try again.
+              </div>
+            </div>
+            
+            <div class="my-4"></div>
+            
+            <h3>Cards</h3>
+            <div class="grid-3 my-3">
+              <div class="card">
+                <h3 class="card-title">Card Title</h3>
+                <p>This is a simple card with some text content. Cards can be used to group related information.</p>
+              </div>
+              
+              <div class="card">
+                <div class="aspect-ratio">
+                  <img src="../demo-images/sandy-bottom.png" alt="Sandy Bottom" class="media-cover">
+                </div>
+                <h3 class="card-title mt-3">Card with Image</h3>
+                <p>This card includes an image with a 16:9 aspect ratio.</p>
+              </div>
+              
+              <div class="card">
+                <h3 class="card-title">Interactive Card</h3>
+                <p>Cards have hover effects built in. Try hovering over this card to see it in action.</p>
+                <div class="card-footer">
+                  <a href="#" class="btn">Learn More</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="my-4"></div>
+            
+            <h3>Accordion Example</h3>
+            <details class="my-3">
+              <summary>What is a typography-first approach?</summary>
+              <div>
+                <p>A typography-first approach prioritizes text readability and hierarchy in design. It starts with establishing a solid typographic foundation before adding other design elements. This approach ensures content is legible, accessible, and properly structured.</p>
+              </div>
+            </details>
+            
+            <details class="my-3">
+              <summary>How do design tokens help with consistency?</summary>
+              <div>
+                <p>Design tokens are named variables that store design decisions like colors, spacing, and typography values. By using tokens instead of hardcoded values, you ensure consistency throughout your design and make it easier to update the design system as a whole.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Layout Variants Tab -->
+      <div id="layout-variants" class="custom-tab-content" style="opacity: 0; transform: translateY(10px);">
+        <p class="tab-description">Pre-built layout structures for different types of websites and applications.</p>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Blog Layout</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="layout-blog">
+              <div class="main-content">
+                <div class="layout-demo main-demo">Main Content Area</div>
+              </div>
+              <div class="sidebar">
+                <div class="layout-demo sidebar-demo">Sidebar</div>
+              </div>
+            </div>
+            
+            <div class="code-block">
+              &lt;div class="layout-blog"&gt;
+                &lt;div class="main-content"&gt;
+                  &lt;!-- Main content here --&gt;
+                &lt;/div&gt;
+                &lt;div class="sidebar"&gt;
+                  &lt;!-- Sidebar content here --&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Portfolio Layout</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="layout-portfolio portfolio-3col">
+              <div class="layout-demo">Portfolio Item 1</div>
+              <div class="layout-demo">Portfolio Item 2</div>
+              <div class="layout-demo">Portfolio Item 3</div>
+              <div class="layout-demo">Portfolio Item 4</div>
+              <div class="layout-demo">Portfolio Item 5</div>
+              <div class="layout-demo">Portfolio Item 6</div>
+            </div>
+            
+            <div class="code-block">
+              &lt;div class="layout-portfolio portfolio-3col"&gt;
+                &lt;div&gt;Portfolio Item 1&lt;/div&gt;
+                &lt;div&gt;Portfolio Item 2&lt;/div&gt;
+                &lt;div&gt;Portfolio Item 3&lt;/div&gt;
+                &lt;!-- More items --&gt;
+              &lt;/div&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Magazine Layout</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="layout-magazine">
+              <div class="magazine-featured layout-demo">Featured Article</div>
+              
+              <div class="magazine-split">
+                <div>
+                  <div class="layout-demo">Main Column</div>
+                </div>
+                <div>
+                  <div class="layout-demo">Side Column</div>
+                </div>
+              </div>
+              
+              <div class="magazine-grid">
+                <div class="layout-demo">Article 1</div>
+                <div class="layout-demo">Article 2</div>
+                <div class="layout-demo">Article 3</div>
+              </div>
+            </div>
+            
+            <div class="code-block">
+              &lt;div class="layout-magazine"&gt;
+                &lt;div class="magazine-featured"&gt;
+                  &lt;!-- Featured content --&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="magazine-split"&gt;
+                  &lt;div&gt;&lt;!-- Main column --&gt;&lt;/div&gt;
+                  &lt;div&gt;&lt;!-- Side column --&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="magazine-grid"&gt;
+                  &lt;div&gt;Article 1&lt;/div&gt;
+                  &lt;div&gt;Article 2&lt;/div&gt;
+                  &lt;div&gt;Article 3&lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Dashboard Layout</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="layout-demo">
+              <p>Dashboard layout uses a full-height grid with header, sidebar, and main content areas.</p>
+              <p>View the layout CSS file for implementation details.</p>
+            </div>
+            
+            <div class="code-block">
+              &lt;div class="layout-dashboard"&gt;
+                &lt;header class="dashboard-header"&gt;
+                  &lt;!-- Header content --&gt;
+                &lt;/header&gt;
+                
+                &lt;aside class="dashboard-sidebar"&gt;
+                  &lt;!-- Sidebar navigation --&gt;
+                &lt;/aside&gt;
+                
+                &lt;main class="dashboard-main"&gt;
+                  &lt;!-- Main content --&gt;
+                &lt;/main&gt;
+              &lt;/div&gt;
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Typography Tab -->
+      <div id="typography" class="custom-tab-content" style="opacity: 0; transform: translateY(10px);">
+        <p class="tab-description">Typography showcase and stress tests for the Typography-First template system.</p>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Font Pairings</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="font-pairing-preview">
+              <h3 id="current-font-title">Current Font Pairing</h3>
+              <div class="font-sample-grid">
+                <div>
+                  <h4 id="heading-font-name">EB Garamond</h4>
+                  <p style="font-family: var(--font-heading);" id="heading-font-sample">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789</p>
+                </div>
+                <div>
+                  <h4 id="body-font-name">Plus Jakarta Sans</h4>
+                  <p style="font-family: var(--font-body);" id="body-font-sample">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <div class="component-demo-header">
+            <span>Standard Typography Elements</span>
+          </div>
+          <div class="component-demo-body">
+            <div class="grid-2 my-3">
+              <div>
+                <h1>Heading 1</h1>
+                <h2>Heading 2</h2>
+                <h3>Heading 3</h3>
+                <h4>Heading 4</h4>
+                <h5>Heading 5</h5>
+                <h6>Heading 6</h6>
+              </div>
+              <div>
+                <p>This is a paragraph with <strong>bold text</strong>, <em>italic text</em>, and <a href="#">a hyperlink</a>. The base font pairing offers excellent readability for body text and elegant headings.</p>
+                
+                <p>Line length is limited for optimal readability, and line height is set to provide comfortable vertical rhythm.</p>
+                
+                <blockquote>
+                  "Typography is what language looks like."<br>— Ellen Lupton
+                </blockquote>
+                
+                <p>Here's a keyboard shortcut: press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>
+                
+                <p>Here's some <code>inline code</code> and a <mark>highlighted text</mark>.</p>
+              </div>
+            </div>
+            
+            <div class="my-4"></div>
+            
+            <h3>Lists</h3>
+            <div class="grid-2">
+              <div>
+                <h4>Unordered List</h4>
+                <ul>
+                  <li>Item one</li>
+                  <li>Item two with <a href="#">a link</a></li>
+                  <li>Item three
+                    <ul>
+                      <li>Nested item one</li>
+                      <li>Nested item two</li>
+                    </ul>
+                  </li>
+                  <li>Item four</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Ordered List</h4>
+                <ol>
+                  <li>First item</li>
+                  <li>Second item</li>
+                  <li>Third item
+                    <ol>
+                      <li>Nested ordered item</li>
+                      <li>Another nested item</li>
+                    </ol>
+                  </li>
+                  <li>Fourth item</li>
+                </ol>
+              </div>
+            </div>
+            
+            <div class="my-3">
+              <h4>Definition List</h4>
+              <dl>
+                <dt>Typography</dt>
+                <dd>The art and technique of arranging type to make written language legible, readable, and appealing.</dd>
+                
+                <dt>Vertical Rhythm</dt>
+                <dd>A consistent vertical spacing between elements on a page, creating a sense of harmony and balance.</dd>
+                
+                <dt>Design Tokens</dt>
+                <dd>Named values that form the smallest pieces of a design system, such as colors, spacing, and typography values.</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-demo">
+          <details class="typography-stress-tests">
+            <summary class="component-demo-header">
+              <span>Typography Stress Tests</span>
+            </summary>
+            <div class="component-demo-body">
+              <h3>Very Long Headlines Test</h3>
+              <h1 class="long-headline">This is an extraordinarily, overwhelmingly, and unnecessarily lengthy heading that is designed specifically to test how the typography system handles extremely long lines of text in headings</h1>
+              <h2 class="long-headline">Another exceptionally long subheading that continues for quite some time to ensure proper wrapping, spacing, and line-height settings are appropriately configured for readability</h2>
+              
+              <div class="my-4"></div>
+              
+              <h3>Justified Text</h3>
+              <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              
+              <p style="text-align: justify;">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              
+              <div class="my-4"></div>
+              
+              <h3>Multilingual Typography</h3>
+              <div class="multilingual-demo">
+                <div>
+                  <h4>Chinese (CJK)</h4>
+                  <p>你好，世界！这是一个测试中文字体渲染的示例文本。Typography-First模板应该能够正确显示各种语言的文字，包括中文、日文和韩文等CJK字符。</p>
+                  
+                  <h4>Japanese</h4>
+                  <p>こんにちは世界！これは日本語のフォントレンダリングをテストするためのサンプルテキストです。Typography-Firstテンプレートは、日本語を含むさまざまな言語を適切に表示できるはずです。</p>
+                </div>
+                <div>
+                  <h4>Arabic (RTL)</h4>
+                  <p style="direction: rtl; text-align: right;">مرحبا بالعالم! هذا نص عينة لاختبار عرض الخط العربي. يجب أن يكون قالب Typography-First قادرًا على عرض النصوص العربية وغيرها من النصوص من اليمين إلى اليسار بشكل صحيح.</p>
+                  
+                  <h4>Hebrew (RTL)</h4>
+                  <p style="direction: rtl; text-align: right;">שלום עולם! זוהי דוגמה לבדיקת הרינדור של גופנים בעברית. תבנית Typography-First אמורה להציג טקסט בעברית ושפות אחרות מימין לשמאל באופן נכון.</p>
+                </div>
+              </div>
+              
+              <div class="my-4"></div>
+              
+              <h3>Nested Lists</h3>
+              <ul>
+                <li>First level item 1</li>
+                <li>First level item 2
+                  <ul>
+                    <li>Second level item 1</li>
+                    <li>Second level item 2
+                      <ul>
+                        <li>Third level item 1</li>
+                        <li>Third level item 2
+                          <ul>
+                            <li>Fourth level item 1</li>
+                            <li>Fourth level item 2</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>First level item 3</li>
+              </ul>
+              
+              <ol>
+                <li>First level numbered item 1</li>
+                <li>First level numbered item 2
+                  <ol>
+                    <li>Second level numbered item 1</li>
+                    <li>Second level numbered item 2
+                      <ol>
+                        <li>Third level numbered item 1</li>
+                        <li>Third level numbered item 2</li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li>First level numbered item 3</li>
+              </ol>
+            </div>
+          </details>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Animations Tab -->
+      <div id="animations" class="custom-tab-content" style="opacity: 0; transform: translateY(10px);">
+        <p class="tab-description">Ultra-light JS animation framework. Typography-first, fast, and accessible.</p>
+        
+        <section class="my-4">
+          <h3>Basic Animation</h3>
+          <div class="demo-wrapper">
+            <div id="basic-demo" class="demo-box">Box</div>
+            <div class="demo-controls">
+              <button id="fade-in" class="btn-outline-sm">Fade In</button>
+              <button id="fade-out" class="btn-outline-sm">Fade Out</button>
+              <button id="slide-in" class="btn-outline-sm">Slide In</button>
+              <button id="pulse" class="btn-outline-sm">Pulse</button>
+              <button id="shake" class="btn-outline-sm">Shake</button>
+              <button id="reset" class="btn-outline-sm">Reset</button>
+            </div>
+          </div>
+        </section>
+        
+        <section class="my-4">
+          <h3>Animation Sequences</h3>
+          <div class="demo-wrapper">
+            <div class="sequence-demo">
+              <div class="sequence-item" id="seq-item-1">1</div>
+              <div class="sequence-item" id="seq-item-2">2</div>
+              <div class="sequence-item" id="seq-item-3">3</div>
+              <div class="sequence-item" id="seq-item-4">4</div>
+              <div class="sequence-item" id="seq-item-5">5</div>
+            </div>
+            <div class="demo-controls">
+              <button id="play-sequence" class="btn-outline-sm">Play Sequence</button>
+              <button id="play-staggered" class="btn-outline-sm">Play Staggered</button>
+            </div>
+          </div>
+        </section>
+        
+        <section class="my-4">
+          <h3>Custom Animations</h3>
+          <div class="demo-wrapper">
+            <div id="custom-demo" class="demo-text">Custom Animation</div>
+            <div class="demo-controls">
+              <button id="typewriter" class="btn-outline-sm">Typewriter</button>
+              <button id="letter-spacing" class="btn-outline-sm">Letter Spacing</button>
+              <button id="luxury-reveal" class="btn-outline-sm">Luxury Reveal</button>
+              <button id="custom-reset" class="btn-outline-sm">Reset</button>
+            </div>
+          </div>
+        </section>
+        
+        <section class="my-4">
+          <h3>Scroll Animations</h3>
+          <p>Elements with data-animation attributes animate when scrolled into view.</p>
+          
+          <div class="grid-3 my-4">
+            <div class="demo-box scroll-animate" data-animation="fadeIn" data-animation-delay="100" style="opacity: 0;">Fade In</div>
+            <div class="demo-box scroll-animate" data-animation="slideInUp" data-animation-delay="200" style="opacity: 0; transform: translateY(20px);">Slide Up</div>
+            <div class="demo-box scroll-animate" data-animation="zoomIn" data-animation-delay="300" style="opacity: 0; transform: scale(0.8);">Zoom In</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container py-4 mt-4">
+    <hr>
+    <div class="text-center my-3">
+      <p>&copy; 2025 Typography-First Template. Built with semantic HTML, custom CSS, and native Web Components.</p>
+      <p><a href="https://github.com/stokewell/base" target="_blank">GitHub Repository</a> · <a href="https://github.com/stokewell/base/issues" target="_blank">Report Issue</a> · <a href="https://github.com/stokewell/base/generate" target="_blank">Use Template</a></p>
+      <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;">No frameworks, no dependencies - just clean, semantic code.</p>
+      
+    </div>
+  </footer>
+  
+  <!-- Fixed control buttons -->
+  <div class="fixed-controls">
+    <button id="font-toggle" class="font-toggle-btn" aria-label="Change typography">
+      <svg id="font-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5 4v2h-2v12h-2V6h-2V4h6zm5.05 4C16.86 8 18 9.09 18 11c0 1.91-1.14 3-2.45 3h-.44v4h-2V8h2.05zm0 4c.5 0 .95-.43.95-1s-.45-1-.95-1h-.05v2h.05z" fill="currentColor"/>
+      </svg>
+    </button>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+      <svg id="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 0112.21 3a7 7 0 109.79 9.79z" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Font Selector Modal -->
+  <div id="font-selector-modal" class="font-selector-modal">
+    <div class="font-selector-header">
+      <h3>Choose Font Pairing</h3>
+      <button id="font-selector-close" class="font-selector-close" aria-label="Close font selector">×</button>
+    </div>
+    <div class="font-selector-content">
+      <div class="font-options-grid">
+        <div class="font-option" data-font-pair="EB Garamond|Plus Jakarta Sans">
+          <div class="font-pair-heading" style="font-family: 'EB Garamond', serif; font-weight: 700;">EB Garamond</div>
+          <div class="font-pair-body" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400;">Plus Jakarta Sans</div>
+        </div>
+        <div class="font-option" data-font-pair="DM Serif Display|Inter">
+          <div class="font-pair-heading" style="font-family: 'DM Serif Display', serif; font-weight: 400;">DM Serif Display</div>
+          <div class="font-pair-body" style="font-family: 'Inter', sans-serif; font-weight: 400;">Inter</div>
+        </div>
+        <div class="font-option" data-font-pair="Merriweather|Work Sans">
+          <div class="font-pair-heading" style="font-family: 'Merriweather', serif; font-weight: 700;">Merriweather</div>
+          <div class="font-pair-body" style="font-family: 'Work Sans', sans-serif; font-weight: 400;">Work Sans</div>
+        </div>
+        <div class="font-option" data-font-pair="Cormorant Garamond|Raleway">
+          <div class="font-pair-heading" style="font-family: 'Cormorant Garamond', serif; font-weight: 700;">Cormorant Garamond</div>
+          <div class="font-pair-body" style="font-family: 'Raleway', sans-serif; font-weight: 400;">Raleway</div>
+        </div>
+        <div class="font-option" data-font-pair="Lora|Source Sans Pro">
+          <div class="font-pair-heading" style="font-family: 'Lora', serif; font-weight: 700;">Lora</div>
+          <div class="font-pair-body" style="font-family: 'Source Sans Pro', sans-serif; font-weight: 400;">Source Sans Pro</div>
+        </div>
+        <div class="font-option" data-font-pair="Vollkorn|Noto Sans">
+          <div class="font-pair-heading" style="font-family: 'Vollkorn', serif; font-weight: 700;">Vollkorn</div>
+          <div class="font-pair-body" style="font-family: 'Noto Sans', sans-serif; font-weight: 400;">Noto Sans</div>
+        </div>
+        <div class="font-option" data-font-pair="Outfit|Inter">
+          <div class="font-pair-heading" style="font-family: 'Outfit', sans-serif; font-weight: 700;">Outfit</div>
+          <div class="font-pair-body" style="font-family: 'Inter', sans-serif; font-weight: 400;">Inter</div>
+        </div>
+        <div class="font-option" data-font-pair="Montserrat|Roboto">
+          <div class="font-pair-heading" style="font-family: 'Montserrat', sans-serif; font-weight: 700;">Montserrat</div>
+          <div class="font-pair-body" style="font-family: 'Roboto', sans-serif; font-weight: 400;">Roboto</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <!-- Main Framework JS -->
+  <script src="../js/main.js?v=20230428" defer></script>
+  
+  <!-- Utilities -->
+  <script src="../js/utilities/focus-visible-polyfill.js" defer></script>
+  <script src="../js/utilities/text-utils.js" defer></script>
+  <script src="../js/utilities/theme-toggle.js?v=20230428" defer></script>
+  <script src="../js/utilities/font-switcher.js?v=20230428" defer></script>
+  <script src="../js/utilities/lazy-loader.js?v=20230428" defer></script>
+  <script src="../js/utilities/micro-animations.js?v=20230428" defer></script>
+  
+  <!-- Components -->
+  <script src="../js/components/web-components.js?v=20230428" defer></script>
+  <script src="../js/components/modal.js?v=20230428" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ensure page loads at the top
+      window.scrollTo(0, 0);
+      
+      // Initialize scroll animations
+      const initScrollAnimations = () => {
+        const animateElements = document.querySelectorAll('.scroll-animate');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const animation = el.getAttribute('data-animation');
+              const delay = el.getAttribute('data-animation-delay') || 0;
+              
+              setTimeout(() => {
+                switch(animation) {
+                  case 'fadeIn':
+                    el.style.opacity = '1';
+                    el.style.transition = 'opacity 0.8s ease';
+                    break;
+                  case 'slideInUp':
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    break;
+                  case 'zoomIn':
+                    el.style.opacity = '1';
+                    el.style.transform = 'scale(1)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    break;
+                  default:
+                    el.style.opacity = '1';
+                }
+              }, delay);
+              
+              // Unobserve after animation
+              observer.unobserve(el);
+            }
+          });
+        }, {
+          threshold: 0.2,
+          rootMargin: '0px 0px -50px 0px'
+        });
+        
+        animateElements.forEach(el => {
+          observer.observe(el);
+        });
+      };
+      
+      // Call scroll animations
+      initScrollAnimations();
+      
+      // Apply animation to all text elements when font changes
+      // and update the font sample display
+      const fontSelect = document.getElementById('font-pairing-select');
+      if (fontSelect) {
+        // Initial update of font sample display
+        updateFontSampleDisplay();
+        
+        fontSelect.addEventListener('change', () => {
+          // Apply a subtle fade to the body when font changes
+          document.body.style.transition = 'opacity 0.15s ease';
+          document.body.style.opacity = '0.9';
+          
+          // Simple preloader for the fonts
+          const fontFamilies = fontSelect.value.split('|').map(f => f.trim());
+          const fontPreloader = document.createElement('div');
+          fontPreloader.style.position = 'absolute';
+          fontPreloader.style.visibility = 'hidden';
+          fontPreloader.style.fontFamily = fontFamilies.join(', sans-serif');
+          fontPreloader.textContent = 'Font Preload';
+          document.body.appendChild(fontPreloader);
+          
+          // Give browser a moment to load fonts, then animate
+          setTimeout(() => {
+            // Restore body opacity
+            document.body.style.opacity = '1';
+            document.body.removeChild(fontPreloader);
+            
+            // Apply the bounce animation with staggered timing
+            const animatedElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, blockquote');
+            
+            // Clear any existing animations
+            animatedElements.forEach(el => {
+              el.classList.remove('font-bounce');
+              void el.offsetWidth; // Force reflow
+            });
+            
+            // Apply animations in groups to reduce jank
+            const groups = [
+              { elements: Array.from(animatedElements).filter(el => el.tagName === 'H1' || el.tagName === 'H2'), delay: 0 },
+              { elements: Array.from(animatedElements).filter(el => el.tagName === 'H3' || el.tagName === 'H4'), delay: 30 },
+              { elements: Array.from(animatedElements).filter(el => !['H1', 'H2', 'H3', 'H4'].includes(el.tagName)), delay: 60 }
+            ];
+            
+            // Animate each group with slight delay
+            groups.forEach(group => {
+              setTimeout(() => {
+                group.elements.forEach(el => {
+                  el.classList.add('font-bounce');
+                  
+                  // Remove animation class after it completes
+                  setTimeout(() => {
+                    el.classList.remove('font-bounce');
+                  }, 500); // Animation duration
+                });
+              }, group.delay);
+            });
+            
+            // Update the font sample display
+            updateFontSampleDisplay();
+          }, 50);
+        });
+      }
+      
+      // Font selector modal functionality
+      const fontToggle = document.getElementById('font-toggle'); // Keep the ID the same
+      const fontSelectorModal = document.getElementById('font-selector-modal');
+      const fontSelectorClose = document.getElementById('font-selector-close');
+      const fontOptions = document.querySelectorAll('.font-option');
+      
+      // Mark the currently selected font option
+      const updateSelectedFontOption = () => {
+        const currentFontPair = fontSelect?.value || window.fontSwitcher?.getSelected() || 'EB Garamond|Plus Jakarta Sans';
+        
+        fontOptions.forEach(option => {
+          const fontPair = option.getAttribute('data-font-pair');
+          if (fontPair === currentFontPair) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+      };
+      
+      // Toggle the font selector modal
+      if (fontToggle && fontSelectorModal) {
+        // Open the modal when the font toggle is clicked
+        fontToggle.addEventListener('click', () => {
+          fontSelectorModal.classList.add('open');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling
+          updateSelectedFontOption();
+          
+          // Animate the font icon with a pulse effect
+          const fontIcon = document.getElementById('font-icon');
+          if (fontIcon) {
+            fontIcon.classList.remove('theme-icon-animate');
+            void fontIcon.offsetWidth; // Force reflow
+            fontIcon.classList.add('theme-icon-animate');
+          }
+        });
+        
+        // Close the modal when the close button is clicked
+        if (fontSelectorClose) {
+          fontSelectorClose.addEventListener('click', () => {
+            fontSelectorModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+          });
+        }
+        
+        // Close the modal when clicking outside the content
+        fontSelectorModal.addEventListener('click', (e) => {
+          if (e.target === fontSelectorModal) {
+            fontSelectorModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+          }
+        });
+        
+        // Close the modal when escape key is pressed
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && fontSelectorModal.classList.contains('open')) {
+            fontSelectorModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+          }
+        });
+        
+        // Handle font option selection
+        fontOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            const fontPair = option.getAttribute('data-font-pair');
+            if (fontPair && fontSelect) {
+              // Update the select element value
+              fontSelect.value = fontPair;
+              
+              // Trigger the change event
+              const event = new Event('change');
+              fontSelect.dispatchEvent(event);
+              
+              // Update the selected option
+              updateSelectedFontOption();
+              
+              // Close the modal after selection with a slight delay
+              setTimeout(() => {
+                fontSelectorModal.classList.remove('open');
+                document.body.style.overflow = ''; // Restore scrolling
+              }, 300);
+            }
+          });
+        });
+      }
+      
+      // Function to update the font sample display
+      function updateFontSampleDisplay() {
+        const headingFontName = document.getElementById('heading-font-name');
+        const bodyFontName = document.getElementById('body-font-name');
+        const headingFontSample = document.getElementById('heading-font-sample');
+        const bodyFontSample = document.getElementById('body-font-sample');
+        const fontTitle = document.getElementById('current-font-title');
+        
+        if (headingFontName && bodyFontName) {
+          // Get the current font pair
+          const fontSelect = document.getElementById('font-pairing-select');
+          if (fontSelect) {
+            const selectedValue = fontSelect.value;
+            const [heading, body] = selectedValue.split('|').map(f => f.trim());
+            
+            // Update the font names and samples
+            headingFontName.textContent = heading;
+            bodyFontName.textContent = body;
+            fontTitle.textContent = `Current Font Pairing: ${heading} + ${body}`;
+            
+            // Clear any existing animations
+            [fontTitle, headingFontName, headingFontSample, bodyFontName, bodyFontSample].forEach(el => {
+              if (el) {
+                el.classList.remove('font-bounce');
+                void el.offsetWidth; // Force reflow
+              }
+            });
+            
+            // Apply staggered animations to each element
+            [fontTitle, headingFontName, headingFontSample, bodyFontName, bodyFontSample].forEach((el, index) => {
+              if (el) {
+                setTimeout(() => {
+                  el.classList.add('font-bounce');
+                  
+                  // Remove animation class after it completes
+                  setTimeout(() => {
+                    el.classList.remove('font-bounce');
+                  }, 500);
+                }, index * 100); // Stagger by 100ms
+              }
+            });
+          }
+        }
+      }
+      
+      // Enhanced tabs implementation with anchor link support
+      const tabButtons = document.querySelectorAll('.custom-tab-button');
+      const tabContents = document.querySelectorAll('.custom-tab-content');
+      
+      // Make sure only one tab is active initially
+      function resetTabContents() {
+        tabContents.forEach(content => {
+          content.classList.remove('active');
+          content.style.opacity = '0';
+          content.style.transform = 'translateY(10px)';
+        });
+      }
+      
+      // Only run this if we're seeing multiple active tabs
+      if (document.querySelectorAll('.custom-tab-content.active').length > 1) {
+        resetTabContents();
+        // Make sure the first tab is active
+        const firstTab = document.getElementById('web-components');
+        if (firstTab) {
+          firstTab.classList.add('active');
+          firstTab.style.opacity = '1';
+          firstTab.style.transform = 'translateY(0)';
+        }
+      }
+      
+      // Function to activate a specific tab
+      function activateTab(tabId) {
+        // Find the corresponding button
+        const tabButton = document.querySelector(`.custom-tab-button[data-tab="${tabId}"]`);
+        
+        if (!tabButton || tabButton.classList.contains('active')) return;
+        
+        // Remove active class from all buttons
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to target button
+        tabButton.classList.add('active');
+        
+        // Hide all tab contents first
+        tabContents.forEach(content => {
+          content.classList.remove('active');
+          content.style.opacity = '0';
+          content.style.transform = 'translateY(10px)';
+        });
+        
+        // Show the selected tab content
+        const targetContent = document.getElementById(tabId);
+        
+        if (targetContent) {
+          targetContent.classList.add('active');
+          // Force a reflow to ensure the animation works
+          void targetContent.offsetWidth;
+          // Apply animation styles
+          targetContent.style.opacity = '1';
+          targetContent.style.transform = 'translateY(0)';
+          
+          // Scroll to tabs area with offset for fixed header
+          const tabsContainer = document.querySelector('.custom-tabs');
+          if (tabsContainer) {
+            const headerHeight = document.querySelector('header').offsetHeight || 0;
+            const tabsTop = tabsContainer.getBoundingClientRect().top + 
+                            window.pageYOffset - headerHeight - 20;
+            
+            window.scrollTo({
+              top: tabsTop,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }
+      
+      // Handle tab button clicks
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tabId = button.getAttribute('data-tab');
+          activateTab(tabId);
+          
+          // Update URL hash without scrolling
+          const currentScrollPosition = window.scrollY;
+          window.location.hash = tabId;
+          window.scrollTo(0, currentScrollPosition);
+        });
+      });
+      
+      // Handle anchor links in the navigation
+      const handleNavLinks = () => {
+        const navLinks = document.querySelectorAll('.dropdown-menu-link, .mobile-submenu-link');
+        
+        navLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+              const tabId = href.substring(1);
+              const targetTab = document.getElementById(tabId);
+              
+              if (targetTab && targetTab.classList.contains('custom-tab-content')) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                const mobileNav = document.getElementById('mobile-navigation');
+                if (mobileNav && mobileNav.classList.contains('open')) {
+                  mobileNav.classList.remove('open');
+                  document.querySelector('.menu-toggle')?.classList.remove('open');
+                }
+                
+                // Close desktop dropdown if open
+                const dropdown = document.querySelector('.dropdown-content.active');
+                if (dropdown) {
+                  dropdown.classList.remove('active');
+                  document.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+                }
+                
+                // Activate the tab
+                activateTab(tabId);
+              }
+            }
+          });
+        });
+      };
+      
+      // Check for hash in URL on page load
+      const checkUrlHash = () => {
+        const hash = window.location.hash;
+        if (hash) {
+          const tabId = hash.substring(1);
+          const targetTab = document.getElementById(tabId);
+          
+          if (targetTab && targetTab.classList.contains('custom-tab-content')) {
+            setTimeout(() => {
+              activateTab(tabId);
+            }, 100);
+          }
+        }
+      };
+      
+      // Initialize navigation links and check hash
+      handleNavLinks();
+      checkUrlHash();
+      
+      // Toggle Switch Demo
+      const demoToggle = document.getElementById('demo-toggle');
+      const toggleOutput = document.getElementById('toggle-demo-output');
+      
+      if (demoToggle && toggleOutput) {
+        // Initial state
+        toggleOutput.textContent = `Toggle state: ${demoToggle.checked ? 'ON' : 'OFF'}`;
+        toggleOutput.className = demoToggle.checked ? 'toggle-output toggle-on' : 'toggle-output toggle-off';
+        
+        // Handle toggle change
+        demoToggle.addEventListener('change', (e) => {
+          const isOn = e.detail.checked;
+          toggleOutput.textContent = `Toggle state: ${isOn ? 'ON' : 'OFF'}`;
+          
+          // Update class for styling
+          if (isOn) {
+            toggleOutput.classList.add('toggle-on');
+            toggleOutput.classList.remove('toggle-off');
+          } else {
+            toggleOutput.classList.add('toggle-off');
+            toggleOutput.classList.remove('toggle-on');
+          }
+          
+          // Show animation when toggled
+          animationFramework.presets.pulse(toggleOutput, { duration: 300 });
+        });
+      }
+      
+      // Animation Tab Demos
+      // Basic animations
+      const basicDemo = document.getElementById('basic-demo');
+      
+      if (basicDemo) {
+        document.getElementById('fade-in').addEventListener('click', () => {
+          basicDemo.style.opacity = 0;
+          animationFramework.presets.fadeIn(basicDemo, { duration: 800 });
+        });
+        
+        document.getElementById('fade-out').addEventListener('click', () => {
+          basicDemo.style.opacity = 1;
+          animationFramework.presets.fadeOut(basicDemo, { duration: 800 });
+        });
+        
+        document.getElementById('slide-in').addEventListener('click', () => {
+          basicDemo.style.opacity = 0;
+          basicDemo.style.transform = 'translateX(-100%)';
+          animationFramework.presets.slideInRight(basicDemo, { duration: 800 });
+        });
+        
+        document.getElementById('pulse').addEventListener('click', () => {
+          animationFramework.presets.pulse(basicDemo, { duration: 800 });
+        });
+        
+        document.getElementById('shake').addEventListener('click', () => {
+          animationFramework.presets.shake(basicDemo, { duration: 500 });
+        });
+        
+        document.getElementById('reset').addEventListener('click', () => {
+          basicDemo.style.opacity = 1;
+          basicDemo.style.transform = 'translateX(0) scale(1)';
+        });
+      }
+      
+      // Sequence demo
+      const sequenceItems = [
+        document.getElementById('seq-item-1'),
+        document.getElementById('seq-item-2'),
+        document.getElementById('seq-item-3'),
+        document.getElementById('seq-item-4'),
+        document.getElementById('seq-item-5')
+      ];
+      
+      // Only initialize if all elements exist
+      if (sequenceItems[0] && document.getElementById('play-sequence')) {
+        // Reset sequence items
+        const resetSequence = () => {
+          sequenceItems.forEach(item => {
+            if (item) item.style.opacity = 0;
+          });
+        };
+        
+        // Initial reset
+        resetSequence();
+        
+        document.getElementById('play-sequence').addEventListener('click', () => {
+          resetSequence();
+          
+          // Create and play an animation sequence
+          const sequence = animationFramework.createSequence();
+          
+          sequenceItems.forEach(item => {
+            if (item) {
+              sequence.add(animationFramework.presets.fadeIn(item, { duration: 300 }), 200);
+            }
+          });
+          
+          sequence.play();
+        });
+        
+        document.getElementById('play-staggered').addEventListener('click', () => {
+          resetSequence();
+          
+          // Filter out any null items
+          const validItems = sequenceItems.filter(item => item !== null);
+          
+          // Create and play a staggered animation group
+          const staggered = animationFramework.stagger(validItems, 'fadeIn', { 
+            duration: 500,
+            staggerDelay: 100
+          });
+          
+          staggered.play();
+        });
+      }
+      
+      // Custom animations demo
+      const customDemo = document.getElementById('custom-demo');
+      
+      if (customDemo) {
+        document.getElementById('typewriter').addEventListener('click', () => {
+          customDemo.textContent = 'Custom Animation';
+          
+          animationFramework.presets.typewriter(customDemo, {
+            duration: 1500,
+            easing: 'linear',
+            fillMode: 'forwards'
+          });
+        });
+        
+        document.getElementById('letter-spacing').addEventListener('click', () => {
+          customDemo.textContent = 'Letter Spacing';
+          customDemo.style.opacity = 1;
+          
+          animationFramework.presets.letterSpacing(customDemo, {
+            duration: 1000,
+            easing: 'smooth'
+          });
+        });
+        
+        document.getElementById('luxury-reveal').addEventListener('click', () => {
+          customDemo.textContent = 'Luxury Reveal';
+          customDemo.style.opacity = 0;
+          
+          animationFramework.presets.luxuryReveal(customDemo, {
+            duration: 1200,
+            easing: 'elegant'
+          });
+        });
+        
+        document.getElementById('custom-reset').addEventListener('click', () => {
+          customDemo.textContent = 'Custom Animation';
+          customDemo.style.opacity = 1;
+          customDemo.style.letterSpacing = '';
+        });
+      }
+    });
+  </script>
+  <script src="../js/components/navigation.js"></script>
+  <script src="../js/components/nav-style-switcher.js"></script>
+  <!-- Theme toggle script already included in utilities -->
+</body>
+</html>
