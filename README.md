@@ -1,6 +1,6 @@
 # Syntax - Modern Web Framework
 
-[Live Demo](https://stokewell.github.io/syntax/demo/) ·  [Use this Template](https://github.com/stokewell/base/generate)
+[Live Demo](https://stokewell.github.io/syntax/demo/) ·  [Use this Template](https://github.com/stokewell/syntax/generate) 
 
 > **Credit**: Syntax is built upon the excellent [Base framework](https://github.com/stokewell/base) - a lightweight foundation for modern websites. This project extends Base with additional features while maintaining its clean, minimalist approach.
 
