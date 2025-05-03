@@ -1,6 +1,6 @@
 # Syntax - Modern Web Framework
 
-[Live Demo](https://stokewell.github.io/base/demo/) · [Components Demo](https://stokewell.github.io/base/demo/components.html) · [Use this Template](https://github.com/stokewell/base/generate)
+[Live Demo](https://stokewell.github.io/syntax/demo/) ·  [Use this Template](https://github.com/stokewell/base/generate)
 
 > **Credit**: Syntax is built upon the excellent [Base framework](https://github.com/stokewell/base) - a lightweight foundation for modern websites. This project extends Base with additional features while maintaining its clean, minimalist approach.
 
@@ -33,14 +33,8 @@ This framework is ideal for:
 
 ## ✍️ Typography System
 
-This framework includes a flexible typography system with an optional starter pairing:
-
-- **Headings** — [Playfair Display](https://fonts.google.com/specimen/Playfair+Display)
-- **Body** — [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans)
-
-Additional pairings are available including:
+This framework includes a flexible typography system with optional starter font pairings including:
 - Serif + Sans-Serif combinations (DM Serif Display + Inter, EB Garamond + Plus Jakarta Sans)
-- All Sans-Serif pairing ([Syne](https://fonts.google.com/specimen/Syne) + [Outfit](https://fonts.google.com/specimen/Outfit))
 
 Fonts are easily configurable using CSS variables (`--font-heading`, `--font-body`).
 
@@ -219,10 +213,9 @@ At the end of your `<body>`:
 </header>
 ```
 
-### 4. Explore the demos
+### 4. Explore the demo
 
-- Open [`/demo/index.html`](https://stokewell.github.io/base/demo/) to preview all styles, tokens, and basic components
-- Open [`/demo/components.html`](https://stokewell.github.io/base/demo/components.html) for web components and layout variants
+- Open [`/demo/index.html`](https://stokewell.github.io/syntax/demo/) to preview all styles, tokens, and basic components
 
 ## 🧩 Web Components & UI Elements
 
@@ -355,8 +348,6 @@ const animationCSS = animationFramework.generateCSS();
 // <div class="ani-fadeIn ani-duration-slow">Pure CSS animation</div>
 ```
 
-[View Animation Framework Demo](animations.html)
-
 ## 🧹 Customization Guide
 
 ### Performance Optimizations
@@ -432,4 +423,4 @@ This project uses resources from several open-source projects. See [CREDITS.md](
 
 Want to start your next project with this foundation?
 
-→ [Click here to generate your own copy](https://github.com/stokewell/base/generate)
+→ [Click here to generate your own copy](https://github.com/stokewell/syntax/generate)
