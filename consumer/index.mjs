@@ -18,3 +18,15 @@ export {
 } from './lib/generator.mjs';
 export { ConsumerPathError, assertSafeRelativePath, resolveInside } from './lib/path-safety.mjs';
 export { ConsumerConfigError, validateAndNormalizeConfig } from './lib/validation.mjs';
+export {
+  PUBLIC_VISUAL_DIRECTIONS,
+  getVisualDirection,
+  renderDirectionVariables,
+} from './directions/index.mjs';
+export {
+  PUBLIC_RECIPE_IDS,
+  blankRecipe,
+  getRecipe,
+  listRecipes,
+  portfolioRecipe,
+} from './recipes/index.mjs';

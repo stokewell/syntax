@@ -6,6 +6,11 @@ All notable changes to Syntax are documented here.
 
 ### Added
 
+- Public Blank and Portfolio recipe contracts with semantic, no-JavaScript HTML output.
+- Editorial and Product visual directions that alter typography, shape, alignment, and elevation rather than only color.
+- Accessible accent-palette generation for light and dark themes.
+- Static Portfolio output supporting one to six projects, with an optional structured-content mirror.
+- Generated desktop/mobile preview fixtures, framework-versus-project metrics, and recipe-specific Playwright and axe coverage.
 - A versioned `syntax.project.json` schema for project identity, recipes, visual directions, features, modes, deployment, and generated-file provenance.
 - Runtime configuration validation with actionable errors and canonical normalization.
 - A deterministic recipe-to-files engine with stable configuration hashing and machine-independent path ordering.
