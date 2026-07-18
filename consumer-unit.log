@@ -1,0 +1,49 @@
+
+> syntax-typography-starter@1.2.0 test:unit
+> vitest run tests/unit
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.10 [39m[90m/home/runner/work/syntax/syntax[39m
+
+ [32m✓[39m tests/unit/font-pairs.test.js [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [31m❯[39m tests/unit/consumer-mode.test.js [2m([22m[2m10 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 396[2mms[22m[39m
+[31m     [31m×[31m normalizes equivalent configurations into the same project file set[39m[32m 12[2mms[22m[39m
+     [32m✓[39m reports actionable errors for unsupported values[32m 3[2mms[22m[39m
+     [32m✓[39m rejects unknown fields instead of silently discarding them[32m 3[2mms[22m[39m
+     [32m✓[39m matches the committed foundation fixture byte for byte[32m 185[2mms[22m[39m
+     [32m✓[39m records deterministic provenance without timestamps[32m 35[2mms[22m[39m
+     [32m✓[39m rejects traversal and duplicate recipe paths before writing[32m 4[2mms[22m[39m
+     [32m✓[39m preflights collisions and leaves the directory unchanged[32m 57[2mms[22m[39m
+     [32m✓[39m permits explicit replacement only inside the test suite[32m 65[2mms[22m[39m
+     [32m✓[39m reads and validates a generated manifest[32m 29[2mms[22m[39m
+     [32m✓[39m keeps Consumer Mode outside the Syntax production bundle definition[32m 1[2mms[22m[39m
+ [32m✓[39m tests/unit/consumer-recipes.test.js [2m([22m[2m8 tests[22m[2m)[22m[33m 2039[2mms[22m[39m
+     [33m[2m✓[22m[39m generates a small Blank project without requiring JavaScript [33m 585[2mms[22m[39m
+     [33m[2m✓[22m[39m supports one-project and six-project Portfolio outputs [33m 517[2mms[22m[39m
+     [33m[2m✓[22m[39m keeps recipe identity in project CSS rather than the Syntax bundle [33m 408[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/unit/consumer-mode.test.js[2m > [22mConsumer Mode configuration[2m > [22mnormalizes equivalent configurations into the same project file set
+[31m[1mConsumerGenerationError[22m: Recipe blank does not support selected features: dialog.[39m
+[36m [2m❯[22m resolveRecipeDefinitions consumer/lib/generator.mjs:[2m118:11[22m[39m
+    [90m116|[39m   const incompatible = config.features.filter((feature) => !compatible…
+    [90m117|[39m   [35mif[39m (incompatible[33m.[39mlength [33m>[39m [34m0[39m) {
+    [90m118|[39m     [35mthrow[39m [35mnew[39m [33mConsumerGenerationError[39m(
+    [90m   |[39m           [31m^[39m
+    [90m119|[39m       `Recipe ${recipe.id} does not support selected features: ${incom…
+    [90m120|[39m     )[33m;[39m
+[90m [2m❯[22m renderRecipeFiles consumer/lib/generator.mjs:[2m150:29[22m[39m
+[90m [2m❯[22m createProjectFileSet consumer/lib/generator.mjs:[2m200:23[22m[39m
+[90m [2m❯[22m tests/unit/consumer-mode.test.js:[2m83:29[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m19 passed[39m[22m[90m (20)[39m
+[2m   Start at [22m 15:28:18
+[2m   Duration [22m 2.43s[2m (transform 279ms, setup 0ms, import 465ms, tests 2.44s, environment 1ms)[22m
+
+
+::error file=/home/runner/work/syntax/syntax/consumer/lib/generator.mjs,title=tests/unit/consumer-mode.test.js > Consumer Mode configuration > normalizes equivalent configurations into the same project file set,line=118,column=11::ConsumerGenerationError: Recipe blank does not support selected features: dialog.%0A ❯ resolveRecipeDefinitions consumer/lib/generator.mjs:118:11%0A ❯ renderRecipeFiles consumer/lib/generator.mjs:150:29%0A ❯ createProjectFileSet consumer/lib/generator.mjs:200:23%0A ❯ tests/unit/consumer-mode.test.js:83:29%0A%0A
