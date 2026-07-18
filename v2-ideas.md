@@ -2,6 +2,8 @@
 
 This roadmap is ordered. Core reliability and proven real-world demand come before ecosystem expansion.
 
+**Current focus:** v1.3 Consumer Mode foundation.
+
 ## v1.1 — Stabilization
 
 - [x] Correct public branding, metadata, canonical URLs, and root routing
