@@ -23,6 +23,69 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
 
+      - name: Format source
+        run: >-
+          npx prettier --write
+          index.html
+          demo/index.html
+          demo/demo.css
+          css/tokens.css
+          css/themes.css
+          css/style.css
+          css/components/a11y.css
+          css/components/buttons.css
+          css/components/controls.css
+          css/components/modal.css
+          js/config/font-pairs.js
+          js/utilities/theme-toggle.js
+          js/utilities/font-switcher.js
+          js/components/navigation.js
+          js/components/modal.js
+          js/components/web-components.js
+          js/main.js
+          scripts
+          tests
+          package.json
+          eslint.config.js
+          playwright.config.js
+          .stylelintrc
+          .stylelintrc.json
+          .prettierrc.json
+          .github/workflows/ci.yml
+          README.md
+          docs/STYLE_GUIDE.md
+          v2-ideas.md
+          CHANGELOG.md
+          site.webmanifest
+
+      - name: Upload formatted source
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatted-source
+          include-hidden-files: true
+          path: |
+            index.html
+            demo/index.html
+            demo/demo.css
+            css/tokens.css
+            css/themes.css
+            css/style.css
+            css/components/a11y.css
+            css/components/buttons.css
+            css/components/controls.css
+            css/components/modal.css
+            js/config/font-pairs.js
+            js/utilities/theme-toggle.js
+            js/utilities/font-switcher.js
+            js/components/navigation.js
+            js/components/modal.js
+            js/components/web-components.js
+            js/main.js
+            README.md
+            docs/STYLE_GUIDE.md
+            .stylelintrc
+            .github/workflows/ci.yml
+
       - name: Lint JavaScript
         run: npm run lint:js
 
