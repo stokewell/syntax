@@ -1,25 +1,17 @@
-/**
- * Font Switcher
- * Live Google Fonts pairing selector with localStorage support
- */
+/** Accessible font-pair preview controller. */
+(function (global) {
+  'use strict';
 
-(function () {
-  const htmlEl = document.documentElement;
-  const STORAGE_KEY = 'preferred-font-pairing';
+  const STORAGE_KEY = 'syntax-font-pair';
   const LINK_ID = 'dynamic-fonts-live';
+  let initialized = false;
+  let previousFocus = null;
 
-  // Helper function to animate font changes with a subtle bounce effect
-  const animateFontZoom = (elements) => {
-    elements.forEach(el => {
-      el.classList.add('font-bounce');
-      setTimeout(() => {
-        el.classList.remove('font-bounce');
-      }, 500); // Reduced time to match animation duration
-    });
-  };
+  function encodeFamily(name, weights) {
+    return `family=${name.trim().replace(/ /g, '+')}:${weights}`;
+  }
 
-  // Load fonts from Google and apply CSS vars with optimal weights
-  const applyFontPairing = (heading, body) => {
+  function loadPair(pair) {
     let link = document.getElementById(LINK_ID);
     if (!link) {
       link = document.createElement('link');
@@ -27,202 +19,160 @@
       link.rel = 'stylesheet';
       document.head.appendChild(link);
     }
-
-    // Map of fonts to their optimal weights
-    const fontWeights = {
-      'Outfit': 'wght@300;400;500;700;900',
-      'Inter': 'wght@300;400;500;700',
-      'Work Sans': 'wght@300;400;500;700',
-      'EB Garamond': 'ital,wght@0,400;0,700;1,400',
-      'Montserrat': 'wght@400;500;600;700',
-      'Roboto': 'wght@300;400;500;700',
-      'DM Serif Display': 'ital,wght@0,400',
-      'Playfair Display': 'ital,wght@0,400;0,700;1,400',
-      'Plus Jakarta Sans': 'wght@300;400;500;700',
-      'Merriweather': 'wght@300;400;700',
-      'Cormorant Garamond': 'wght@400;500;700',
-      'Raleway': 'wght@400;500;700',
-      'Lora': 'wght@400;500;700',
-      'Source Sans Pro': 'wght@300;400;600',
-      'Vollkorn': 'wght@400;500;700',
-      'Noto Sans': 'wght@400;500;700'
-    };
-    
-    // Get weights for selected fonts or use defaults
-    const headingWeights = fontWeights[heading] || 'wght@400;700';
-    const bodyWeights = fontWeights[body] || 'wght@400';
-    
-    // Format the URL with appropriate weights
-    const headingFamily = heading.trim().replace(/ /g, '+');
-    const bodyFamily = body.trim().replace(/ /g, '+');
-    
-    link.href = `https://fonts.googleapis.com/css2?family=${headingFamily}:${headingWeights}&family=${bodyFamily}:${bodyWeights}&display=swap`;
-
-    // Determine the correct font family fallbacks based on the font
-    const isSansSerifHeading = heading === 'Outfit' || heading === 'Syne' || heading === 'Poppins' || heading === 'Archivo' || heading === 'Montserrat';
-    const headingFallback = isSansSerifHeading ? 'sans-serif' : 'serif';
-    
-    // Most body fonts are sans-serif, but some are serif
-    const isSerifBody = body === 'EB Garamond' || body === 'Vollkorn' || body === 'Merriweather' || body === 'Lora' || body === 'Cormorant Garamond';
-    const bodyFallback = isSerifBody ? 'serif' : 'sans-serif';
-    
-    htmlEl.style.setProperty('--font-heading', `'${heading}', ${headingFallback}`);
-    htmlEl.style.setProperty('--font-body', `'${body}', ${bodyFallback}`);
-
-    // Add animation to headings and paragraphs with a more logical staggered approach
-    setTimeout(() => {
-      // Collect all animated elements
-      const animatedElements = document.querySelectorAll('h1, h2, h3, h4, p, li, blockquote');
-      
-      // Group elements by importance and animate with staggered timing
-      const groups = [
-        { elements: Array.from(animatedElements).filter(el => el.tagName === 'H1' || el.tagName === 'H2'), delay: 0 },
-        { elements: Array.from(animatedElements).filter(el => el.tagName === 'H3' || el.tagName === 'H4'), delay: 30 },
-        { elements: Array.from(animatedElements).filter(el => !['H1', 'H2', 'H3', 'H4'].includes(el.tagName)), delay: 60 }
-      ];
-      
-      // Apply animations with appropriate delays
-      groups.forEach(group => {
-        setTimeout(() => {
-          animateFontZoom(group.elements);
-        }, group.delay);
-      });
-    }, 50); // Short delay to ensure font has started loading
-  };
-
-  // Extract fonts from selector value
-  const parsePair = (value) => {
-    return value.split('|').map(f => f.trim());
-  };
-
-  // Save selected value to localStorage
-  const storeFontSelection = (value) => {
-    localStorage.setItem(STORAGE_KEY, value);
-  };
-
-  // Map font pairs to their CSS variable names
-  const fontPairMap = {
-    'EB Garamond|Plus Jakarta Sans': { heading: '--font-heading-quinary', body: '--font-body-quinary' },
-    'DM Serif Display|Inter': { heading: '--font-heading-secondary', body: '--font-body-tertiary' },
-    'Merriweather|Work Sans': { heading: '--font-heading-denary', body: '--font-body-secondary' },
-    'Cormorant Garamond|Raleway': { heading: '--font-heading-senary', body: '--font-body-septenary' },
-    'Lora|Source Sans Pro': { heading: '--font-heading-denary', body: '--font-body-senary' },
-    'Vollkorn|Noto Sans': { heading: '--font-heading-septenary', body: '--font-body-septenary' },
-    'Outfit|Inter': { heading: '--font-heading-tredenary', body: '--font-body-tredenary' },
-    'Montserrat|Roboto': { heading: '--font-heading-quattuordenary', body: '--font-body-quattuordenary' }
-  };
-
-  // Load saved pairing from localStorage
-  const getStoredPairing = () => {
-    return localStorage.getItem(STORAGE_KEY) || 'EB Garamond|Plus Jakarta Sans';
-  };
-  
-  // Set data-font attributes on the html element
-  const setFontAttributes = (fontPairKey) => {
-    const pairInfo = fontPairMap[fontPairKey];
-    if (pairInfo) {
-      // Extract the CSS var key and remove the prefix
-      const headingKey = pairInfo.heading.replace('--font-heading-', '');
-      htmlEl.setAttribute('data-font', headingKey);
-    }
-  };
-
-  // Initialize logic after DOM is ready
-  const initFontSwitcher = () => {
-    const fontSwitcher = document.getElementById('font-pairing-select');
-    const fontPreview = document.getElementById('font-pairing-preview');
-    const toggleFontPreview = document.getElementById('toggle-font-preview');
-
-    const savedValue = getStoredPairing();
-
-    if (fontSwitcher) {
-      fontSwitcher.value = savedValue;
-
-      const [heading, body] = parsePair(savedValue);
-      applyFontPairing(heading, body);
-      setFontAttributes(savedValue);
-
-      fontSwitcher.addEventListener('change', (e) => {
-        const value = e.target.value;
-        if (value === 'custom') {
-          alert('Custom font selection coming soon!');
-          return;
-        }
-
-        storeFontSelection(value);
-        const [h, b] = parsePair(value);
-        applyFontPairing(h, b);
-        setFontAttributes(value);
-      });
-    }
-
-    // Add sliding animation to font preview panel
-    if (toggleFontPreview && fontPreview) {
-      // Initialize styles
-      fontPreview.style.maxHeight = '0';
-      fontPreview.style.overflow = 'hidden';
-      fontPreview.style.transition = 'max-height 0.3s var(--ease-in-out), opacity 0.3s var(--ease-in-out)';
-      fontPreview.style.opacity = '0';
-      fontPreview.style.padding = '0';
-      fontPreview.style.width = '100%';
-      fontPreview.style.margin = '0 auto';
-
-      // Remove hidden attribute - we'll control visibility with CSS
-      if (fontPreview.hasAttribute('hidden')) {
-        fontPreview.removeAttribute('hidden');
-      }
-
-      toggleFontPreview.addEventListener('click', () => {
-        const isVisible = fontPreview.style.maxHeight !== '0px' && fontPreview.style.maxHeight !== '0';
-        
-        if (isVisible) {
-          // Hide preview
-          fontPreview.style.maxHeight = '0';
-          fontPreview.style.opacity = '0';
-          fontPreview.style.padding = '0';
-          toggleFontPreview.textContent = 'Customize Fonts';
-        } else {
-          // Show preview
-          fontPreview.style.padding = 'var(--space-2)';
-          fontPreview.style.maxHeight = fontPreview.scrollHeight + 'px';
-          fontPreview.style.opacity = '1';
-          toggleFontPreview.textContent = 'Hide Font Preview';
-          
-          // Update maxHeight after transition to accommodate content changes
-          setTimeout(() => {
-            fontPreview.style.maxHeight = 'none';
-          }, 300);
-        }
-      });
-      
-      // Handle responsive behavior
-      const handleResize = () => {
-        if (fontPreview.style.maxHeight !== '0px' && fontPreview.style.maxHeight !== '0') {
-          // Recalculate height if panel is open
-          fontPreview.style.maxHeight = 'none';
-        }
-      };
-      
-      window.addEventListener('resize', handleResize);
-    }
-
-    // If pairing exists but no switcher rendered, still apply font
-    if (!fontSwitcher && savedValue) {
-      const [heading, body] = parsePair(savedValue);
-      applyFontPairing(heading, body);
-      setFontAttributes(savedValue);
-    }
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFontSwitcher);
-  } else {
-    initFontSwitcher();
+    link.href = `https://fonts.googleapis.com/css2?${encodeFamily(pair.heading, pair.headingWeights)}&${encodeFamily(pair.body, pair.bodyWeights)}&display=swap`;
   }
 
-  // Public API
-  window.fontSwitcher = {
-    apply: applyFontPairing,
-    getSelected: () => localStorage.getItem(STORAGE_KEY)
-  };
-})();
+  function applyPair(key, options = {}) {
+    const pairs = global.SyntaxFontPairs || {};
+    const pair = pairs[key] || pairs.editorial;
+    if (!pair) return;
+
+    loadPair(pair);
+    document.documentElement.style.setProperty(
+      '--font-heading',
+      `'${pair.heading}', ${pair.headingFallback}`,
+    );
+    document.documentElement.style.setProperty(
+      '--font-body',
+      `'${pair.body}', ${pair.bodyFallback}`,
+    );
+    document.documentElement.dataset.fontPair = key;
+
+    if (options.persist !== false) global.localStorage.setItem(STORAGE_KEY, key);
+
+    const title = document.getElementById('current-font-title');
+    if (title) title.textContent = `${pair.heading} + ${pair.body}`;
+
+    document.querySelectorAll('.font-option').forEach((option) => {
+      const selected = option.dataset.fontPair === key;
+      option.setAttribute('aria-checked', String(selected));
+      option.tabIndex = selected ? 0 : -1;
+    });
+
+    document.fonts
+      ?.load(`1rem "${pair.body}"`)
+      .then(() => {
+        document
+          .querySelector('.type-specimen')
+          ?.animate([{ opacity: 0.72 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' });
+      })
+      .catch(() => {});
+
+    document.dispatchEvent(new CustomEvent('syntax-font-change', { detail: { key, pair } }));
+  }
+
+  function selectedKey() {
+    const pairs = global.SyntaxFontPairs || {};
+    const saved = global.localStorage.getItem(STORAGE_KEY);
+    return saved && pairs[saved] ? saved : 'editorial';
+  }
+
+  function renderOptions() {
+    const container = document.getElementById('font-options');
+    const pairs = global.SyntaxFontPairs || {};
+    if (!container) return;
+
+    container.replaceChildren();
+    Object.entries(pairs).forEach(([key, pair]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'font-option';
+      button.dataset.fontPair = key;
+      button.setAttribute('role', 'radio');
+      button.setAttribute('aria-checked', 'false');
+      button.innerHTML = `
+        <span class="font-option-heading" style="font-family: '${pair.heading}', ${pair.headingFallback}">${pair.heading}</span>
+        <span class="font-option-body" style="font-family: '${pair.body}', ${pair.bodyFallback}">${pair.body} · ${pair.label}</span>
+      `;
+      button.addEventListener('click', () => {
+        applyPair(key);
+        closeDialog();
+      });
+      button.addEventListener('keydown', (event) => handleRadioKeys(event, key));
+      container.appendChild(button);
+    });
+  }
+
+  function handleRadioKeys(event, currentKey) {
+    if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key))
+      return;
+    event.preventDefault();
+    const keys = Object.keys(global.SyntaxFontPairs || {});
+    let index = keys.indexOf(currentKey);
+    if (event.key === 'Home') index = 0;
+    else if (event.key === 'End') index = keys.length - 1;
+    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown')
+      index = (index + 1) % keys.length;
+    else index = (index - 1 + keys.length) % keys.length;
+    const next = keys[index];
+    applyPair(next);
+    document.querySelector(`.font-option[data-font-pair="${next}"]`)?.focus();
+  }
+
+  function focusableElements(dialog) {
+    return Array.from(
+      dialog.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    );
+  }
+
+  function trapFocus(event) {
+    const dialog = document.getElementById('font-selector-dialog');
+    if (!dialog || dialog.hidden || event.key !== 'Tab') return;
+    const elements = focusableElements(dialog);
+    if (!elements.length) return;
+    const first = elements[0];
+    const last = elements[elements.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function openDialog() {
+    const dialog = document.getElementById('font-selector-dialog');
+    if (!dialog) return;
+    previousFocus = document.activeElement;
+    dialog.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const selected = document.querySelector('.font-option[aria-checked="true"]');
+    (selected || document.getElementById('font-selector-close'))?.focus();
+  }
+
+  function closeDialog() {
+    const dialog = document.getElementById('font-selector-dialog');
+    if (!dialog || dialog.hidden) return;
+    dialog.hidden = true;
+    document.body.style.overflow = '';
+    previousFocus?.focus();
+  }
+
+  function init() {
+    if (initialized) return;
+    initialized = true;
+    renderOptions();
+    applyPair(selectedKey(), { persist: false });
+
+    document.getElementById('font-toggle')?.addEventListener('click', openDialog);
+    document.getElementById('font-selector-close')?.addEventListener('click', closeDialog);
+    document.getElementById('font-selector-dialog')?.addEventListener('click', (event) => {
+      if (event.target.id === 'font-selector-dialog') closeDialog();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeDialog();
+      trapFocus(event);
+    });
+  }
+
+  global.SyntaxFonts = Object.freeze({
+    init,
+    applyPair,
+    getSelected: selectedKey,
+    openDialog,
+    closeDialog,
+  });
+})(window);

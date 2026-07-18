@@ -1,25 +1,42 @@
-# Syntax v2 Ideas
+# Syntax roadmap
 
-## Core Improvements
+This roadmap is ordered. Core reliability comes before ecosystem expansion.
 
-## Additional Features
+## v1.1 — Stabilization
 
-- **Color System**: Advanced color system with contrast checking and auto dark mode generation
-- **Micro-interactions**: Library of subtle micro-interactions for UI elements
-- **Form Validation**: Built-in form validation with accessible error states
-- **Internationalization**: Simple i18n support with RTL layout handling
-- **Performance Metrics**: Built-in performance monitoring and reporting
+- [x] Correct public branding, metadata, canonical URLs, and root routing
+- [x] Replace the accumulated demo script with a canonical showcase
+- [x] Improve color contrast and focus-visible behavior
+- [x] Add semantic font and theme controls
+- [x] Repair dialog focus restoration and tab content preservation
+- [x] Remove duplicate navigation CSS ownership
+- [x] Add a production build, linting, tests, accessibility checks, and CI
+- [x] Rewrite the README and style guide around the supported product surface
 
-## Developer Experience
+## v1.2 — Component hardening
 
-- **Documentation Site**: Create a documentation site with interactive examples
-- **VS Code Extension**: Custom VS Code extension for design token integration
-- **Design System**: Expand into a complete design system with Figma components
-- **CLI Tool**: Simple CLI for scaffolding new pages and components
-- **Testing Utilities**: Component testing utilities with visual regression tests
+- [ ] Add manual VoiceOver, NVDA, and keyboard test notes for every interactive component
+- [ ] Add visual regression snapshots for light, dark, mobile, and reduced-motion states
+- [ ] Add form validation patterns with accessible summaries and inline errors
+- [ ] Document component events, properties, attributes, and browser support
+- [ ] Decide which older demo files should be archived or deleted
+- [ ] Publish a stable `dist/` artifact with each tagged release
 
-## Community Features
+## v1.3 — Design-system maturity
 
-- **Showcase Gallery**: Gallery of sites built with Typography-First Template
-- **Plugin System**: Allow community plugins and extensions
-- **Theme Marketplace**: Curated collection of typography-focused themes
+- [ ] Add automated token contrast tests
+- [ ] Export design tokens as JSON alongside CSS custom properties
+- [ ] Add RTL layout tests and logical-property audits
+- [ ] Add a small set of editorial page templates built from the core primitives
+- [ ] Add contribution guidelines and a release checklist
+
+## Later, only with demonstrated demand
+
+- Documentation search
+- Figma library
+- CLI scaffolding
+- Plugin model
+- Theme gallery
+- VS Code integration
+
+These are not prerequisites for Syntax to be useful. They should be pursued only after the core has users, stable releases, and clear maintenance capacity.

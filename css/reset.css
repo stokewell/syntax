@@ -26,9 +26,12 @@ dd {
 /* Set core body defaults */
 body {
   min-height: 100vh;
-  scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
   line-height: var(--line-height-normal);
+}
+
+/* Smooth scrolling is opt-in so programmatic focus and clicks remain deterministic. */
+.scroll-smooth {
+  scroll-behavior: smooth;
 }
 
 /* Remove list styles on ul, ol elements */
@@ -40,7 +43,8 @@ ol[class] {
 }
 
 /* Default lists */
-ul, ol {
+ul,
+ol {
   padding-left: var(--space-3);
 }
 
