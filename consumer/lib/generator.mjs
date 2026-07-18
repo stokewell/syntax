@@ -16,6 +16,12 @@ const PRETTIER_PARSERS = Object.freeze({
   '.md': 'markdown',
   '.mjs': 'babel',
 });
+const PRETTIER_OPTIONS = Object.freeze({
+  singleQuote: true,
+  trailingComma: 'all',
+  printWidth: 100,
+  proseWrap: 'preserve',
+});
 
 export class ConsumerGenerationError extends Error {
   constructor(message) {
@@ -43,7 +49,11 @@ async function formatGeneratedContent(relativePath, content) {
   if (!parser) return withTrailingNewline(content);
 
   try {
-    return await formatWithPrettier(content, { parser, filepath: relativePath });
+    return await formatWithPrettier(content, {
+      ...PRETTIER_OPTIONS,
+      parser,
+      filepath: relativePath,
+    });
   } catch (error) {
     throw new ConsumerGenerationError(
       `Unable to format generated file ${relativePath}: ${error.message}`,
