@@ -5,7 +5,9 @@
   function initTabs() {
     document.querySelectorAll('[data-tabs]').forEach((tabs) => {
       const buttons = Array.from(tabs.querySelectorAll('[role="tab"]'));
-      const panels = buttons.map((button) => document.getElementById(button.getAttribute('aria-controls')));
+      const panels = buttons.map((button) =>
+        document.getElementById(button.getAttribute('aria-controls')),
+      );
 
       function select(index, focus = false) {
         buttons.forEach((button, buttonIndex) => {
@@ -47,7 +49,11 @@
             { transform: 'translateX(-1rem)', opacity: 0.4 },
             { transform: 'translateX(0)', opacity: 1 },
           ],
-          pulse: [{ transform: 'scale(1)' }, { transform: 'scale(1.035)' }, { transform: 'scale(1)' }],
+          pulse: [
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.035)' },
+            { transform: 'scale(1)' },
+          ],
         };
         target.animate(frames[button.dataset.motion], { duration: 420, easing: 'ease-out' });
       });
@@ -71,6 +77,7 @@
     document.documentElement.classList.add('syntax-ready');
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 })(window);

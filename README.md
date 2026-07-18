@@ -44,15 +44,15 @@ npm run check
 The production bundle is generated in `dist/`:
 
 ```html
-<link rel="stylesheet" href="dist/syntax.css">
+<link rel="stylesheet" href="dist/syntax.css" />
 <script src="dist/syntax.js" defer></script>
 ```
 
 During development, the modular source files can be loaded directly:
 
 ```html
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/layouts.css">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/layouts.css" />
 
 <script src="js/config/font-pairs.js" defer></script>
 <script src="js/utilities/theme-toggle.js" defer></script>
@@ -131,7 +131,14 @@ SyntaxFonts.applyPair('modernSans');
 ```html
 <button data-modal-target="example-dialog">Open dialog</button>
 
-<div id="example-dialog" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialog-title" hidden>
+<div
+  id="example-dialog"
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="dialog-title"
+  hidden
+>
   <div class="modal-content">
     <button data-modal-close aria-label="Close dialog">×</button>
     <h2 id="dialog-title">Dialog title</h2>

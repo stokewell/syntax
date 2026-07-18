@@ -28,8 +28,14 @@
     if (!pair) return;
 
     loadPair(pair);
-    document.documentElement.style.setProperty('--font-heading', `'${pair.heading}', ${pair.headingFallback}`);
-    document.documentElement.style.setProperty('--font-body', `'${pair.body}', ${pair.bodyFallback}`);
+    document.documentElement.style.setProperty(
+      '--font-heading',
+      `'${pair.heading}', ${pair.headingFallback}`,
+    );
+    document.documentElement.style.setProperty(
+      '--font-body',
+      `'${pair.body}', ${pair.bodyFallback}`,
+    );
     document.documentElement.dataset.fontPair = key;
 
     if (options.persist !== false) global.localStorage.setItem(STORAGE_KEY, key);
@@ -43,12 +49,14 @@
       option.tabIndex = selected ? 0 : -1;
     });
 
-    document.fonts?.load(`1rem "${pair.body}"`).then(() => {
-      document.querySelector('.type-specimen')?.animate(
-        [{ opacity: 0.72 }, { opacity: 1 }],
-        { duration: 180, easing: 'ease-out' }
-      );
-    }).catch(() => {});
+    document.fonts
+      ?.load(`1rem "${pair.body}"`)
+      .then(() => {
+        document
+          .querySelector('.type-specimen')
+          ?.animate([{ opacity: 0.72 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' });
+      })
+      .catch(() => {});
 
     document.dispatchEvent(new CustomEvent('syntax-font-change', { detail: { key, pair } }));
   }
@@ -86,13 +94,15 @@
   }
 
   function handleRadioKeys(event, currentKey) {
-    if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+    if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key))
+      return;
     event.preventDefault();
     const keys = Object.keys(global.SyntaxFontPairs || {});
     let index = keys.indexOf(currentKey);
     if (event.key === 'Home') index = 0;
     else if (event.key === 'End') index = keys.length - 1;
-    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') index = (index + 1) % keys.length;
+    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown')
+      index = (index + 1) % keys.length;
     else index = (index - 1 + keys.length) % keys.length;
     const next = keys[index];
     applyPair(next);
@@ -100,7 +110,11 @@
   }
 
   function focusableElements(dialog) {
-    return Array.from(dialog.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    return Array.from(
+      dialog.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    );
   }
 
   function trapFocus(event) {
@@ -154,5 +168,11 @@
     });
   }
 
-  global.SyntaxFonts = Object.freeze({ init, applyPair, getSelected: selectedKey, openDialog, closeDialog });
+  global.SyntaxFonts = Object.freeze({
+    init,
+    applyPair,
+    getSelected: selectedKey,
+    openDialog,
+    closeDialog,
+  });
 })(window);

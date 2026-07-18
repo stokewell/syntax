@@ -26,7 +26,9 @@
   backdrop-filter: blur(12px);
   cursor: pointer;
   pointer-events: auto;
-  transition: transform var(--transition-fast) var(--ease-out), border-color var(--transition-fast) var(--ease-in-out);
+  transition:
+    transform var(--transition-fast) var(--ease-out),
+    border-color var(--transition-fast) var(--ease-in-out);
 }
 
 .theme-toggle-btn:hover,
@@ -114,7 +116,7 @@
   cursor: pointer;
 }
 
-.font-option[aria-checked="true"] {
+.font-option[aria-checked='true'] {
   border-color: var(--color-primary);
   box-shadow: var(--shadow-focus);
 }

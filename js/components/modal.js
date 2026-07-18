@@ -8,7 +8,11 @@
   let previousFocus = null;
 
   function focusables(modal) {
-    return Array.from(modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    return Array.from(
+      modal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    );
   }
 
   function open(id, trigger = document.activeElement) {
@@ -80,5 +84,10 @@
     });
   }
 
-  global.SyntaxModal = Object.freeze({ init, open, close, closeAll: () => document.querySelectorAll(SELECTOR).forEach((modal) => close(modal)) });
+  global.SyntaxModal = Object.freeze({
+    init,
+    open,
+    close,
+    closeAll: () => document.querySelectorAll(SELECTOR).forEach((modal) => close(modal)),
+  });
 })(window);

@@ -19,7 +19,11 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: transform var(--transition-fast) var(--ease-out), background-color var(--transition-fast) var(--ease-in-out), border-color var(--transition-fast) var(--ease-in-out), box-shadow var(--transition-fast) var(--ease-in-out);
+  transition:
+    transform var(--transition-fast) var(--ease-out),
+    background-color var(--transition-fast) var(--ease-in-out),
+    border-color var(--transition-fast) var(--ease-in-out),
+    box-shadow var(--transition-fast) var(--ease-in-out);
 }
 
 .btn,
@@ -81,7 +85,7 @@
 .btn-outline:disabled,
 .btn-contrast:disabled,
 .btn-outline-sm:disabled,
-[aria-disabled="true"] {
+[aria-disabled='true'] {
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;

@@ -7,7 +7,9 @@
   border-bottom: 1px solid transparent;
   background: rgba(var(--color-bg-rgb), 0.96);
   backdrop-filter: blur(12px);
-  transition: border-color var(--transition-fast) var(--ease-in-out), box-shadow var(--transition-fast) var(--ease-in-out);
+  transition:
+    border-color var(--transition-fast) var(--ease-in-out),
+    box-shadow var(--transition-fast) var(--ease-in-out);
 }
 
 .header.shadow {
@@ -131,7 +133,10 @@
   visibility: hidden;
   pointer-events: none;
   transform: translate(-50%, -0.25rem);
-  transition: opacity var(--transition-fast) var(--ease-in-out), transform var(--transition-fast) var(--ease-out), visibility var(--transition-fast);
+  transition:
+    opacity var(--transition-fast) var(--ease-in-out),
+    transform var(--transition-fast) var(--ease-out),
+    visibility var(--transition-fast);
 }
 
 .dropdown-content.active {
@@ -172,7 +177,9 @@
   height: 2px;
   border-radius: 1px;
   background: currentcolor;
-  transition: transform var(--transition-fast) var(--ease-in-out), opacity var(--transition-fast) var(--ease-in-out);
+  transition:
+    transform var(--transition-fast) var(--ease-in-out),
+    opacity var(--transition-fast) var(--ease-in-out);
 }
 
 .menu-toggle.open span:nth-child(1) {
@@ -200,7 +207,10 @@
   visibility: hidden;
   pointer-events: none;
   transform: translateX(100%);
-  transition: opacity var(--transition-medium) var(--ease-in-out), transform var(--transition-medium) var(--ease-in-out), visibility var(--transition-medium);
+  transition:
+    opacity var(--transition-medium) var(--ease-in-out),
+    transform var(--transition-medium) var(--ease-in-out),
+    visibility var(--transition-medium);
 }
 
 .mobile-nav.open {

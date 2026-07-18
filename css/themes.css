@@ -1,9 +1,9 @@
 /* Syntax themes */
-[data-theme="light"] {
+[data-theme='light'] {
   color-scheme: light;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   color-scheme: dark;
   --color-bg: #181716;
   --color-bg-rgb: 24, 23, 22;
@@ -29,7 +29,7 @@
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme="high-contrast"] {
+[data-theme='high-contrast'] {
   color-scheme: dark;
   --color-bg: #000;
   --color-bg-rgb: 0, 0, 0;
@@ -49,7 +49,9 @@
 }
 
 body {
-  transition: background-color var(--transition-fast) var(--ease-in-out), color var(--transition-fast) var(--ease-in-out);
+  transition:
+    background-color var(--transition-fast) var(--ease-in-out),
+    color var(--transition-fast) var(--ease-in-out);
 }
 
 @media (prefers-reduced-motion: reduce) {

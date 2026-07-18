@@ -10,7 +10,7 @@
       headingWeights: 'ital,wght@0,400;0,700;1,400',
       bodyWeights: 'wght@400;500;600;700',
       headingFallback: 'Georgia, serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }),
     contemporary: Object.freeze({
       label: 'Contemporary',
@@ -19,7 +19,7 @@
       headingWeights: 'ital,wght@0,400',
       bodyWeights: 'wght@400;500;600;700',
       headingFallback: 'Georgia, serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }),
     literary: Object.freeze({
       label: 'Literary',
@@ -28,7 +28,7 @@
       headingWeights: 'wght@400;600;700',
       bodyWeights: 'wght@400;500;600;700',
       headingFallback: 'Georgia, serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }),
     modernSans: Object.freeze({
       label: 'Modern Sans',
@@ -37,7 +37,7 @@
       headingWeights: 'wght@500;600;700;800',
       bodyWeights: 'wght@400;500;600;700',
       headingFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }),
     classic: Object.freeze({
       label: 'Classic',
@@ -46,7 +46,7 @@
       headingWeights: 'wght@500;600;700',
       bodyWeights: 'wght@400;500;600;700',
       headingFallback: 'Georgia, serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }),
     geometric: Object.freeze({
       label: 'Geometric',
@@ -55,8 +55,8 @@
       headingWeights: 'wght@500;600;700;800',
       bodyWeights: 'wght@400;500;700',
       headingFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    })
+      bodyFallback: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    }),
   });
 
   global.SyntaxFontPairs = pairs;

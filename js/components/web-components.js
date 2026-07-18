@@ -116,7 +116,13 @@
 
     activate(event) {
       if (!this.clickable) return;
-      this.dispatchEvent(new CustomEvent('card-click', { bubbles: true, composed: true, detail: { originalEvent: event } }));
+      this.dispatchEvent(
+        new CustomEvent('card-click', {
+          bubbles: true,
+          composed: true,
+          detail: { originalEvent: event },
+        }),
+      );
     }
 
     handleKeydown(event) {
@@ -128,7 +134,9 @@
     render() {
       const title = this.getAttribute('title');
       const image = this.getAttribute('image');
-      const level = ['0', '1', '2'].includes(this.getAttribute('shadow-level')) ? this.getAttribute('shadow-level') : '1';
+      const level = ['0', '1', '2'].includes(this.getAttribute('shadow-level'))
+        ? this.getAttribute('shadow-level')
+        : '1';
 
       this.card.className = `card shadow-${level}${this.clickable ? ' clickable' : ''}`;
       this.titleElement.hidden = !title;
@@ -180,7 +188,13 @@
       this.labelElement = this.shadowRoot.querySelector('.label');
       this.input.addEventListener('change', () => {
         this.toggleAttribute('checked', this.input.checked);
-        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { checked: this.input.checked } }));
+        this.dispatchEvent(
+          new CustomEvent('change', {
+            bubbles: true,
+            composed: true,
+            detail: { checked: this.input.checked },
+          }),
+        );
       });
     }
 
@@ -194,7 +208,8 @@
 
     render() {
       this.input.checked = this.hasAttribute('checked') && this.getAttribute('checked') !== 'false';
-      this.input.disabled = this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
+      this.input.disabled =
+        this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
       this.input.name = this.getAttribute('name') || '';
       this.labelElement.textContent = this.getAttribute('label') || '';
     }
@@ -252,7 +267,12 @@
 
     connectedCallback() {
       this.tablist.addEventListener('keydown', this.handleKeydown);
-      this.observer.observe(this, { childList: true, attributes: true, subtree: false, attributeFilter: ['label', 'selected'] });
+      this.observer.observe(this, {
+        childList: true,
+        attributes: true,
+        subtree: false,
+        attributeFilter: ['label', 'selected'],
+      });
       this.render();
     }
 
@@ -262,7 +282,9 @@
     }
 
     get items() {
-      return Array.from(this.children).filter((child) => child.tagName.toLowerCase() === 'tab-item');
+      return Array.from(this.children).filter(
+        (child) => child.tagName.toLowerCase() === 'tab-item',
+      );
     }
 
     select(index, focus = false) {
@@ -277,7 +299,9 @@
         button.tabIndex = selected ? 0 : -1;
       });
       if (focus) buttons[index]?.focus();
-      this.dispatchEvent(new CustomEvent('tab-change', { bubbles: true, composed: true, detail: { index } }));
+      this.dispatchEvent(
+        new CustomEvent('tab-change', { bubbles: true, composed: true, detail: { index } }),
+      );
     }
 
     render() {
@@ -305,7 +329,9 @@
 
     handleKeydown(event) {
       const buttons = Array.from(this.tablist.querySelectorAll('[role="tab"]'));
-      const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
+      const current = buttons.findIndex(
+        (button) => button.getAttribute('aria-selected') === 'true',
+      );
       let next = current;
       if (event.key === 'ArrowRight') next = (current + 1) % buttons.length;
       else if (event.key === 'ArrowLeft') next = (current - 1 + buttons.length) % buttons.length;
@@ -322,12 +348,18 @@
     ['custom-card', CustomCard],
     ['toggle-switch', ToggleSwitch],
     ['tab-item', TabItem],
-    ['tabs-container', TabsContainer]
+    ['tabs-container', TabsContainer],
   ];
 
   definitions.forEach(([name, constructor]) => {
     if (!customElements.get(name)) customElements.define(name, constructor);
   });
 
-  global.SyntaxComponents = Object.freeze({ ResponsiveImage, CustomCard, ToggleSwitch, TabItem, TabsContainer });
+  global.SyntaxComponents = Object.freeze({
+    ResponsiveImage,
+    CustomCard,
+    ToggleSwitch,
+    TabItem,
+    TabsContainer,
+  });
 })(window);

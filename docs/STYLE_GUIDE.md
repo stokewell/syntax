@@ -18,14 +18,14 @@ The core principles are:
 
 ### Light theme
 
-| Role | Token | Value |
-|---|---|---|
-| Page background | `--color-bg` | `#fbfaf8` |
-| Surface | `--color-surface` | `#f3efea` |
-| Primary text | `--color-text` | `#24211f` |
-| Secondary text | `--color-text-secondary` | `#625c57` |
-| Primary action | `--color-primary` | `#087f7f` |
-| Text on primary | `--color-on-primary` | `#ffffff` |
+| Role            | Token                    | Value     |
+| --------------- | ------------------------ | --------- |
+| Page background | `--color-bg`             | `#fbfaf8` |
+| Surface         | `--color-surface`        | `#f3efea` |
+| Primary text    | `--color-text`           | `#24211f` |
+| Secondary text  | `--color-text-secondary` | `#625c57` |
+| Primary action  | `--color-primary`        | `#087f7f` |
+| Text on primary | `--color-on-primary`     | `#ffffff` |
 
 The light-theme primary action and white foreground meet WCAG AA contrast for normal text. When changing either token, test the pair as a unit.
 

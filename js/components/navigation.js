@@ -64,14 +64,18 @@
     if (!header) return;
     let ticking = false;
 
-    global.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      global.requestAnimationFrame(() => {
-        header.classList.toggle('shadow', global.scrollY > 24);
-        ticking = false;
-      });
-    }, { passive: true });
+    global.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        global.requestAnimationFrame(() => {
+          header.classList.toggle('shadow', global.scrollY > 24);
+          ticking = false;
+        });
+      },
+      { passive: true },
+    );
   }
 
   function init() {
