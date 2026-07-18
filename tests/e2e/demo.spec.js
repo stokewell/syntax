@@ -7,21 +7,24 @@ async function reportHitTarget(locator, label) {
     const rect = element.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
-    const stack = document.elementsFromPoint(x, y).slice(0, 8).map((node) => ({
-      tag: node.tagName,
-      id: node.id,
-      className: typeof node.className === 'string' ? node.className : '',
-      position: getComputedStyle(node).position,
-      zIndex: getComputedStyle(node).zIndex,
-      pointerEvents: getComputedStyle(node).pointerEvents,
-    }));
+    const stack = document
+      .elementsFromPoint(x, y)
+      .slice(0, 8)
+      .map((node) => ({
+        tag: node.tagName,
+        id: node.id,
+        className: typeof node.className === 'string' ? node.className : '',
+        position: window.getComputedStyle(node).position,
+        zIndex: window.getComputedStyle(node).zIndex,
+        pointerEvents: window.getComputedStyle(node).pointerEvents,
+      }));
     return {
-      viewport: { width: innerWidth, height: innerHeight, scrollY },
+      viewport: { width: window.innerWidth, height: window.innerHeight, scrollY: window.scrollY },
       rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
       stack,
     };
   });
-  console.log(`${label}: ${JSON.stringify(details)}`);
+  console.warn(`${label}: ${JSON.stringify(details)}`);
 }
 
 test.beforeEach(async ({ page }) => {
