@@ -1,0 +1,85 @@
+[WebServer] (node:3046) [DEP0066] DeprecationWarning: OutgoingMessage.prototype._headers is deprecated
+[WebServer] (Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 22 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › blank-editorial loads without overflow or serious accessibility violations (989ms)
+  ✓   2 [chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › blank-product loads without overflow or serious accessibility violations (1.0s)
+  ✓   3 [chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › portfolio-editorial loads without overflow or serious accessibility violations (995ms)
+  ✓   5 [chromium] › tests/e2e/consumer-recipes.spec.js:31:1 › Portfolio recipes render one and six projects (246ms)
+  ✓   4 [chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › portfolio-product loads without overflow or serious accessibility violations (1.3s)
+  ✓   7 [chromium] › tests/e2e/consumer-recipes.spec.js:53:1 › data-backed Portfolio remains complete without JavaScript (294ms)
+  ✓   8 [chromium] › tests/e2e/consumer-recipes.spec.js:63:1 › theme enhancement cycles explicit preferences (189ms)
+  ✓   6 [chromium] › tests/e2e/consumer-recipes.spec.js:39:1 › Portfolio project artwork loads (667ms)
+  ✓   9 [chromium] › tests/e2e/consumer-recipes.spec.js:74:1 › Editorial and Product directions are meaningfully different (326ms)
+  ✓  10 [chromium] › tests/e2e/consumer-recipes.spec.js:94:1 › Portfolio remains usable at 320 CSS pixels (226ms)
+  ✘  11 [chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms (239ms)
+  ✓  12 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › blank-editorial loads without overflow or serious accessibility violations (1.0s)
+  ✓  13 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › blank-product loads without overflow or serious accessibility violations (1.0s)
+  ✓  14 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › portfolio-editorial loads without overflow or serious accessibility violations (1.0s)
+  ✓  16 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:31:1 › Portfolio recipes render one and six projects (266ms)
+  ✓  15 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:12:3 › portfolio-product loads without overflow or serious accessibility violations (1.3s)
+  ✓  18 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:53:1 › data-backed Portfolio remains complete without JavaScript (209ms)
+  ✓  17 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:39:1 › Portfolio project artwork loads (510ms)
+  ✓  19 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:63:1 › theme enhancement cycles explicit preferences (211ms)
+  ✓  20 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:74:1 › Editorial and Product directions are meaningfully different (318ms)
+  ✓  21 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:94:1 › Portfolio remains usable at 320 CSS pixels (203ms)
+  ✘  22 [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms (216ms)
+
+
+  1) [chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "0s"
+    Received: "1e-05s"
+
+      114 |       return { transitionDuration: style.transitionDuration, transform: style.transform };
+      115 |     });
+    > 116 |   expect(motion.transitionDuration).toBe('0s');
+          |                                     ^
+      117 |   expect(motion.transform).toBe('none');
+      118 | });
+      119 |
+        at /home/runner/work/syntax/syntax/tests/e2e/consumer-recipes.spec.js:116:37
+
+    Error Context: test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "0s"
+    Received: "1e-05s"
+
+      114 |       return { transitionDuration: style.transitionDuration, transform: style.transform };
+      115 |     });
+    > 116 |   expect(motion.transitionDuration).toBe('0s');
+          |                                     ^
+      117 |   expect(motion.transform).toBe('none');
+      118 | });
+      119 |
+        at /home/runner/work/syntax/syntax/tests/e2e/consumer-recipes.spec.js:116:37
+
+    Error Context: test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-mobile-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-mobile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/consumer-recipes-reduced-m-554f4--transitions-and-transforms-mobile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms 
+    [mobile-chromium] › tests/e2e/consumer-recipes.spec.js:105:1 › reduced motion disables project transitions and transforms 
+  20 passed (9.9s)
