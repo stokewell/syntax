@@ -35,5 +35,30 @@ if (!html.includes('<a href="../lab/">Component Lab</a> ·')) {
 }
 
 await writeFile(demoPath, html);
+
+const motionPath = new URL('../js/utilities/micro-animations.js', import.meta.url);
+let motion = await readFile(motionPath, 'utf8');
+const typewriterStart = `      const text = element.textContent;
+      element.textContent = '';`;
+const reducedMotionGuard = `      const text = element.textContent;
+      const reduce = customOptions.respectReducedMotion !== false && prefersReducedMotion();
+      if (reduce) {
+        return new Animation({
+          element,
+          keyframes: [{ opacity: 1 }, { opacity: 1 }],
+          ...customOptions,
+          autoplay: false
+        });
+      }
+      element.textContent = '';`;
+
+if (!motion.includes('const reduce = customOptions.respectReducedMotion !== false')) {
+  if (!motion.includes(typewriterStart)) {
+    throw new Error('Unable to locate the typewriter animation marker.');
+  }
+  motion = motion.replace(typewriterStart, reducedMotionGuard);
+  await writeFile(motionPath, motion);
+}
+
 await rm(new URL('./apply-component-lab-links.mjs', import.meta.url));
 await rm(new URL('../.github/workflows/component-lab-link.yml', import.meta.url));
