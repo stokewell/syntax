@@ -1,0 +1,44 @@
+name: Format Consumer Mode Plan
+
+on:
+  pull_request:
+    paths:
+      - 'docs/CONSUMER_MODE_PLAN.md'
+      - 'v2-ideas.md'
+      - 'package.json'
+      - '.github/workflows/format-consumer-plan.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Format plan
+        run: npm run format
+
+      - name: Remove one-shot formatter
+        run: rm .github/workflows/format-consumer-plan.yml
+
+      - name: Commit canonical formatting
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Format Consumer Mode plan"
+          git push origin HEAD:${{ github.head_ref }}
