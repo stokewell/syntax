@@ -1,6 +1,7 @@
 import { access, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { getSetupRecipe } from '../recipes/setup.mjs';
 import { createProjectFileSet } from './generator.mjs';
 import { assertNoTemplateResidue, scanTemplateResidue } from './residue.mjs';
 
@@ -65,13 +66,16 @@ export function formatSetupSummary(plan) {
   return lines.join('\n');
 }
 
-export async function createSetupPlan({ config, recipe, outputDirectory }) {
+export async function createSetupPlan({ config, outputDirectory }) {
   if (typeof outputDirectory !== 'string' || outputDirectory.trim() === '') {
     throw new ConsumerSetupError('outputDirectory must be a non-empty path.');
   }
 
   const root = path.resolve(outputDirectory);
-  const fileSet = await createProjectFileSet({ config, recipe });
+  const fileSet = await createProjectFileSet({
+    config,
+    recipe: getSetupRecipe(config.recipe.id),
+  });
   assertNoTemplateResidue(publicFileObject(fileSet.files));
 
   if (await exists(path.join(root, 'syntax.project.json'))) {
