@@ -40,11 +40,11 @@ const jsFiles = [
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 
-const css = `/* Syntax v1.1.0 | MIT License */\n${await bundleCss(path.join(root, 'css/style.css'))}`;
+const css = `/* Syntax v1.2.0 | MIT License */\n${await bundleCss(path.join(root, 'css/style.css'))}`;
 const jsParts = await Promise.all(
   jsFiles.map(async (file) => `\n/* ${file} */\n${await readFile(path.join(root, file), 'utf8')}`),
 );
-const js = `/* Syntax v1.1.0 | MIT License */\n${jsParts.join('\n')}`;
+const js = `/* Syntax v1.2.0 | MIT License */\n${jsParts.join('\n')}`;
 
 await writeFile(path.join(dist, 'syntax.css'), css);
 await writeFile(path.join(dist, 'syntax.js'), js);

@@ -865,6 +865,15 @@
     typewriter: (element, customOptions = {}) => {
       // This is special - we need to handle the content differently
       const text = element.textContent;
+      const reduce = customOptions.respectReducedMotion !== false && prefersReducedMotion();
+      if (reduce) {
+        return new Animation({
+          element,
+          keyframes: [{ opacity: 1 }, { opacity: 1 }],
+          ...customOptions,
+          autoplay: false
+        });
+      }
       element.textContent = '';
       element.style.width = 'fit-content';
       element.style.whiteSpace = 'pre';

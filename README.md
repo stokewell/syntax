@@ -1,10 +1,10 @@
 # Syntax
 
-[Live demo](https://stokewell.github.io/syntax/) · [Use this template](https://github.com/stokewell/syntax/generate) · [Report an issue](https://github.com/stokewell/syntax/issues)
+[Overview](https://stokewell.github.io/syntax/) · [Component Lab](https://stokewell.github.io/syntax/lab/) · [Use this template](https://github.com/stokewell/syntax/generate) · [Report an issue](https://github.com/stokewell/syntax/issues)
 
 Syntax is a **typography-first website starter and lightweight design system for handcrafted content sites**. It provides expressive type, practical layout primitives, accessible components, explicit theming, and zero runtime dependencies.
 
-Syntax grew from the earlier [Base](https://github.com/stokewell/base) project. The stabilization release narrows the product around a dependable core rather than treating every experiment as framework surface area.
+Syntax grew from the earlier [Base](https://github.com/stokewell/base) project. The framework keeps a dependable production core while the dedicated Component Lab provides an exhaustive public proving ground for the broader supported surface.
 
 ## What is in core
 
@@ -13,14 +13,24 @@ Syntax grew from the earlier [Base](https://github.com/stokewell/base) project. 
 - Responsive containers, grids, utilities, and editorial layouts
 - Buttons, cards, forms, alerts, navigation, dialogs, tabs, and accordions
 - Explicit `system`, `light`, and `dark` theme preferences
-- A curated font-pair preview tool backed by one canonical configuration
+- Eight curated font pairings backed by one canonical configuration
 - Native custom elements for responsive images, cards, toggles, and tabs
-- Keyboard behavior and reduced-motion support
+- A dependency-free micro-animation API with reduced-motion support
+- Keyboard behavior and resilient focus management
 - A build that produces `dist/syntax.css` and `dist/syntax.js`
 
-## Optional extras
+## Overview and Component Lab
 
-The font playground, Web Components, and animation utilities are useful additions, but they are not required to use the CSS foundation. Syntax remains a starter first, not an application framework.
+The public surfaces have separate jobs:
+
+- [`/demo/`](https://stokewell.github.io/syntax/demo/) is the polished product overview and quick-start showcase.
+- [`/lab/`](https://stokewell.github.io/syntax/lab/) is the exhaustive component, layout, media, typography, accessibility, and motion test surface.
+
+The lab consumes the same public framework files users receive. Its own `lab/lab.css` and `lab/lab.js` are demonstration-only and are never included in the production bundle. See [docs/COMPONENT_LAB.md](docs/COMPONENT_LAB.md) for the coverage contract.
+
+## Optional modules
+
+The CSS foundation does not require JavaScript. Font previews, custom elements, navigation behavior, dialogs, and animation utilities can be loaded only when a project needs them. Syntax remains a starter and design system rather than an application framework.
 
 ## Quick start
 
@@ -52,7 +62,6 @@ During development, the modular source files can be loaded directly:
 
 ```html
 <link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/layouts.css" />
 
 <script src="js/config/font-pairs.js" defer></script>
 <script src="js/utilities/theme-toggle.js" defer></script>
@@ -84,9 +93,15 @@ syntax/
 ├── demo/
 │   ├── index.html
 │   └── demo.css
+├── lab/
+│   ├── index.html
+│   ├── lab.css
+│   └── lab.js
 ├── scripts/build.mjs
 ├── tests/
-└── docs/STYLE_GUIDE.md
+└── docs/
+    ├── STYLE_GUIDE.md
+    └── COMPONENT_LAB.md
 ```
 
 ## Design tokens
@@ -95,8 +110,8 @@ Customize Syntax through semantic variables rather than component-specific overr
 
 ```css
 :root {
-  --color-primary: #087f7f;
-  --color-on-primary: #ffffff;
+  --color-primary: #067474;
+  --color-on-primary: #fff;
   --font-heading: 'EB Garamond', Georgia, serif;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
   --radius-lg: 1rem;
@@ -104,7 +119,7 @@ Customize Syntax through semantic variables rather than component-specific overr
 }
 ```
 
-The light and dark themes redefine semantic roles such as `--color-bg`, `--color-surface`, `--color-text`, and `--color-border`. Components should consume these roles instead of introducing isolated colors.
+The light and dark themes redefine semantic roles such as `--color-bg`, `--color-surface`, `--color-text`, and `--color-border`. Components consume these roles rather than introducing isolated colors.
 
 ## Theme controller
 
@@ -124,7 +139,26 @@ All pairings live in `js/config/font-pairs.js`. The selector UI, Google Fonts re
 SyntaxFonts.applyPair('modernSans');
 ```
 
+The current set includes Editorial, Contemporary, Scholarly, Literary, Bookish, Modern Sans, Classic, and Geometric pairings. Font files are requested only when a pairing is selected.
+
 ## Components
+
+### Responsive image
+
+```html
+<responsive-image src="image.jpg" alt="Description" aspect-ratio="16:9" lazy>
+  <span slot="caption">Optional caption</span>
+</responsive-image>
+```
+
+### Custom card
+
+```html
+<custom-card title="Card title" image="image.jpg" shadow-level="2" clickable>
+  <p>Card content.</p>
+  <div slot="footer">Footer content</div>
+</custom-card>
+```
 
 ### Dialog
 
@@ -166,25 +200,37 @@ The controller traps focus, closes on Escape, and restores focus to the original
 
 The tabs component preserves its light-DOM content and supports Arrow keys, Home, and End.
 
+## Motion API
+
+The micro-animation utility exposes presets, groups, sequences, staggering, scroll-triggered attributes, and named easings:
+
+```js
+animationFramework.presets.luxuryReveal(element);
+animationFramework.stagger(items, 'slideInUp', { staggerDelay: 90 }).play();
+```
+
+Every animation honors `prefers-reduced-motion` by default.
+
 ## Quality checks
 
-- ESLint for JavaScript
-- Stylelint for canonical CSS
+- ESLint for framework, lab, build, and test JavaScript
+- Stylelint for canonical and lab CSS
 - Prettier formatting checks
 - Vitest unit tests
 - Playwright desktop and mobile smoke tests
+- Component Lab coverage tests
 - axe-core checks for serious and critical accessibility violations
 - GitHub Actions on pushes and pull requests
 
-Automated checks support, but do not replace, manual keyboard and screen-reader testing.
+Automated checks support, but do not replace, manual keyboard, screen-reader, and real-device testing.
 
 ## Browser support
 
-Syntax targets current evergreen browsers. Progressive enhancement is preferred: core content remains usable without JavaScript, while dialogs, navigation, font previews, and custom elements add behavior when JavaScript is available.
+Syntax targets current evergreen browsers. Progressive enhancement is preferred: core content remains usable without JavaScript, while dialogs, navigation, font previews, animations, and custom elements add behavior when JavaScript is available.
 
 ## Status
 
-The current work is the **v1.1 stabilization release**. The focus is correctness, accessibility, coherent architecture, delivery, and documentation. See [v2-ideas.md](v2-ideas.md) for the ordered roadmap.
+The current release is **v1.2 — Component Lab**. It restores the full demonstrable framework surface without adding lab-only code to the production bundle.
 
 ## License
 
