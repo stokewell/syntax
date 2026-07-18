@@ -2,9 +2,20 @@ import { createHash } from 'node:crypto';
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { format as formatWithPrettier } from 'prettier';
+
 import { CONSUMER_GENERATOR_VERSION } from './constants.mjs';
 import { assertSafeRelativePath, resolveInside } from './path-safety.mjs';
 import { validateAndNormalizeConfig } from './validation.mjs';
+
+const PRETTIER_PARSERS = Object.freeze({
+  '.css': 'css',
+  '.html': 'html',
+  '.js': 'babel',
+  '.json': 'json',
+  '.md': 'markdown',
+  '.mjs': 'babel',
+});
 
 export class ConsumerGenerationError extends Error {
   constructor(message) {
@@ -27,6 +38,19 @@ function withTrailingNewline(value) {
   return `${String(value).replace(/\r\n?/g, '\n').replace(/\n*$/, '')}\n`;
 }
 
+async function formatGeneratedContent(relativePath, content) {
+  const parser = PRETTIER_PARSERS[path.posix.extname(relativePath)];
+  if (!parser) return withTrailingNewline(content);
+
+  try {
+    return await formatWithPrettier(content, { parser, filepath: relativePath });
+  } catch (error) {
+    throw new ConsumerGenerationError(
+      `Unable to format generated file ${relativePath}: ${error.message}`,
+    );
+  }
+}
+
 function validateRecipeDefinition(recipe, config) {
   if (recipe === null || typeof recipe !== 'object' || Array.isArray(recipe)) {
     throw new ConsumerGenerationError('Recipe definition must be an object.');
@@ -41,7 +65,7 @@ function validateRecipeDefinition(recipe, config) {
   }
 }
 
-function renderRecipeFiles(recipe, config) {
+async function renderRecipeFiles(recipe, config) {
   const files = new Map();
   for (const [index, definition] of recipe.files.entries()) {
     if (definition === null || typeof definition !== 'object' || Array.isArray(definition)) {
@@ -64,11 +88,11 @@ function renderRecipeFiles(recipe, config) {
       );
     }
 
-    const rendered = hasRenderer ? definition.render({ config }) : definition.content;
+    const rendered = hasRenderer ? await definition.render({ config }) : definition.content;
     if (typeof rendered !== 'string') {
       throw new ConsumerGenerationError(`Recipe file ${relativePath} did not render a string.`);
     }
-    files.set(relativePath, withTrailingNewline(rendered));
+    files.set(relativePath, await formatGeneratedContent(relativePath, rendered));
   }
 
   return files;
@@ -78,13 +102,13 @@ function createConfigurationHash(config) {
   return createHash('sha256').update(stableStringify(config)).digest('hex');
 }
 
-export function createProjectFileSet({ config: inputConfig, recipe }) {
+export async function createProjectFileSet({ config: inputConfig, recipe }) {
   const config = validateAndNormalizeConfig(inputConfig);
   const configWithoutGenerated = { ...config };
   delete configWithoutGenerated.generated;
 
   validateRecipeDefinition(recipe, configWithoutGenerated);
-  const files = renderRecipeFiles(recipe, configWithoutGenerated);
+  const files = await renderRecipeFiles(recipe, configWithoutGenerated);
   const generatedPaths = [...files.keys(), 'syntax.project.json'].sort();
   const manifest = {
     ...configWithoutGenerated,
@@ -94,7 +118,10 @@ export function createProjectFileSet({ config: inputConfig, recipe }) {
       files: generatedPaths,
     },
   };
-  files.set('syntax.project.json', `${JSON.stringify(manifest, null, 2)}\n`);
+  files.set(
+    'syntax.project.json',
+    await formatGeneratedContent('syntax.project.json', JSON.stringify(manifest)),
+  );
 
   return {
     config: configWithoutGenerated,
@@ -127,7 +154,7 @@ export async function generateProject({
     );
   }
 
-  const fileSet = createProjectFileSet({ config, recipe });
+  const fileSet = await createProjectFileSet({ config, recipe });
   const root = path.resolve(outputDirectory);
   const destinations = [...fileSet.files.keys()].map((relativePath) => ({
     relativePath,
