@@ -347,8 +347,8 @@ export const projects = [
     description: 'A concise description.',
     image: './assets/project.svg',
     url: 'https://example.com',
-    tags: ['Product design', 'Web development']
-  }
+    tags: ['Product design', 'Web development'],
+  },
 ];
 ```
 
