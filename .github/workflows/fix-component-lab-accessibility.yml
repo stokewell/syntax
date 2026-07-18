@@ -1,0 +1,42 @@
+name: Fix Component Lab Accessibility
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/fix-component-lab-accessibility.mjs'
+      - '.github/workflows/fix-component-lab-accessibility.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install formatting tools
+        run: npm install --ignore-scripts
+
+      - name: Apply framework and lab fixes
+        run: node scripts/fix-component-lab-accessibility.mjs
+
+      - name: Format canonical source
+        run: npm run format
+
+      - name: Commit accessibility fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Fix Component Lab accessibility"
+          git push origin HEAD:${{ github.head_ref }}
