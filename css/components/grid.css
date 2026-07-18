@@ -1,100 +1,50 @@
-    /* Global grid system for professional layout */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      padding-inline: clamp(1rem, 4vw, 2rem);
-    }
-    
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: clamp(1rem, 3vw, 1.5rem);
-    }
-    
-    .grid-col-full {
-      grid-column: span 12;
-    }
-    
-    .grid-col-8 {
-      grid-column: span 12;
-    }
-    
-    .grid-col-6 {
-      grid-column: span 12;
-    }
-    
-    .grid-col-4 {
-      grid-column: span 12;
-    }
-    
-    @media (min-width: 768px) {
-      .grid-col-8 {
-        grid-column: span 8;
-      }
-      
-      .grid-col-6 {
-        grid-column: span 6;
-      }
-      
-      .grid-col-4 {
-        grid-column: span 4;
-      }
-    }
-    
-    /* Modern section styling with shadows instead of borders */
-    .section {
-      border: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      border-radius: 12px;
-      padding: 2rem;
-      background-color: var(--color-bg);
-      transition: box-shadow 0.3s ease;
-      margin-bottom: 2rem;
-    }
-    
-    .section:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-    }
-    
-    /* Fixed controls for font and theme toggles - Directly from working version */
-    .fixed-controls {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 1000;
-    }
-    
-    .fixed-control-btn,
-    .theme-toggle-btn,
-    .font-toggle-btn {
-      cursor: pointer;
-      background-color: var(--color-bg);
-      border: 1px solid var(--color-subtle);
-      color: var(--color-text);
-      padding: 8px;
-      border-radius: 50%;
-      transition: all 0.25s var(--ease-in-out);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    
-    /* Adjust based on theme */
-    [data-theme="light"] .fixed-control-btn,
-    [data-theme="light"] .theme-toggle-btn,
-    [data-theme="light"] .font-toggle-btn {
-      background-color: rgba(255, 255, 255, 0.85);
-    }
-    
-    [data-theme="dark"] .fixed-control-btn,
-    [data-theme="dark"] .theme-toggle-btn,
-    [data-theme="dark"] .font-toggle-btn {
+/* Twelve-column grid and container primitives */
+.container {
+  width: min(100% - 2 * var(--gutter), 75rem);
+  margin-inline: auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.grid-col-full,
+.grid-col-8,
+.grid-col-6,
+.grid-col-4,
+.grid-col-3 {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-3);
+}
+
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .grid-col-8 {
+    grid-column: span 8;
+  }
+
+  .grid-col-6 {
+    grid-column: span 6;
+  }
+
+  .grid-col-4 {
+    grid-column: span 4;
+  }
+
+  .grid-col-3 {
+    grid-column: span 3;
+  }
+}
