@@ -81,7 +81,9 @@ async function askChoice(rl, label, choices, fallback) {
 }
 
 async function askYesNo(rl, label, fallback = false) {
-  const answer = (await rl.question(`${label} (${fallback ? 'Y/n' : 'y/N'}): `)).trim().toLowerCase();
+  const answer = (await rl.question(`${label} (${fallback ? 'Y/n' : 'y/N'}): `))
+    .trim()
+    .toLowerCase();
   if (answer === '') return fallback;
   if (['y', 'yes'].includes(answer)) return true;
   if (['n', 'no'].includes(answer)) return false;
@@ -218,7 +220,9 @@ async function main() {
       config = JSON.parse(await readFile(path.resolve(options.config), 'utf8'));
     } else {
       if (!process.stdin.isTTY) {
-        throw new ConsumerSetupError('Interactive setup requires a TTY. Use --config for CI or agents.');
+        throw new ConsumerSetupError(
+          'Interactive setup requires a TTY. Use --config for CI or agents.',
+        );
       }
       rl = createInterface({ input: process.stdin, output: process.stdout });
       config = await collectInteractiveConfig(rl);

@@ -16,11 +16,14 @@ export function scanPublicContent(files) {
   const findings = [];
   for (const [relativePath, content] of Object.entries(files)) {
     for (const [rule, needles] of RULES) {
-      if (needles.some((needle) => content.includes(needle))) findings.push({ file: relativePath, rule });
+      if (needles.some((needle) => content.includes(needle)))
+        findings.push({ file: relativePath, rule });
     }
   }
   return findings.sort((left, right) =>
-    left.file === right.file ? left.rule.localeCompare(right.rule) : left.file.localeCompare(right.file),
+    left.file === right.file
+      ? left.rule.localeCompare(right.rule)
+      : left.file.localeCompare(right.file),
   );
 }
 

@@ -144,7 +144,9 @@ export async function applySetupPlan(plan) {
   } catch (error) {
     await Promise.all(created.map((filePath) => rm(filePath, { force: true })));
     await Promise.all(
-      [...backups.entries()].map(async ([filePath, content]) => writeFile(filePath, content, 'utf8')),
+      [...backups.entries()].map(async ([filePath, content]) =>
+        writeFile(filePath, content, 'utf8'),
+      ),
     );
     throw error instanceof ConsumerSetupError
       ? error

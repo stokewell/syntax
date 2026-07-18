@@ -11,12 +11,7 @@ import { blankRecipe } from './blank.mjs';
 import { portfolioRecipe } from './portfolio.mjs';
 import { escapeHtml } from './shared.mjs';
 
-const SETUP_FEATURES = Object.freeze([
-  'theme',
-  'mobile-navigation',
-  'responsive-image',
-  'dialog',
-]);
+const SETUP_FEATURES = Object.freeze(['theme', 'mobile-navigation', 'responsive-image', 'dialog']);
 
 function renderBlankArtwork(config) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title description">
@@ -35,7 +30,8 @@ async function resolveDefinition(definition, context) {
 function wrapDefinition(definition, transform, path = definition.path) {
   return {
     path,
-    render: async (context) => transform(await resolveDefinition(definition, context), context.config),
+    render: async (context) =>
+      transform(await resolveDefinition(definition, context), context.config),
   };
 }
 
