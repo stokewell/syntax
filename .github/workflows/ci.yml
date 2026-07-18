@@ -23,6 +23,15 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
 
+      - name: Capture JavaScript lint
+        run: npm run lint:js > lint-report.txt 2>&1 || true
+
+      - name: Upload lint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: setup-lint-report
+          path: lint-report.txt
+
       - name: Lint JavaScript
         run: npm run lint:js
 
