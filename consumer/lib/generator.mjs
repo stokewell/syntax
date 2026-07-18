@@ -15,6 +15,7 @@ const PRETTIER_PARSERS = Object.freeze({
   '.json': 'json',
   '.md': 'markdown',
   '.mjs': 'babel',
+  '.svg': 'html',
 });
 const PRETTIER_OPTIONS = Object.freeze({
   singleQuote: true,
@@ -67,7 +68,22 @@ async function formatGeneratedContent(relativePath, content) {
   }
 }
 
-function validateRecipeDefinition(recipe, config) {
+function assertUniqueStrings(value, path) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new ConsumerGenerationError(`${path} must be a non-empty array.`);
+  }
+  const seen = new Set();
+  for (const item of value) {
+    if (typeof item !== 'string' || item.trim() === '') {
+      throw new ConsumerGenerationError(`${path} must contain non-empty strings.`);
+    }
+    if (seen.has(item)) throw new ConsumerGenerationError(`${path} contains a duplicate: ${item}.`);
+    seen.add(item);
+  }
+  return seen;
+}
+
+async function resolveRecipeDefinitions(recipe, config) {
   if (recipe === null || typeof recipe !== 'object' || Array.isArray(recipe)) {
     throw new ConsumerGenerationError('Recipe definition must be an object.');
   }
@@ -76,16 +92,74 @@ function validateRecipeDefinition(recipe, config) {
       `Recipe definition ${String(recipe.id)}@${String(recipe.version)} does not match configuration ${config.recipe.id}@${config.recipe.version}.`,
     );
   }
-  if (!Array.isArray(recipe.files) || recipe.files.length === 0) {
-    throw new ConsumerGenerationError('Recipe definition must contain at least one file.');
+  if (typeof recipe.label !== 'string' || recipe.label.trim() === '') {
+    throw new ConsumerGenerationError('Recipe definition must include a label.');
   }
+  if (typeof recipe.description !== 'string' || recipe.description.trim() === '') {
+    throw new ConsumerGenerationError('Recipe definition must include a description.');
+  }
+
+  const visualDirections = assertUniqueStrings(
+    recipe.visualDirections,
+    `Recipe ${recipe.id}.visualDirections`,
+  );
+  if (!visualDirections.has(config.visualDirection)) {
+    throw new ConsumerGenerationError(
+      `Recipe ${recipe.id} does not support the ${config.visualDirection} visual direction.`,
+    );
+  }
+
+  const compatibleFeatures = assertUniqueStrings(
+    recipe.compatibleFeatures,
+    `Recipe ${recipe.id}.compatibleFeatures`,
+  );
+  const incompatible = config.features.filter((feature) => !compatibleFeatures.has(feature));
+  if (incompatible.length > 0) {
+    throw new ConsumerGenerationError(
+      `Recipe ${recipe.id} does not support selected features: ${incompatible.join(', ')}.`,
+    );
+  }
+
+  if (recipe.validateConfig !== undefined) {
+    if (typeof recipe.validateConfig !== 'function') {
+      throw new ConsumerGenerationError(`Recipe ${recipe.id}.validateConfig must be a function.`);
+    }
+    try {
+      await recipe.validateConfig({ config });
+    } catch (error) {
+      throw new ConsumerGenerationError(`Invalid ${recipe.id} recipe data: ${error.message}`);
+    }
+  }
+
+  const hasFiles = Array.isArray(recipe.files);
+  const hasFactory = typeof recipe.createFiles === 'function';
+  if (hasFiles === hasFactory) {
+    throw new ConsumerGenerationError(
+      `Recipe ${recipe.id} must define exactly one of files or createFiles.`,
+    );
+  }
+
+  const definitions = hasFactory ? await recipe.createFiles({ config }) : recipe.files;
+  if (!Array.isArray(definitions) || definitions.length === 0) {
+    throw new ConsumerGenerationError(`Recipe ${recipe.id} must produce at least one file.`);
+  }
+  return definitions;
 }
 
 async function renderRecipeFiles(recipe, config) {
+  const definitions = await resolveRecipeDefinitions(recipe, config);
   const files = new Map();
-  for (const [index, definition] of recipe.files.entries()) {
+
+  for (const [index, definition] of definitions.entries()) {
     if (definition === null || typeof definition !== 'object' || Array.isArray(definition)) {
       throw new ConsumerGenerationError(`Recipe file ${index} must be an object.`);
+    }
+
+    if (definition.when !== undefined) {
+      if (typeof definition.when !== 'function') {
+        throw new ConsumerGenerationError(`Recipe file ${index}.when must be a function.`);
+      }
+      if (!(await definition.when({ config }))) continue;
     }
 
     const relativePath = assertSafeRelativePath(definition.path);
@@ -123,7 +197,6 @@ export async function createProjectFileSet({ config: inputConfig, recipe }) {
   const configWithoutGenerated = { ...config };
   delete configWithoutGenerated.generated;
 
-  validateRecipeDefinition(recipe, configWithoutGenerated);
   const files = await renderRecipeFiles(recipe, configWithoutGenerated);
   const generatedPaths = [...files.keys(), 'syntax.project.json'].sort(comparePaths);
   const manifest = {

@@ -124,7 +124,12 @@
       "required": ["id", "version"],
       "properties": {
         "id": { "enum": ["blank", "portfolio", "product", "app"] },
-        "version": { "type": "integer", "minimum": 1 }
+        "version": { "type": "integer", "minimum": 1 },
+        "data": {
+          "type": "object",
+          "maxProperties": 100,
+          "description": "Recipe-owned JSON data validated by the selected recipe contract."
+        }
       }
     },
     "generated": {

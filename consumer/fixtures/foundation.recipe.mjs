@@ -10,6 +10,10 @@ function escapeHtml(value) {
 export const foundationRecipe = Object.freeze({
   id: 'blank',
   version: 1,
+  label: 'Foundation fixture',
+  description: 'Internal deterministic generator fixture.',
+  visualDirections: Object.freeze(['editorial']),
+  compatibleFeatures: Object.freeze(['theme']),
   files: [
     {
       path: 'index.html',

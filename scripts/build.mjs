@@ -1,50 +1,19 @@
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { createSyntaxCssBundle, createSyntaxJsBundle } from './lib/syntax-bundle.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 
-async function bundleCss(file, seen = new Set()) {
-  const absolute = path.resolve(file);
-  if (seen.has(absolute)) return '';
-  seen.add(absolute);
-
-  const source = await readFile(absolute, 'utf8');
-  const directory = path.dirname(absolute);
-  const importPattern = /@import\s+url\(['"](.+?)['"]\);/g;
-  let result = '';
-  let cursor = 0;
-
-  for (const match of source.matchAll(importPattern)) {
-    result += source.slice(cursor, match.index);
-    result += `\n/* ${match[1]} */\n`;
-    result += await bundleCss(path.resolve(directory, match[1]), seen);
-    cursor = match.index + match[0].length;
-  }
-
-  return result + source.slice(cursor);
-}
-
-const jsFiles = [
-  'js/config/font-pairs.js',
-  'js/utilities/theme-toggle.js',
-  'js/utilities/font-switcher.js',
-  'js/components/navigation.js',
-  'js/components/modal.js',
-  'js/components/web-components.js',
-  'js/utilities/micro-animations.js',
-  'js/main.js',
-];
-
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 
-const css = `/* Syntax v1.2.0 | MIT License */\n${await bundleCss(path.join(root, 'css/style.css'))}`;
-const jsParts = await Promise.all(
-  jsFiles.map(async (file) => `\n/* ${file} */\n${await readFile(path.join(root, file), 'utf8')}`),
-);
-const js = `/* Syntax v1.2.0 | MIT License */\n${jsParts.join('\n')}`;
+const [css, js] = await Promise.all([
+  createSyntaxCssBundle({ root }),
+  createSyntaxJsBundle({ root }),
+]);
 
 await writeFile(path.join(dist, 'syntax.css'), css);
 await writeFile(path.join(dist, 'syntax.js'), js);

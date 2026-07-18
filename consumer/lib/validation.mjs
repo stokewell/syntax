@@ -33,8 +33,9 @@ const PROJECT_KEYS = new Set([
   'secondaryAction',
 ]);
 const ACTION_KEYS = new Set(['label', 'destination']);
-const RECIPE_KEYS = new Set(['id', 'version']);
+const RECIPE_KEYS = new Set(['id', 'version', 'data']);
 const GENERATED_KEYS = new Set(['generatorVersion', 'configurationHash', 'files']);
+const UNSAFE_OBJECT_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
 export class ConsumerConfigError extends Error {
   constructor(issues) {
@@ -45,7 +46,9 @@ export class ConsumerConfigError extends Error {
 }
 
 function isPlainObject(value) {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
 }
 
 function rejectUnknownKeys(value, allowedKeys, path, issues) {
@@ -69,7 +72,11 @@ function requireNonEmptyString(value, path, issues, maximumLength = 240) {
 }
 
 function normalizeNullableHttpUrl(value, path, issues) {
-  if (value === null || value === undefined || value === '') return null;
+  if (value === null) return null;
+  if (value === undefined || value === '') {
+    issues.push(`${path} must be an http(s) URL or explicit null.`);
+    return null;
+  }
   if (typeof value !== 'string') {
     issues.push(`${path} must be an http(s) URL or null.`);
     return null;
@@ -110,8 +117,12 @@ function normalizeDestination(value, path, issues) {
 }
 
 function normalizeAction(value, path, issues, required) {
-  if (value === null || value === undefined) {
-    if (required) issues.push(`${path} is required.`);
+  if (value === null) {
+    if (required) issues.push(`${path} is required and may not be null.`);
+    return null;
+  }
+  if (value === undefined) {
+    issues.push(`${path} must be supplied${required ? '' : ' as an action or explicit null'}.`);
     return null;
   }
   if (!isPlainObject(value)) {
@@ -124,6 +135,44 @@ function normalizeAction(value, path, issues, required) {
     label: requireNonEmptyString(value.label, `${path}.label`, issues, 80),
     destination: normalizeDestination(value.destination, `${path}.destination`, issues),
   };
+}
+
+function normalizeJsonValue(value, path, issues, depth = 0) {
+  if (depth > 10) {
+    issues.push(`${path} exceeds the maximum nesting depth of 10.`);
+    return null;
+  }
+  if (value === null || typeof value === 'boolean') return value;
+  if (typeof value === 'string') {
+    if (value.length > 20_000) issues.push(`${path} must be 20000 characters or fewer.`);
+    return value;
+  }
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) issues.push(`${path} must be a finite number.`);
+    return value;
+  }
+  if (Array.isArray(value)) {
+    if (value.length > 100) issues.push(`${path} may contain at most 100 entries.`);
+    return value.map((entry, index) =>
+      normalizeJsonValue(entry, `${path}[${index}]`, issues, depth + 1),
+    );
+  }
+  if (!isPlainObject(value)) {
+    issues.push(`${path} must contain JSON-compatible values only.`);
+    return null;
+  }
+
+  const keys = Object.keys(value).sort();
+  if (keys.length > 100) issues.push(`${path} may contain at most 100 properties.`);
+  const normalized = {};
+  for (const key of keys) {
+    if (UNSAFE_OBJECT_KEYS.has(key)) {
+      issues.push(`${path}.${key} is not allowed.`);
+      continue;
+    }
+    normalized[key] = normalizeJsonValue(value[key], `${path}.${key}`, issues, depth + 1);
+  }
+  return normalized;
 }
 
 function isSafeManifestPath(value) {
@@ -248,6 +297,8 @@ export function validateAndNormalizeConfig(value) {
   if (!Number.isInteger(recipe.version) || recipe.version < 1) {
     issues.push('recipe.version must be a positive integer.');
   }
+  const recipeData =
+    recipe.data === undefined ? undefined : normalizeJsonValue(recipe.data, 'recipe.data', issues);
 
   if (!VISUAL_DIRECTIONS.includes(value.visualDirection)) {
     issues.push(`visualDirection must be one of: ${VISUAL_DIRECTIONS.join(', ')}.`);
@@ -273,6 +324,9 @@ export function validateAndNormalizeConfig(value) {
   const generated = normalizeGenerated(value.generated, issues);
   if (issues.length > 0) throw new ConsumerConfigError(issues);
 
+  const normalizedRecipe = { id: recipe.id, version: recipe.version };
+  if (recipeData && Object.keys(recipeData).length > 0) normalizedRecipe.data = recipeData;
+
   const normalized = {
     $schema: SCHEMA_URL,
     schemaVersion: CONSUMER_SCHEMA_VERSION,
@@ -287,7 +341,7 @@ export function validateAndNormalizeConfig(value) {
       primaryAction,
       secondaryAction,
     },
-    recipe: { id: recipe.id, version: recipe.version },
+    recipe: normalizedRecipe,
     visualDirection: value.visualDirection,
     accentColor: value.accentColor.toUpperCase(),
     features: FEATURE_IDS.filter((feature) => seenFeatures.has(feature)),

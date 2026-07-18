@@ -80,8 +80,12 @@ describe('Consumer Mode configuration', () => {
       $schema: left.$schema,
     };
 
-    const leftFiles = await createProjectFileSet({ config: left, recipe: foundationRecipe });
-    const rightFiles = await createProjectFileSet({ config: right, recipe: foundationRecipe });
+    const deterministicRecipe = {
+      ...foundationRecipe,
+      compatibleFeatures: ['theme', 'dialog'],
+    };
+    const leftFiles = await createProjectFileSet({ config: left, recipe: deterministicRecipe });
+    const rightFiles = await createProjectFileSet({ config: right, recipe: deterministicRecipe });
 
     expect([...leftFiles.files.entries()]).toEqual([...rightFiles.files.entries()]);
     expect(leftFiles.manifest.generated.configurationHash).toBe(
@@ -148,7 +152,7 @@ describe('Consumer Mode generation', () => {
     });
 
     expect(fileSet.manifest.generated).toEqual({
-      generatorVersion: '0.1.0',
+      generatorVersion: '0.2.0',
       configurationHash: 'ab175c3dfd8f2fddcdfa58dd9524f661fbf47f085319d9859ff28889bacf66eb',
       files: ['PROJECT_BRIEF.md', 'index.html', 'site.css', 'syntax.project.json'],
     });
@@ -161,11 +165,19 @@ describe('Consumer Mode generation', () => {
     const traversalRecipe = {
       id: 'blank',
       version: 1,
+      label: 'Test recipe',
+      description: 'Test-only recipe.',
+      visualDirections: ['editorial'],
+      compatibleFeatures: ['theme'],
       files: [{ path: '../escape.txt', content: 'nope' }],
     };
     const duplicateRecipe = {
       id: 'blank',
       version: 1,
+      label: 'Test recipe',
+      description: 'Test-only recipe.',
+      visualDirections: ['editorial'],
+      compatibleFeatures: ['theme'],
       files: [
         { path: 'same.txt', content: 'one' },
         { path: 'same.txt', content: 'two' },

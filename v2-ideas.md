@@ -27,8 +27,8 @@ This roadmap is ordered. Core reliability and proven real-world demand come befo
 
 - [x] Add the `syntax.project.json` schema and generated-file ownership contract
 - [x] Add a deterministic configuration-to-files engine
-- [ ] Add Blank and Portfolio recipes
-- [ ] Add Editorial and Product visual directions
+- [x] Add Blank and Portfolio recipes
+- [x] Add Editorial and Product visual directions
 - [ ] Generate project metadata, manifest, README, and `PROJECT_BRIEF.md`
 - [ ] Detect remaining Syntax template names, URLs, and placeholder copy
 - [ ] Generate consumer-focused smoke and accessibility tests
