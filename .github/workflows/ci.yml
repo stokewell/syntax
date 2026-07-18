@@ -110,7 +110,14 @@ jobs:
           path: prettier-report.txt
 
       - name: Run unit tests
-        run: npm run test:unit
+        run: npm run test:unit > unit-test-report.txt 2>&1
+
+      - name: Upload unit test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: unit-test-report.txt
 
       - name: Build production bundle
         run: npm run build
