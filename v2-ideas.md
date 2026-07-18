@@ -1,6 +1,8 @@
 # Syntax roadmap
 
-This roadmap is ordered. Core reliability comes before ecosystem expansion.
+This roadmap is ordered. Core reliability and proven real-world demand come before ecosystem expansion.
+
+**Current focus:** v1.3 Consumer Mode foundation.
 
 ## v1.1 — Stabilization
 
@@ -13,30 +15,55 @@ This roadmap is ordered. Core reliability comes before ecosystem expansion.
 - [x] Add a production build, linting, tests, accessibility checks, and CI
 - [x] Rewrite the README and style guide around the supported product surface
 
-## v1.2 — Component hardening
+## v1.2 — Component Lab
 
-- [ ] Add manual VoiceOver, NVDA, and keyboard test notes for every interactive component
-- [ ] Add visual regression snapshots for light, dark, mobile, and reduced-motion states
-- [ ] Add form validation patterns with accessible summaries and inline errors
-- [ ] Document component events, properties, attributes, and browser support
-- [ ] Decide which older demo files should be archived or deleted
-- [ ] Publish a stable `dist/` artifact with each tagged release
+- [x] Add a dedicated exhaustive proving ground separate from the overview
+- [x] Restore media, Web Component, layout, typography, and motion coverage
+- [x] Add desktop/mobile interaction, image-loading, reduced-motion, and axe tests
+- [x] Preserve lab-only CSS and JavaScript outside the production bundle
+- [x] Use the lab to harden Custom Card, Tabs, and reduced-motion semantics
 
-## v1.3 — Design-system maturity
+## v1.3 — Consumer Mode foundation
 
-- [ ] Add automated token contrast tests
-- [ ] Export design tokens as JSON alongside CSS custom properties
-- [ ] Add RTL layout tests and logical-property audits
-- [ ] Add a small set of editorial page templates built from the core primitives
-- [ ] Add contribution guidelines and a release checklist
+- [ ] Add the `syntax.project.json` schema and generated-file ownership contract
+- [ ] Add a deterministic configuration-to-files engine
+- [ ] Add Blank and Portfolio recipes
+- [ ] Add Editorial and Product visual directions
+- [ ] Generate project metadata, manifest, README, and `PROJECT_BRIEF.md`
+- [ ] Detect remaining Syntax template names, URLs, and placeholder copy
+- [ ] Generate consumer-focused smoke and accessibility tests
+- [ ] Add a local `npm run setup` command after deterministic generation is tested
 
-## Later, only with demonstrated demand
+See [`docs/CONSUMER_MODE_PLAN.md`](docs/CONSUMER_MODE_PLAN.md) for the complete product and implementation plan.
 
-- Documentation search
-- Figma library
-- CLI scaffolding
-- Plugin model
-- Theme gallery
-- VS Code integration
+## v1.4 — Consumer Mode recipes and shipping
 
-These are not prerequisites for Syntax to be useful. They should be pursued only after the core has users, stable releases, and clear maintenance capacity.
+- [ ] Add Product and App recipes
+- [ ] Add Technical, Playful, Minimal, Cinematic, and Retro Interface directions
+- [ ] Add optional feature selection and selective module loading
+- [ ] Add prototype and ship modes
+- [ ] Add root-based and Actions-based GitHub Pages deployment
+- [ ] Generate sitemap, robots, structured data, and a release checklist
+- [ ] Trim downstream CI to consumer-relevant checks
+
+## v1.5 — Audit and additive workflow
+
+- [ ] Add `syntax:audit` text and JSON reports
+- [ ] Add safe `syntax:add` commands for optional features and proven patterns
+- [ ] Add optional structured-content files for repeated project data
+- [ ] Compare framework and project-owned code across real projects
+- [ ] Establish the evidence threshold for promoting patterns into Syntax core
+
+## Later, after the local workflow is proven
+
+- Publish `create-syntax` and support `npm create syntax@latest`
+- Add visual regression snapshots
+- Add manual VoiceOver and NVDA test notes
+- Export design tokens as JSON
+- Add RTL logical-property audits
+- Publish stable `dist/` artifacts with tagged releases
+- Add safe update tooling only after generated-file ownership is proven
+- Consider optional AI-assisted brief and copy generation
+- Consider additional deployment adapters and a recipe gallery
+
+Consumer Mode is development tooling. Recipes and setup machinery must never enter the production CSS or JavaScript bundle.
