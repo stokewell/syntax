@@ -21,6 +21,10 @@ The lab may contain presentation helpers and interaction wiring in `lab/lab.css`
 
 A capability belongs in framework source only when it is reusable outside the lab. The lab must consume that capability through the same public API a user would use.
 
+## Accessibility contract
+
+The lab validates open Shadow DOM as part of the accessibility tree. Custom elements must provide valid alternative text, avoid nested interactive controls, and keep ARIA relationships within the same DOM scope. Lazy media tests scroll each asset into view before checking its decoded dimensions.
+
 ## Validation
 
 Run the complete lint, formatting, unit, build, desktop/mobile browser, image-loading, interaction, reduced-motion, and accessibility checks with:
