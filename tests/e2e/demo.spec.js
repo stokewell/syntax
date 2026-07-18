@@ -1,6 +1,29 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+async function reportHitTarget(locator, label) {
+  await locator.scrollIntoViewIfNeeded();
+  const details = await locator.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const stack = document.elementsFromPoint(x, y).slice(0, 8).map((node) => ({
+      tag: node.tagName,
+      id: node.id,
+      className: typeof node.className === 'string' ? node.className : '',
+      position: getComputedStyle(node).position,
+      zIndex: getComputedStyle(node).zIndex,
+      pointerEvents: getComputedStyle(node).pointerEvents,
+    }));
+    return {
+      viewport: { width: innerWidth, height: innerHeight, scrollY },
+      rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+      stack,
+    };
+  });
+  console.log(`${label}: ${JSON.stringify(details)}`);
+}
+
 test.beforeEach(async ({ page }) => {
   await page.goto('/demo/', { waitUntil: 'domcontentloaded' });
 });
@@ -19,16 +42,18 @@ test('tabs work with keyboard navigation', async ({ page }) => {
   await expect(page.getByRole('tabpanel', { name: 'Typography' })).toBeVisible();
 });
 
-test('dialog restores focus to its trigger', async ({ page }) => {
+test('dialog restores focus to its trigger', async ({ page }, testInfo) => {
   const trigger = page.getByRole('button', { name: 'Open dialog' });
+  if (testInfo.project.name === 'mobile-chromium') await reportHitTarget(trigger, 'dialog-trigger-hit-test');
   await trigger.click();
   await expect(page.getByRole('dialog', { name: 'A dependable dialog' })).toBeVisible();
   await page.getByRole('button', { name: 'Done' }).click();
   await expect(trigger).toBeFocused();
 });
 
-test('theme preference cycles explicitly', async ({ page }) => {
+test('theme preference cycles explicitly', async ({ page }, testInfo) => {
   const toggle = page.getByRole('button', { name: /Theme preference/ });
+  if (testInfo.project.name === 'mobile-chromium') await reportHitTarget(toggle, 'theme-toggle-hit-test');
   await toggle.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'light');
   await toggle.click();
