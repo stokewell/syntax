@@ -2,6 +2,8 @@
 
 This directory contains development-time scaffolding infrastructure. It is not part of the browser runtime or the Syntax production bundle.
 
+The foundation API remains internal while its recipe and ownership contracts are being proven through Issues #6 and #7.
+
 ## Current surface
 
 ```js
