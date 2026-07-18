@@ -43,26 +43,18 @@ test('registers the restored custom elements', async ({ page }) => {
 });
 
 test('restored image examples load successfully', async ({ page }) => {
-  const loaded = await page.evaluate(async () => {
-    const images = [
-      document.querySelector('responsive-image')?.shadowRoot?.querySelector('img'),
-      document.querySelector('#image-custom-card')?.shadowRoot?.querySelector('img'),
-      document.querySelector('.lab-media-frame img'),
-    ].filter(Boolean);
+  const images = [
+    page.locator('responsive-image img'),
+    page.locator('#image-custom-card img'),
+    page.locator('.lab-media-frame img'),
+  ];
 
-    await Promise.all(
-      images.map((image) =>
-        image.complete
-          ? Promise.resolve()
-          : new Promise((resolve, reject) => {
-              image.addEventListener('load', resolve, { once: true });
-              image.addEventListener('error', reject, { once: true });
-            }),
-      ),
-    );
-    return images.length === 3 && images.every((image) => image.naturalWidth > 0);
-  });
-  expect(loaded).toBe(true);
+  for (const image of images) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(async () => image.evaluate((element) => element.complete && element.naturalWidth > 0))
+      .toBe(true);
+  }
 });
 
 test('interactive toggle reports its state', async ({ page }) => {

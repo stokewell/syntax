@@ -83,7 +83,7 @@
           .footer { display: flex; justify-content: flex-end; padding: 0 1.25rem 1.25rem; }
         </style>
         <article class="card">
-          <img hidden>
+          <img alt="" hidden>
           <div class="content"><h3 hidden></h3><slot></slot></div>
           <div class="footer"><slot name="footer"></slot></div>
         </article>
@@ -318,11 +318,12 @@
         button.type = 'button';
         button.id = `${itemId}-tab`;
         button.setAttribute('role', 'tab');
-        button.setAttribute('aria-controls', itemId);
-        button.textContent = item.getAttribute('label') || `Tab ${index + 1}`;
+        const label = item.getAttribute('label') || `Tab ${index + 1}`;
+        button.textContent = label;
         button.addEventListener('click', () => this.select(index));
         this.tablist.appendChild(button);
-        item.setAttribute('aria-labelledby', button.id);
+        item.removeAttribute('aria-labelledby');
+        item.setAttribute('aria-label', label);
       });
       this.select(selectedIndex);
     }
