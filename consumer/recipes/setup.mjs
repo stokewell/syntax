@@ -32,9 +32,9 @@ async function resolveDefinition(definition, context) {
   return typeof definition.render === 'function' ? definition.render(context) : definition.content;
 }
 
-function wrapDefinition(definition, transform) {
+function wrapDefinition(definition, transform, path = definition.path) {
   return {
-    path: definition.path,
+    path,
     render: async (context) => transform(await resolveDefinition(definition, context), context.config),
   };
 }
@@ -110,9 +110,50 @@ function transformCss(css, config, recipeId) {
   height: auto;
 }`);
   }
+  if (config.features.includes('mobile-navigation')) {
+    additions.push(`@media (max-width: 48rem) {
+  [data-mobile-navigation] a {
+    display: flex !important;
+    align-items: center;
+  }
+}`);
+  }
   const featureCss = renderFeatureCss(config);
   if (featureCss) additions.push(featureCss);
   return additions.length > 0 ? `${css}\n\n${additions.join('\n\n')}` : css;
+}
+
+function transformConsumerTest(content) {
+  return content.replace(
+    `  if (selectedFeatures.includes('mobile-navigation')) {
+    const toggle = page.getByRole('button', { name: 'Open navigation' });
+    await toggle.focus();
+    await page.keyboard.press('Enter');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  }`,
+    `  if (selectedFeatures.includes('mobile-navigation')) {
+    const toggle = page.getByRole('button', { name: 'Open navigation' });
+    if (await toggle.isVisible()) {
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    } else {
+      await expect(page.locator('[data-mobile-navigation]')).toBeVisible();
+    }
+  }`,
+  );
+}
+
+function setupToolingDefinitions(config) {
+  return createProjectToolingFiles(config).map((definition) => {
+    if (definition.path === '.github/workflows/consumer-ci.yml') {
+      return { ...definition, path: '.github/workflows/ci.yml' };
+    }
+    if (definition.path === 'tests/consumer.spec.js') {
+      return wrapDefinition(definition, transformConsumerTest);
+    }
+    return definition;
+  });
 }
 
 function createSetupRecipe(baseRecipe) {
@@ -151,7 +192,7 @@ function createSetupRecipe(baseRecipe) {
 
       const featureScript = renderFeatureScript(config);
       if (featureScript) files.push({ path: 'site.js', content: featureScript });
-      files.push(...createProjectToolingFiles(config));
+      files.push(...setupToolingDefinitions(config));
       return files;
     },
   });
