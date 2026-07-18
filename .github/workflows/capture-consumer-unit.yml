@@ -1,0 +1,40 @@
+name: Capture Consumer Unit Failure
+
+on:
+  push:
+    branches: [feature/consumer-recipes-v1]
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out recipe branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/consumer-recipes-v1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Capture unit output
+        run: npm run test:unit > consumer-unit.log 2>&1 || true
+
+      - name: Remove diagnostic workflow
+        run: rm .github/workflows/capture-consumer-unit.yml
+
+      - name: Commit diagnostic log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add consumer-unit.log .github/workflows/capture-consumer-unit.yml
+          git commit -m "Capture Consumer Mode unit failure"
+          git push origin HEAD:feature/consumer-recipes-v1
