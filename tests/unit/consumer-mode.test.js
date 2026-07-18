@@ -80,8 +80,12 @@ describe('Consumer Mode configuration', () => {
       $schema: left.$schema,
     };
 
-    const leftFiles = await createProjectFileSet({ config: left, recipe: foundationRecipe });
-    const rightFiles = await createProjectFileSet({ config: right, recipe: foundationRecipe });
+    const deterministicRecipe = {
+      ...foundationRecipe,
+      compatibleFeatures: ['theme', 'dialog'],
+    };
+    const leftFiles = await createProjectFileSet({ config: left, recipe: deterministicRecipe });
+    const rightFiles = await createProjectFileSet({ config: right, recipe: deterministicRecipe });
 
     expect([...leftFiles.files.entries()]).toEqual([...rightFiles.files.entries()]);
     expect(leftFiles.manifest.generated.configurationHash).toBe(
