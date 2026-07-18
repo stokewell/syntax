@@ -126,6 +126,16 @@ function normalizeAction(value, path, issues, required) {
   };
 }
 
+function isSafeManifestPath(value) {
+  return (
+    typeof value === 'string' &&
+    value.trim() !== '' &&
+    !value.includes('\\') &&
+    !value.startsWith('/') &&
+    !value.split('/').includes('..')
+  );
+}
+
 function normalizeGenerated(value, issues) {
   if (value === undefined) return undefined;
   if (!isPlainObject(value)) {
@@ -134,27 +144,44 @@ function normalizeGenerated(value, issues) {
   }
 
   rejectUnknownKeys(value, GENERATED_KEYS, 'generated', issues);
-  const files = Array.isArray(value.files)
-    ? value.files.map((file, index) =>
-        requireNonEmptyString(file, `generated.files[${index}]`, issues, 500),
-      )
-    : [];
-  if (!Array.isArray(value.files)) issues.push('generated.files must be an array.');
+  const generatorVersion = requireNonEmptyString(
+    value.generatorVersion,
+    'generated.generatorVersion',
+    issues,
+    40,
+  );
+  const configurationHash = requireNonEmptyString(
+    value.configurationHash,
+    'generated.configurationHash',
+    issues,
+    128,
+  );
+  if (configurationHash && !/^[0-9a-f]{64}$/.test(configurationHash)) {
+    issues.push('generated.configurationHash must be a lowercase SHA-256 digest.');
+  }
+
+  const files = [];
+  const seenFiles = new Set();
+  if (!Array.isArray(value.files)) {
+    issues.push('generated.files must be an array.');
+  } else {
+    value.files.forEach((file, index) => {
+      const normalized = requireNonEmptyString(file, `generated.files[${index}]`, issues, 500);
+      if (normalized && !isSafeManifestPath(normalized)) {
+        issues.push(`generated.files[${index}] must be a safe relative path.`);
+      }
+      if (seenFiles.has(normalized)) {
+        issues.push(`generated.files may not contain duplicates: ${normalized}.`);
+      }
+      seenFiles.add(normalized);
+      files.push(normalized);
+    });
+  }
 
   return {
-    generatorVersion: requireNonEmptyString(
-      value.generatorVersion,
-      'generated.generatorVersion',
-      issues,
-      40,
-    ),
-    configurationHash: requireNonEmptyString(
-      value.configurationHash,
-      'generated.configurationHash',
-      issues,
-      128,
-    ),
-    files,
+    generatorVersion,
+    configurationHash,
+    files: files.sort(),
   };
 }
 
@@ -177,7 +204,32 @@ export function validateAndNormalizeConfig(value) {
   if (!isPlainObject(value.project)) issues.push('project must be an object.');
   rejectUnknownKeys(project, PROJECT_KEYS, 'project', issues);
 
+  const name = requireNonEmptyString(project.name, 'project.name', issues, 120);
   const slug = requireNonEmptyString(project.slug, 'project.slug', issues, 100);
+  const description = requireNonEmptyString(
+    project.description,
+    'project.description',
+    issues,
+    320,
+  );
+  const author = requireNonEmptyString(project.author, 'project.author', issues, 120);
+  const canonicalUrl = normalizeNullableHttpUrl(
+    project.canonicalUrl,
+    'project.canonicalUrl',
+    issues,
+  );
+  const repositoryUrl = normalizeNullableHttpUrl(
+    project.repositoryUrl,
+    'project.repositoryUrl',
+    issues,
+  );
+  const primaryAction = normalizeAction(project.primaryAction, 'project.primaryAction', issues, true);
+  const secondaryAction = normalizeAction(
+    project.secondaryAction,
+    'project.secondaryAction',
+    issues,
+    false,
+  );
   if (slug && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
     issues.push('project.slug must use lowercase letters, numbers, and single hyphens.');
   }
@@ -198,9 +250,7 @@ export function validateAndNormalizeConfig(value) {
   if (typeof value.accentColor !== 'string' || !/^#[0-9a-f]{6}$/i.test(value.accentColor)) {
     issues.push('accentColor must be a six-digit hexadecimal color such as #067474.');
   }
-  if (!Array.isArray(value.features)) {
-    issues.push('features must be an array.');
-  }
+  if (!Array.isArray(value.features)) issues.push('features must be an array.');
   const incomingFeatures = Array.isArray(value.features) ? value.features : [];
   const seenFeatures = new Set();
   for (const feature of incomingFeatures) {
@@ -223,14 +273,14 @@ export function validateAndNormalizeConfig(value) {
     schemaVersion: CONSUMER_SCHEMA_VERSION,
     syntaxVersion: SYNTAX_VERSION,
     project: {
-      name: requireNonEmptyString(project.name, 'project.name', [], 120),
+      name,
       slug,
-      description: requireNonEmptyString(project.description, 'project.description', [], 320),
-      author: requireNonEmptyString(project.author, 'project.author', [], 120),
-      canonicalUrl: normalizeNullableHttpUrl(project.canonicalUrl, 'project.canonicalUrl', []),
-      repositoryUrl: normalizeNullableHttpUrl(project.repositoryUrl, 'project.repositoryUrl', []),
-      primaryAction: normalizeAction(project.primaryAction, 'project.primaryAction', [], true),
-      secondaryAction: normalizeAction(project.secondaryAction, 'project.secondaryAction', [], false),
+      description,
+      author,
+      canonicalUrl,
+      repositoryUrl,
+      primaryAction,
+      secondaryAction,
     },
     recipe: { id: recipe.id, version: recipe.version },
     visualDirection: value.visualDirection,
