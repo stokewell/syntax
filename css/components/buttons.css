@@ -48,6 +48,13 @@
   border-color: var(--color-border);
 }
 
+.btn-sm,
+.btn-outline-sm {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.8rem;
+  font-size: var(--font-size-sm);
+}
+
 .btn:hover,
 .btn-primary:hover,
 .btn-secondary:hover,
@@ -78,13 +85,6 @@
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;
-}
-
-.btn-sm,
-.btn-outline-sm {
-  min-height: 2.25rem;
-  padding: 0.4rem 0.8rem;
-  font-size: var(--font-size-sm);
 }
 
 .btn-lg {
