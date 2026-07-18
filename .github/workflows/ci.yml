@@ -44,6 +44,9 @@ jobs:
       - name: Run browser and accessibility tests
         run: npm run test:e2e
 
+      - name: Verify generated consumer project
+        run: npm run test:consumer-setup
+
       - name: Upload production bundle
         uses: actions/upload-artifact@v4
         with:
