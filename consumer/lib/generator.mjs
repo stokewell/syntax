@@ -40,6 +40,12 @@ export function stableStringify(value) {
   return `{${entries.join(',')}}`;
 }
 
+function comparePaths(left, right) {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
 function withTrailingNewline(value) {
   return `${String(value).replace(/\r\n?/g, '\n').replace(/\n*$/, '')}\n`;
 }
@@ -119,7 +125,7 @@ export async function createProjectFileSet({ config: inputConfig, recipe }) {
 
   validateRecipeDefinition(recipe, configWithoutGenerated);
   const files = await renderRecipeFiles(recipe, configWithoutGenerated);
-  const generatedPaths = [...files.keys(), 'syntax.project.json'].sort();
+  const generatedPaths = [...files.keys(), 'syntax.project.json'].sort(comparePaths);
   const manifest = {
     ...configWithoutGenerated,
     generated: {
@@ -136,7 +142,7 @@ export async function createProjectFileSet({ config: inputConfig, recipe }) {
   return {
     config: configWithoutGenerated,
     manifest,
-    files: new Map([...files.entries()].sort(([left], [right]) => left.localeCompare(right))),
+    files: new Map([...files.entries()].sort(([left], [right]) => comparePaths(left, right))),
   };
 }
 
@@ -178,7 +184,7 @@ export async function generateProject({
     }
     if (collisions.length > 0) {
       throw new ConsumerGenerationError(
-        `Refusing to overwrite project-owned files: ${collisions.sort().join(', ')}`,
+        `Refusing to overwrite project-owned files: ${collisions.sort(comparePaths).join(', ')}`,
       );
     }
   }
