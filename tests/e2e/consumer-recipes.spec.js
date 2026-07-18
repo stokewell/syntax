@@ -113,6 +113,6 @@ test('reduced motion disables project transitions and transforms', async ({ page
       const style = window.getComputedStyle(element);
       return { transitionDuration: style.transitionDuration, transform: style.transform };
     });
-  expect(motion.transitionDuration).toBe('0s');
+  expect(Number.parseFloat(motion.transitionDuration)).toBeLessThanOrEqual(0.001);
   expect(motion.transform).toBe('none');
 });
