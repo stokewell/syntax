@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
+    "declaration-empty-line-before": null,
+    "font-family-name-quotes": "always-where-recommended",
+    "media-feature-range-notation": "prefix",
+    "selector-class-pattern": null,
+    "custom-property-empty-line-before": null
+  }
+}
