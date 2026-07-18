@@ -1,6 +1,11 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+async function activate(locator, testInfo) {
+  if (testInfo.project.name === 'mobile-chromium') await locator.tap();
+  else await locator.click();
+}
+
 test.beforeEach(async ({ page }) => {
   await page.goto('/demo/', { waitUntil: 'domcontentloaded' });
 });
@@ -19,19 +24,19 @@ test('tabs work with keyboard navigation', async ({ page }) => {
   await expect(page.getByRole('tabpanel', { name: 'Typography' })).toBeVisible();
 });
 
-test('dialog restores focus to its trigger', async ({ page }) => {
+test('dialog restores focus to its trigger', async ({ page }, testInfo) => {
   const trigger = page.getByRole('button', { name: 'Open dialog' });
-  await trigger.click();
+  await activate(trigger, testInfo);
   await expect(page.getByRole('dialog', { name: 'A dependable dialog' })).toBeVisible();
-  await page.getByRole('button', { name: 'Done' }).click();
+  await activate(page.getByRole('button', { name: 'Done' }), testInfo);
   await expect(trigger).toBeFocused();
 });
 
-test('theme preference cycles explicitly', async ({ page }) => {
+test('theme preference cycles explicitly', async ({ page }, testInfo) => {
   const toggle = page.getByRole('button', { name: /Theme preference/ });
-  await toggle.click();
+  await activate(toggle, testInfo);
   await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'light');
-  await toggle.click();
+  await activate(toggle, testInfo);
   await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'dark');
 });
 
