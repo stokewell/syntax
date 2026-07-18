@@ -1,236 +1,159 @@
-# Typography-First Template Style Guide
+# Syntax style guide
 
-This document outlines the design principles, component styling guidelines, and best practices for maintaining and extending the Typography-First Template.
+This guide defines the visual and implementation rules for Syntax. The source of truth is the code in `css/tokens.css`, `css/themes.css`, and `js/config/font-pairs.js`.
 
-## Design Philosophy
+## Product principle
 
-The Typography-First Template follows these core principles:
+Syntax is a typography-first website starter and lightweight design system. It should feel deliberate and expressive without becoming ornamental or difficult to maintain.
 
-1. **Typography as Foundation**: Clear typographic hierarchy is the backbone of good design
-2. **Visual Clarity**: Prioritize readability and user experience over decorative elements
-3. **Progressive Enhancement**: Start with solid HTML structure, enhance with modern CSS
-4. **Performance First**: No dependencies, minimal JavaScript, optimized assets
-5. **Accessibility**: WCAG-compliant color contrast, keyboard navigation, and proper semantics
+The core principles are:
 
-## Color System
+1. **Typography is structural.** Type establishes hierarchy, pacing, and character.
+2. **Semantic tokens precede component values.** Components consume roles such as `--color-surface`, not isolated hex codes.
+3. **Progressive enhancement is the default.** Content and links remain useful without JavaScript.
+4. **Accessibility claims require evidence.** Keyboard behavior, contrast, focus visibility, reduced motion, and automated checks are release criteria.
+5. **Runtime stays dependency-free.** Development tools may be used to validate and package the source.
 
-Our color system uses CSS variables to maintain consistency and enable theming:
+## Color system
+
+### Light theme
+
+| Role | Token | Value |
+|---|---|---|
+| Page background | `--color-bg` | `#fbfaf8` |
+| Surface | `--color-surface` | `#f3efea` |
+| Primary text | `--color-text` | `#24211f` |
+| Secondary text | `--color-text-secondary` | `#625c57` |
+| Primary action | `--color-primary` | `#087f7f` |
+| Text on primary | `--color-on-primary` | `#ffffff` |
+
+The light-theme primary action and white foreground meet WCAG AA contrast for normal text. When changing either token, test the pair as a unit.
+
+### Dark theme
+
+Dark mode uses a lighter primary color with a dark `--color-on-primary` foreground. Do not assume white belongs on every saturated color.
+
+### Rules
+
+- Use semantic roles in components.
+- Add a new token only when a recurring design decision cannot be represented by an existing role.
+- Keep `-rgb` companion values only where alpha composition is required.
+- Test normal text at 4.5:1 and large text or non-text UI at 3:1 minimum.
+
+## Typography
+
+The default pairing is EB Garamond for headings and Plus Jakarta Sans for body copy.
 
 ```css
-/* Light theme (default) */
 :root {
-  --color-primary: #3366cc;
-  --color-primary-rgb: 51, 102, 204;
-  --color-success: #2ecc71;
-  --color-success-rgb: 46, 204, 113;
-  --color-text: #333333;
-  --color-text-rgb: 51, 51, 51;
-  --color-bg: #ffffff;
-  --color-bg-rgb: 255, 255, 255;
-  --color-subtle: rgba(0, 0, 0, 0.1);
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-  --color-primary: #5f8ee4;
-  --color-primary-rgb: 95, 142, 228;
-  --color-success: #43d180;
-  --color-success-rgb: 67, 209, 128;
-  --color-text: #e0e0e0;
-  --color-text-rgb: 224, 224, 224;
-  --color-bg: #121212;
-  --color-bg-rgb: 18, 18, 18;
-  --color-subtle: rgba(255, 255, 255, 0.1);
+  --font-heading: 'EB Garamond', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --max-text-width: 68ch;
+  --line-height-normal: 1.55;
 }
 ```
 
-## Typography System
+Curated alternatives are named semantically in `js/config/font-pairs.js`: `editorial`, `contemporary`, `literary`, `modernSans`, `classic`, and `geometric`.
 
-We implement a modular type scale for consistent sizing throughout the application:
+Do not add ordinal names such as `quinary` or duplicate the same pair across CSS, HTML, and JavaScript.
+
+### Type rules
+
+- Keep body copy within `--max-text-width`.
+- Use `clamp()` for major display sizes.
+- Avoid animating every text node when a font changes; animate the preview region only.
+- Load only weights used by the design.
+- Retain strong system fallbacks.
+
+## Spacing
+
+Syntax uses a 0.5rem baseline:
 
 ```css
-h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-}
-
-h4 {
-  font-size: clamp(1.125rem, 2vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-p.lead {
-  font-size: clamp(1.125rem, 2.5vw, 1.35rem);
-  line-height: 1.6;
-  color: var(--color-text-secondary, var(--color-text));
-  opacity: 0.9;
-}
+--space-1: 0.5rem;
+--space-2: 1rem;
+--space-3: 1.5rem;
+--space-4: 2rem;
+--space-5: 2.5rem;
+--space-6: 3rem;
+--space-8: 4rem;
 ```
 
-## Grid System
+Prefer tokenized spacing. Use fluid `clamp()` values for page-level padding and large section gaps.
 
-The template uses a 12-column grid system for layouts:
+## Shape and elevation
 
-```css
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  padding-inline: clamp(1rem, 4vw, 2rem);
-}
+- Small controls: `--radius-sm`
+- Cards and panels: `--radius-lg`
+- Major dialogs: `--radius-xl`
+- Pills and circular buttons: `--radius-round`
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: clamp(1rem, 3vw, 1.5rem);
-}
+Shadows should clarify elevation, not decorate every surface. A border plus `--shadow-sm` is usually enough for cards.
 
-.grid-col-full {
-  grid-column: span 12;
-}
+## Components
 
-.grid-col-8 {
-  grid-column: span 12;
-}
+### Buttons
 
-@media (min-width: 768px) {
-  .grid-col-8 {
-    grid-column: span 8;
-  }
-}
-```
+- Primary buttons use `--color-primary` and `--color-on-primary`.
+- Secondary and outline buttons remain distinguishable without relying only on color.
+- Every button has hover, active, focus-visible, disabled, and reduced-motion behavior.
+- Do not use a generic clickable `<div>` when a button or link is appropriate.
 
-## Component Guidelines
+### Navigation
 
-### Cards
+There is one canonical header and mobile navigation implementation in `modern-header.css`. `controls.css` is reserved for display controls and the typography dialog.
 
-We use subtle shadows and border accents instead of full borders for a more polished look:
+Mobile submenu triggers must be buttons with `aria-expanded` and `aria-controls`.
 
-```css
-.card {
-  background-color: var(--color-bg);
-  border-radius: 12px;
-  padding: clamp(1.5rem, 5vw, 2.5rem);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  position: relative;
-  overflow: hidden;
-  border: none;
-}
+### Dialogs
 
-.card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 60px;
-  background-color: var(--color-primary);
-  border-radius: 0 0 4px 0;
-}
-```
+Dialogs must:
+
+- use `role="dialog"` and `aria-modal="true"`
+- have an accessible name
+- record the trigger before moving focus
+- trap focus while open
+- close on Escape
+- restore focus on close
+- establish a positioning context for internal absolute controls
 
 ### Tabs
 
-For tabs, we use a clean horizontal style with clear active states:
+Tabs must use the tablist, tab, and tabpanel roles; expose selected state; support Arrow keys, Home, and End; and preserve panel content across re-renders.
 
-```css
-.custom-tabs-nav {
-  display: flex;
-  flex-wrap: wrap;
-  background: linear-gradient(to bottom, 
-    rgba(var(--color-primary-rgb), 0.06), 
-    rgba(var(--color-primary-rgb), 0.02));
-  justify-content: center;
-  position: relative;
-  padding: 0 0.75rem;
-}
+### Custom elements
 
-.custom-tab-button.active {
-  opacity: 1;
-  font-weight: 700;
-  color: var(--color-primary);
-  background-color: var(--color-bg);
-  border-top: 3px solid var(--color-primary);
-  border-left: 1px solid rgba(var(--color-text-rgb), 0.06);
-  border-right: 1px solid rgba(var(--color-text-rgb), 0.06);
-  border-bottom: 1px solid var(--color-bg);
-  margin-bottom: -1px;
-}
-```
+Custom elements should enhance semantic content rather than hide critical information. Prefer native controls inside Shadow DOM. Observed attributes must match all supported runtime properties.
 
-### Gradient Text
+## Focus treatment
 
-For emphasis, we use gradient text effects:
+Never globally remove focus outlines without a guaranteed replacement. Syntax uses `:focus-visible` so pointer interactions stay visually quiet while keyboard interactions remain obvious.
 
-```css
-.gradient-text {
-  background: linear-gradient(90deg, var(--color-primary), var(--color-success));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-}
-```
+## Motion
 
-## Animation Guidelines
+Motion should explain state or preserve spatial context.
 
-Animations should be subtle and purposeful, enhancing user experience without being distracting:
+- Typical duration: 150–400ms
+- Default easing: `--ease-out` for entrances, `--ease-in-out` for state changes
+- Avoid large document-wide animations
+- Honor `prefers-reduced-motion`
+- Ensure final states are immediately applied when motion is reduced
 
-- Use CSS transitions for hover/active states
-- Keep durations between 200-400ms
-- Use timing functions like ease-out for natural movement
-- Implement reduced motion support
+## Responsive design
 
-```css
-.element {
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-}
+Prefer content-driven breakpoints. Existing layout utilities generally switch near 768px, but new components should break where their content requires it.
 
-@media (prefers-reduced-motion: reduce) {
-  .element {
-    transition: none;
-  }
-}
-```
+Use:
 
-## Accessibility Guidelines
+- fluid gutters
+- `minmax()` grids
+- horizontal scrolling for narrow tab lists
+- minimum touch targets near 44×44px
+- safe-area environment variables for fixed controls
 
-- Maintain WCAG AA contrast ratios (minimum 4.5:1 for normal text, 3:1 for large text)
-- Ensure keyboard navigation works for all interactive elements
-- Use proper semantic HTML elements
-- Implement proper focus states for keyboard users
+## Documentation rules
 
-## Responsive Design
-
-We follow a mobile-first approach with these breakpoints:
-
-- Small: 0-576px (default)
-- Medium: 577-768px
-- Large: 769-992px
-- X-Large: 993px+
-
-Use fluid values with clamp() for smooth transitions between breakpoints:
-
-```css
-.element {
-  padding: clamp(1rem, 4vw, 2rem);
-  font-size: clamp(1rem, 2vw, 1.25rem);
-}
-```
+- The canonical demo must match the current product name, URLs, tokens, and installation path.
+- Examples must be executable, not aspirational pseudocode.
+- Claims such as “WCAG AA” should be qualified by tested scope.
+- Old prototypes belong in an archive branch or release, not beside the canonical demo.
