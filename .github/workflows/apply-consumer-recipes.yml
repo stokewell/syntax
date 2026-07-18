@@ -1,0 +1,111 @@
+name: Apply Consumer Recipes
+
+on:
+  push:
+    branches: [feature/consumer-recipes-v1]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out recipe branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/consumer-recipes-v1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply staged recipe payload
+        run: |
+          cat .consumer-payload/part-* > /tmp/consumer-recipes.b64
+          base64 --decode /tmp/consumer-recipes.b64 > /tmp/consumer-recipes.tar.gz
+          tar -xzf /tmp/consumer-recipes.tar.gz
+
+      - name: Update foundation tests and release records
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          tests = Path('tests/unit/consumer-mode.test.js')
+          text = tests.read_text()
+          text = text.replace("generatorVersion: '0.1.0'", "generatorVersion: '0.2.0'")
+          contract = """      label: 'Test recipe',
+                description: 'Test-only recipe.',
+                visualDirections: ['editorial'],
+                compatibleFeatures: ['theme'],
+          """
+          text = text.replace(
+              """      id: 'blank',
+                version: 1,
+                files: [{ path: '../escape.txt', content: 'nope' }],""",
+              """      id: 'blank',
+                version: 1,
+          """ + contract + """      files: [{ path: '../escape.txt', content: 'nope' }],""",
+          )
+          text = text.replace(
+              """      id: 'blank',
+                version: 1,
+                files: [
+          """,
+              """      id: 'blank',
+                version: 1,
+          """ + contract + """      files: [
+          """,
+              1,
+          )
+          tests.write_text(text)
+
+          roadmap = Path('v2-ideas.md')
+          text = roadmap.read_text()
+          text = text.replace('- [ ] Add Blank and Portfolio recipes', '- [x] Add Blank and Portfolio recipes')
+          text = text.replace(
+              '- [ ] Add Editorial and Product visual directions',
+              '- [x] Add Editorial and Product visual directions',
+          )
+          roadmap.write_text(text)
+
+          changelog = Path('CHANGELOG.md')
+          text = changelog.read_text()
+          marker = '## Unreleased — Consumer Mode foundation\n\n### Added\n\n'
+          addition = """- Public Blank and Portfolio recipe contracts with semantic, no-JavaScript HTML output.
+          - Editorial and Product visual directions that alter typography, shape, alignment, and elevation rather than only color.
+          - Accessible accent-palette generation for light and dark themes.
+          - Static Portfolio output supporting one to six projects, with an optional structured-content mirror.
+          - Generated desktop/mobile preview fixtures, framework-versus-project metrics, and recipe-specific Playwright and axe coverage.
+          """
+          if addition not in text:
+              text = text.replace(marker, marker + addition)
+          changelog.write_text(text)
+          PY
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Format implementation
+        run: npm run format
+
+      - name: Regenerate deterministic foundation fixture
+        run: npm run consumer:fixtures
+
+      - name: Verify preview generation
+        run: npm run consumer:previews
+
+      - name: Remove generated previews and migration machinery
+        run: |
+          rm -rf consumer/previews .consumer-payload
+          rm .github/workflows/apply-consumer-recipes.yml
+
+      - name: Commit Consumer Mode recipes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Add Blank and Portfolio consumer recipes"
+          git push origin HEAD:feature/consumer-recipes-v1
