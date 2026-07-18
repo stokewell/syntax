@@ -40,7 +40,7 @@ Public recipe previews are generated on demand:
 npm run consumer:previews
 ```
 
-Preview output is gitignored because each project contains a complete Syntax CSS bundle.
+Preview output is gitignored because each project contains a complete Syntax CSS bundle. The browser suite regenerates those previews before checking desktop, mobile, theme, reduced-motion, and accessibility behavior.
 
 ## Next phase
 
