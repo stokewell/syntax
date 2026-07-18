@@ -16,7 +16,14 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
+    {
+      name: 'mobile-chromium',
+      use: {
+        ...devices['Pixel 7'],
+        viewport: { width: 412, height: 839 },
+        screen: { width: 412, height: 915 },
+      },
+    },
   ],
   webServer: {
     command: 'npm run serve',
