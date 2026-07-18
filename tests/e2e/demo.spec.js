@@ -1,9 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-async function activate(locator, testInfo) {
-  if (testInfo.project.name === 'mobile-chromium') await locator.tap();
-  else await locator.click();
+async function activate(locator, page, testInfo) {
+  if (testInfo.project.name !== 'mobile-chromium') {
+    await locator.click();
+    return;
+  }
+
+  await locator.scrollIntoViewIfNeeded();
+  const box = await locator.boundingBox();
+  if (!box) throw new Error('Unable to resolve a touch target bounding box.');
+  await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
 }
 
 test.beforeEach(async ({ page }) => {
@@ -26,17 +33,17 @@ test('tabs work with keyboard navigation', async ({ page }) => {
 
 test('dialog restores focus to its trigger', async ({ page }, testInfo) => {
   const trigger = page.getByRole('button', { name: 'Open dialog' });
-  await activate(trigger, testInfo);
+  await activate(trigger, page, testInfo);
   await expect(page.getByRole('dialog', { name: 'A dependable dialog' })).toBeVisible();
-  await activate(page.getByRole('button', { name: 'Done' }), testInfo);
+  await activate(page.getByRole('button', { name: 'Done' }), page, testInfo);
   await expect(trigger).toBeFocused();
 });
 
 test('theme preference cycles explicitly', async ({ page }, testInfo) => {
   const toggle = page.getByRole('button', { name: /Theme preference/ });
-  await activate(toggle, testInfo);
+  await activate(toggle, page, testInfo);
   await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'light');
-  await activate(toggle, testInfo);
+  await activate(toggle, page, testInfo);
   await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'dark');
 });
 
