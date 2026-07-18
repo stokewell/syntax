@@ -140,7 +140,9 @@
                   aspect-ratio="16:9"
                   lazy
                 >
-                  <span slot="caption">Geese flying in formation, rendered through &lt;responsive-image&gt;.</span>
+                  <span slot="caption"
+                    >Geese flying in formation, rendered through &lt;responsive-image&gt;.</span
+                  >
                 </responsive-image>
                 <pre class="code-block"><code>&lt;responsive-image
   src="geese.jpg"
@@ -168,7 +170,9 @@
                   shadow-level="2"
                   clickable
                 >
-                  <p>This card exposes image, shadow, content, footer, click, and keyboard behavior.</p>
+                  <p>
+                    This card exposes image, shadow, content, footer, click, and keyboard behavior.
+                  </p>
                   <div slot="footer">
                     <button class="btn-outline-sm" type="button" tabindex="-1">View details</button>
                   </div>
@@ -206,7 +210,9 @@
                     </div>
                   </custom-card>
                   <custom-card title="Clickable Card" shadow-level="2" clickable>
-                    <p>Clickable cards expose a semantic role, focus state, and activation event.</p>
+                    <p>
+                      Clickable cards expose a semantic role, focus state, and activation event.
+                    </p>
                     <div slot="footer">
                       <span class="small">Press Enter or Space</span>
                     </div>
@@ -236,7 +242,11 @@
                   </div>
                   <div>
                     <p class="lab-label">Live state</p>
-                    <toggle-switch id="interactive-toggle" label="Try toggling me" checked></toggle-switch>
+                    <toggle-switch
+                      id="interactive-toggle"
+                      label="Try toggling me"
+                      checked
+                    ></toggle-switch>
                     <p class="lab-output" id="toggle-demo-output" aria-live="polite">
                       Toggle state: ON
                     </p>
@@ -258,7 +268,9 @@
                   </tab-item>
                   <tab-item label="Second Tab">
                     <h4>Second tab content</h4>
-                    <p>Each tab is associated with a labeled panel and retains its original content.</p>
+                    <p>
+                      Each tab is associated with a labeled panel and retains its original content.
+                    </p>
                   </tab-item>
                   <tab-item label="Third Tab">
                     <h4>Third tab content</h4>
@@ -328,7 +340,10 @@
 
                   <div class="card lab-interactive-card" tabindex="0">
                     <h4 class="card-title">Interactive Card</h4>
-                    <p>Hover and focus states make the affordance visible to mouse and keyboard users.</p>
+                    <p>
+                      Hover and focus states make the affordance visible to mouse and keyboard
+                      users.
+                    </p>
                     <div class="card-footer">
                       <a class="btn-outline-sm" href="#accordions">Learn more</a>
                     </div>
@@ -426,7 +441,9 @@
                 <div class="layout-dashboard lab-dashboard-preview">
                   <header class="dashboard-header lab-layout-block">Dashboard header</header>
                   <aside class="dashboard-sidebar lab-layout-block">Sidebar navigation</aside>
-                  <main class="dashboard-main lab-layout-block lab-layout-main">Dashboard content</main>
+                  <main class="dashboard-main lab-layout-block lab-layout-main">
+                    Dashboard content
+                  </main>
                 </div>
               </article>
             </div>
@@ -566,8 +583,8 @@
                       Good typography must remain readable under less-than-ideal editorial choices.
                       This paragraph is deliberately justified to expose spacing rivers, word gaps,
                       and line-length weaknesses. The point is not to recommend justified text for
-                      the web, but to ensure the system degrades predictably when content authors use
-                      it.
+                      the web, but to ensure the system degrades predictably when content authors
+                      use it.
                     </p>
                   </div>
 
@@ -578,13 +595,19 @@
                         <h4>Chinese</h4>
                         <p>你好，世界！这是一个测试中文字体渲染和行高表现的示例文本。</p>
                         <h4>Japanese</h4>
-                        <p>こんにちは世界！これは日本語のフォントレンダリングを確認する文章です。</p>
+                        <p>
+                          こんにちは世界！これは日本語のフォントレンダリングを確認する文章です。
+                        </p>
                       </div>
                       <div>
                         <h4>Arabic</h4>
-                        <p dir="rtl">مرحبا بالعالم! هذا نص لاختبار عرض الخط العربي واتجاه الكتابة.</p>
+                        <p dir="rtl">
+                          مرحبا بالعالم! هذا نص لاختبار عرض الخط العربي واتجاه الكتابة.
+                        </p>
                         <h4>Hebrew</h4>
-                        <p dir="rtl">שלום עולם! זוהי דוגמה לבדיקת טיפוגרפיה וכיוון כתיבה מימין לשמאל.</p>
+                        <p dir="rtl">
+                          שלום עולם! זוהי דוגמה לבדיקת טיפוגרפיה וכיוון כתיבה מימין לשמאל.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -682,7 +705,11 @@
                   <button class="btn-outline-sm" type="button" data-custom-animation="typewriter">
                     Typewriter
                   </button>
-                  <button class="btn-outline-sm" type="button" data-custom-animation="letterSpacing">
+                  <button
+                    class="btn-outline-sm"
+                    type="button"
+                    data-custom-animation="letterSpacing"
+                  >
                     Letter Spacing
                   </button>
                   <button class="btn-outline-sm" type="button" data-custom-animation="luxuryReveal">
@@ -696,7 +723,11 @@
                 <h3>Scroll Animations</h3>
                 <p>Scroll these cards into view to test declarative data attributes.</p>
                 <div class="lab-grid lab-grid-3 scroll-animation-grid">
-                  <div class="motion-scroll-card" data-animation="fadeIn" data-animation-delay="100">
+                  <div
+                    class="motion-scroll-card"
+                    data-animation="fadeIn"
+                    data-animation-delay="100"
+                  >
                     Fade In
                   </div>
                   <div
@@ -706,7 +737,11 @@
                   >
                     Slide Up
                   </div>
-                  <div class="motion-scroll-card" data-animation="zoomIn" data-animation-delay="300">
+                  <div
+                    class="motion-scroll-card"
+                    data-animation="zoomIn"
+                    data-animation-delay="300"
+                  >
                     Zoom In
                   </div>
                 </div>
@@ -794,7 +829,9 @@
       hidden
     >
       <div class="modal-content">
-        <button class="modal-close" type="button" data-modal-close aria-label="Close dialog">×</button>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close dialog">
+          ×
+        </button>
         <h2 id="lab-modal-title">Accessible modal dialog</h2>
         <p>
           Close with the buttons, Escape, or the backdrop. Focus returns to the button that opened

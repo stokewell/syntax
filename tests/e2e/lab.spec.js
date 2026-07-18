@@ -90,7 +90,9 @@ test('modal restores focus to its trigger', async ({ page }, testInfo) => {
 test('motion controls invoke the shipped animation framework', async ({ page }, testInfo) => {
   await activate(page.getByRole('button', { name: 'Pulse' }), page, testInfo);
   await expect
-    .poll(async () => page.locator('#basic-demo').evaluate((element) => element.getAnimations().length))
+    .poll(async () =>
+      page.locator('#basic-demo').evaluate((element) => element.getAnimations().length),
+    )
     .toBeGreaterThan(0);
 });
 
