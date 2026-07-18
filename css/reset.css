@@ -26,7 +26,6 @@ dd {
 /* Set core body defaults */
 body {
   min-height: 100vh;
-  text-rendering: optimizeSpeed;
   line-height: var(--line-height-normal);
 }
 
