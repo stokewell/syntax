@@ -1,6 +1,6 @@
 # Component Lab
 
-`/lab/` is the exhaustive public proving ground for Syntax. The overview page stays concise; the lab demonstrates the full supported surface without adding demo code to the production bundle.
+[`/lab/`](https://stokewell.github.io/syntax/lab/) is the exhaustive public proving ground for Syntax. The overview page stays concise; the lab demonstrates the full supported surface without adding demo code to the production bundle.
 
 ## Coverage
 
@@ -20,3 +20,11 @@
 The lab may contain presentation helpers and interaction wiring in `lab/lab.css` and `lab/lab.js`. Those files are never included in `dist/syntax.css` or `dist/syntax.js`.
 
 A capability belongs in framework source only when it is reusable outside the lab. The lab must consume that capability through the same public API a user would use.
+
+## Validation
+
+Run the complete lint, formatting, unit, build, desktop/mobile browser, image-loading, interaction, reduced-motion, and accessibility checks with:
+
+```bash
+npm run check
+```
