@@ -1,0 +1,31 @@
+name: Link Component Lab
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/apply-component-lab-links.mjs'
+      - '.github/workflows/component-lab-link.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Apply overview links and remove one-shot helper
+        run: node scripts/apply-component-lab-links.mjs
+
+      - name: Commit generated overview navigation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Link overview to Component Lab"
+          git push origin HEAD:${{ github.head_ref }}
