@@ -1,6 +1,18 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+async function activate(locator, page, testInfo) {
+  if (testInfo.project.name !== 'mobile-chromium') {
+    await locator.click();
+    return;
+  }
+
+  await locator.scrollIntoViewIfNeeded();
+  const box = await locator.boundingBox();
+  if (!box) throw new Error('Unable to resolve a touch target bounding box.');
+  await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 test.beforeEach(async ({ page }) => {
   await page.goto('/lab/', { waitUntil: 'domcontentloaded' });
 });
@@ -30,6 +42,29 @@ test('registers the restored custom elements', async ({ page }) => {
   expect(registered).toBe(true);
 });
 
+test('restored image examples load successfully', async ({ page }) => {
+  const loaded = await page.evaluate(async () => {
+    const images = [
+      document.querySelector('responsive-image')?.shadowRoot?.querySelector('img'),
+      document.querySelector('#image-custom-card')?.shadowRoot?.querySelector('img'),
+      document.querySelector('.lab-media-frame img'),
+    ].filter(Boolean);
+
+    await Promise.all(
+      images.map((image) =>
+        image.complete
+          ? Promise.resolve()
+          : new Promise((resolve, reject) => {
+              image.addEventListener('load', resolve, { once: true });
+              image.addEventListener('error', reject, { once: true });
+            }),
+      ),
+    );
+    return images.length === 3 && images.every((image) => image.naturalWidth > 0);
+  });
+  expect(loaded).toBe(true);
+});
+
 test('interactive toggle reports its state', async ({ page }) => {
   const toggle = page.locator('#interactive-toggle').locator('input');
   await toggle.evaluate((input) => input.click());
@@ -44,8 +79,16 @@ test('Web Component tabs support keyboard navigation', async ({ page }) => {
   await expect(tabs.locator('[role="tab"]').nth(1)).toBeFocused();
 });
 
-test('motion controls invoke the shipped animation framework', async ({ page }) => {
-  await page.getByRole('button', { name: 'Pulse' }).click();
+test('modal restores focus to its trigger', async ({ page }, testInfo) => {
+  const trigger = page.getByRole('button', { name: 'Open modal' });
+  await activate(trigger, page, testInfo);
+  await expect(page.getByRole('dialog', { name: 'Accessible modal dialog' })).toBeVisible();
+  await activate(page.getByRole('button', { name: 'Confirm' }), page, testInfo);
+  await expect(trigger).toBeFocused();
+});
+
+test('motion controls invoke the shipped animation framework', async ({ page }, testInfo) => {
+  await activate(page.getByRole('button', { name: 'Pulse' }), page, testInfo);
   await expect
     .poll(async () => page.locator('#basic-demo').evaluate((element) => element.getAnimations().length))
     .toBeGreaterThan(0);
