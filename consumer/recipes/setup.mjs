@@ -120,14 +120,19 @@ function transformCss(css, config, recipeId) {
 }
 
 function transformConsumerTest(content) {
-  return content.replace(
-    `  if (selectedFeatures.includes('mobile-navigation')) {
+  const themeBlock = `  if (selectedFeatures.includes('theme')) {
+    const toggle = page.getByRole('button', { name: /Theme preference/ });
+    await toggle.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'light');
+  }`;
+  const mobileBlock = `  if (selectedFeatures.includes('mobile-navigation')) {
     const toggle = page.getByRole('button', { name: 'Open navigation' });
     await toggle.focus();
     await page.keyboard.press('Enter');
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-  }`,
-    `  if (selectedFeatures.includes('mobile-navigation')) {
+  }`;
+  const mobileReplacement = `  if (selectedFeatures.includes('mobile-navigation')) {
     const toggle = page.getByRole('button', { name: 'Open navigation' });
     if (await toggle.isVisible()) {
       await toggle.focus();
@@ -136,7 +141,11 @@ function transformConsumerTest(content) {
     } else {
       await expect(page.locator('[data-mobile-navigation]')).toBeVisible();
     }
-  }`,
+  }`;
+
+  return content.replace(
+    `${themeBlock}\n\n${mobileBlock}`,
+    `${mobileReplacement}\n\n${themeBlock}`,
   );
 }
 
