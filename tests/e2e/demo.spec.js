@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/demo/');
+  await page.goto('/demo/', { waitUntil: 'domcontentloaded' });
 });
 
 test('loads the canonical Syntax showcase', async ({ page }) => {
