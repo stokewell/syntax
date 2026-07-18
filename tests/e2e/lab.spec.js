@@ -94,6 +94,13 @@ test('motion controls invoke the shipped animation framework', async ({ page }, 
     .toBeGreaterThan(0);
 });
 
+test('typewriter retains content when reduced motion is requested', async ({ page }, testInfo) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await activate(page.getByRole('button', { name: 'Typewriter' }), page, testInfo);
+  await expect(page.locator('#custom-demo')).toHaveText('Custom Animation');
+});
+
 test('has no serious or critical axe violations', async ({ page }) => {
   const results = await new AxeBuilder({ page }).analyze();
   const blocking = results.violations.filter((violation) =>
