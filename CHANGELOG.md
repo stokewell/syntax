@@ -6,6 +6,10 @@ All notable changes to Syntax are documented here.
 
 ### Added
 
+- Interactive and config-driven `npm run setup` workflows with dry runs, pre-write summaries, cancellation safety, and transactional rollback.
+- Personalized package metadata, Open Graph data, manifests, project briefs, consumer tests, CI, and root GitHub Pages publishing instructions.
+- Selectable theme, mobile-navigation, responsive-image, and dialog enhancements with no unselected feature code.
+- Public template-residue scanning and a generated-project verification gate.
 - Public Blank and Portfolio recipe contracts with semantic, no-JavaScript HTML output.
 - Editorial and Product visual directions that alter typography, shape, alignment, and elevation rather than only color.
 - Accessible accent-palette generation for light and dark themes.
@@ -23,7 +27,7 @@ All notable changes to Syntax are documented here.
 ### Scope
 
 - Consumer Mode remains development-only and is excluded from `dist/syntax.css` and `dist/syntax.js`.
-- Public Blank and Portfolio recipes and interactive setup remain scheduled for the next implementation phase.
+- Product/App recipes, Ship mode, audit reports, and public package distribution remain scheduled for later phases.
 
 ## 1.2.0 — Component Lab
 

@@ -9,6 +9,7 @@ import {
   createProjectFileSet,
   generateProject,
   getRecipe,
+  getSetupRecipe,
   listRecipes,
 } from './consumer/index.mjs';
 ```
@@ -22,9 +23,21 @@ import {
 - `blank` v1
 - `portfolio` v1
 
-Both support the `editorial` and `product` visual directions. Theme preference is the only optional behavior implemented in this phase.
+Both support the `editorial` and `product` visual directions. Setup can add theme preference, mobile navigation, responsive-image enhancement, and native dialog behavior without loading unselected modules.
 
 See [`docs/CONSUMER_RECIPES.md`](../docs/CONSUMER_RECIPES.md) for recipe contracts and preview instructions.
+
+## Setup
+
+```bash
+npm run setup
+npm run setup -- --config project.config.json --dry-run
+npm run setup -- --config project.config.json --output . --yes
+```
+
+Setup displays a complete write plan, recognizes known template entry files, blocks project-owned collisions, and rolls back the transaction if generation or residue validation fails.
+
+See [`docs/CONSUMER_SETUP.md`](../docs/CONSUMER_SETUP.md).
 
 ## Fixtures and previews
 
@@ -41,7 +54,3 @@ npm run consumer:previews
 ```
 
 Preview output is gitignored because each project contains a complete Syntax CSS bundle. The browser suite regenerates those previews before checking desktop, mobile, theme, reduced-motion, and accessibility behavior.
-
-## Next phase
-
-Issue #8 adds the interactive `npm run setup` flow, metadata prompts, generated consumer tests, and GitHub Pages preview configuration.

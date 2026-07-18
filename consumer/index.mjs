@@ -18,6 +18,14 @@ export {
 } from './lib/generator.mjs';
 export { ConsumerPathError, assertSafeRelativePath, resolveInside } from './lib/path-safety.mjs';
 export { ConsumerConfigError, validateAndNormalizeConfig } from './lib/validation.mjs';
+export { SETUP_FEATURE_IDS, selectedSetupFeatures } from './lib/features.mjs';
+export { assertNoTemplateResidue, scanPublicContent, scanTemplateResidue } from './lib/residue.mjs';
+export {
+  ConsumerSetupError,
+  applySetupPlan,
+  createSetupPlan,
+  formatSetupSummary,
+} from './lib/setup.mjs';
 export {
   PUBLIC_VISUAL_DIRECTIONS,
   getVisualDirection,
@@ -30,3 +38,4 @@ export {
   listRecipes,
   portfolioRecipe,
 } from './recipes/index.mjs';
+export { getSetupRecipe, listSetupRecipes } from './recipes/setup.mjs';
