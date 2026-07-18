@@ -1,30 +1,14 @@
 {
-  "name": "Typography-First Template",
-  "short_name": "Typography-First",
+  "name": "Syntax — Typography-first website starter",
+  "short_name": "Syntax",
+  "description": "A lightweight, typography-first website starter and design system.",
   "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
+    { "src": "favicon.ico", "sizes": "48x48", "type": "image/x-icon" },
+    { "src": "favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ],
-  "theme_color": "#0eaaaa",
-  "background_color": "#ffffff",
+  "theme_color": "#087f7f",
+  "background_color": "#fbfaf8",
   "display": "standalone",
-  "start_url": "demo/index.html"
+  "start_url": "./demo/"
 }
