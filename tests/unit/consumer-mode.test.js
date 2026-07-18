@@ -80,8 +80,8 @@ describe('Consumer Mode configuration', () => {
       $schema: left.$schema,
     };
 
-    const leftFiles = createProjectFileSet({ config: left, recipe: foundationRecipe });
-    const rightFiles = createProjectFileSet({ config: right, recipe: foundationRecipe });
+    const leftFiles = await createProjectFileSet({ config: left, recipe: foundationRecipe });
+    const rightFiles = await createProjectFileSet({ config: right, recipe: foundationRecipe });
 
     expect([...leftFiles.files.entries()]).toEqual([...rightFiles.files.entries()]);
     expect(leftFiles.manifest.generated.configurationHash).toBe(
@@ -142,7 +142,7 @@ describe('Consumer Mode generation', () => {
   });
 
   it('records deterministic provenance without timestamps', async () => {
-    const fileSet = createProjectFileSet({
+    const fileSet = await createProjectFileSet({
       config: await readConfig(),
       recipe: foundationRecipe,
     });
@@ -172,10 +172,10 @@ describe('Consumer Mode generation', () => {
       ],
     };
 
-    expect(() => createProjectFileSet({ config, recipe: traversalRecipe })).toThrow(
+    await expect(createProjectFileSet({ config, recipe: traversalRecipe })).rejects.toThrow(
       ConsumerPathError,
     );
-    expect(() => createProjectFileSet({ config, recipe: duplicateRecipe })).toThrow(
+    await expect(createProjectFileSet({ config, recipe: duplicateRecipe })).rejects.toThrow(
       ConsumerGenerationError,
     );
     await expect(readdir(outputDirectory)).rejects.toThrow();
