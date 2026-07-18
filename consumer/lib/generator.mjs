@@ -150,7 +150,11 @@ export async function generateProject({
   try {
     for (const destination of destinations) {
       await mkdir(path.dirname(destination.absolutePath), { recursive: true });
-      await writeFile(destination.absolutePath, fileSet.files.get(destination.relativePath), 'utf8');
+      await writeFile(
+        destination.absolutePath,
+        fileSet.files.get(destination.relativePath),
+        'utf8',
+      );
       writtenFiles.push(destination.absolutePath);
     }
   } catch (error) {

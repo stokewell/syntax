@@ -27,8 +27,4 @@ export const FEATURE_IDS = Object.freeze([
   'forms',
 ]);
 export const PROJECT_MODES = Object.freeze(['prototype', 'ship']);
-export const DEPLOYMENT_IDS = Object.freeze([
-  'none',
-  'github-pages-root',
-  'github-pages-actions',
-]);
+export const DEPLOYMENT_IDS = Object.freeze(['none', 'github-pages-root', 'github-pages-actions']);

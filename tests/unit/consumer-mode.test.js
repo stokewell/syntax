@@ -46,7 +46,9 @@ async function listFiles(directory, prefix = '') {
 }
 
 afterEach(async () => {
-  await Promise.all(temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })));
+  await Promise.all(
+    temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })),
+  );
 });
 
 describe('Consumer Mode configuration', () => {
@@ -188,7 +190,9 @@ describe('Consumer Mode generation', () => {
       generateProject({ config: await readConfig(), recipe: foundationRecipe, outputDirectory }),
     ).rejects.toThrow(/Refusing to overwrite project-owned files: index\.html/);
 
-    expect(await readFile(path.join(outputDirectory, 'index.html'), 'utf8')).toBe('project-owned\n');
+    expect(await readFile(path.join(outputDirectory, 'index.html'), 'utf8')).toBe(
+      'project-owned\n',
+    );
     expect(await listFiles(outputDirectory)).toEqual(['index.html']);
   });
 

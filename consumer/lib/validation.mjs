@@ -223,7 +223,12 @@ export function validateAndNormalizeConfig(value) {
     'project.repositoryUrl',
     issues,
   );
-  const primaryAction = normalizeAction(project.primaryAction, 'project.primaryAction', issues, true);
+  const primaryAction = normalizeAction(
+    project.primaryAction,
+    'project.primaryAction',
+    issues,
+    true,
+  );
   const secondaryAction = normalizeAction(
     project.secondaryAction,
     'project.secondaryAction',
