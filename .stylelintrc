@@ -8,6 +8,7 @@
     "declaration-empty-line-before": null,
     "font-family-name-quotes": "always-where-recommended",
     "media-feature-range-notation": "prefix",
+    "no-descending-specificity": null,
     "selector-class-pattern": null
   }
 }
