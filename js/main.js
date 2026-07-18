@@ -43,11 +43,20 @@
         if (reduce) return;
         const frames = {
           fade: [{ opacity: 0.25 }, { opacity: 1 }],
-          slide: [{ transform: 'translateX(-1rem)', opacity: 0.4 }, { transform: 'translateX(0)', opacity: 1 }],
-          pulse: [{ transform: 'scale(1)' }, { transform: 'scale(1.035)' }, { transform: 'scale(1)' }]
+          slide: [
+            { transform: 'translateX(-1rem)', opacity: 0.4 },
+            { transform: 'translateX(0)', opacity: 1 },
+          ],
+          pulse: [{ transform: 'scale(1)' }, { transform: 'scale(1.035)' }, { transform: 'scale(1)' }],
         };
         target.animate(frames[button.dataset.motion], { duration: 420, easing: 'ease-out' });
       });
+    });
+  }
+
+  function initScrollableRegions() {
+    document.querySelectorAll('pre, [data-scrollable-region]').forEach((region) => {
+      if (!region.hasAttribute('tabindex')) region.tabIndex = 0;
     });
   }
 
@@ -58,6 +67,7 @@
     global.SyntaxModal?.init();
     initTabs();
     initMotionDemo();
+    initScrollableRegions();
     document.documentElement.classList.add('syntax-ready');
   }
 
