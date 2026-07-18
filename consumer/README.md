@@ -14,6 +14,8 @@ import { createProjectFileSet, generateProject } from './consumer/index.mjs';
 
 `generateProject` performs a collision preflight and writes that file map to a target directory. Existing destination files are never silently replaced.
 
+Supported generated text formats are normalized with Syntax's pinned Prettier rules so fixture output remains reproducible across machines.
+
 ## Foundation fixture
 
 The committed foundation fixture proves deterministic output without claiming to be the finished Blank recipe:
