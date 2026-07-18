@@ -49,7 +49,6 @@ jobs:
           eslint.config.js
           playwright.config.js
           .stylelintrc
-          .stylelintrc.json
           .prettierrc.json
           .github/workflows/ci.yml
           README.md
@@ -81,6 +80,7 @@ jobs:
             js/components/modal.js
             js/components/web-components.js
             js/main.js
+            package.json
             README.md
             docs/STYLE_GUIDE.md
             .stylelintrc
