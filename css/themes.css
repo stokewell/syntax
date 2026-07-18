@@ -31,19 +31,19 @@
 
 [data-theme="high-contrast"] {
   color-scheme: dark;
-  --color-bg: #000000;
+  --color-bg: #000;
   --color-bg-rgb: 0, 0, 0;
-  --color-surface: #111111;
-  --color-surface-raised: #000000;
-  --color-text: #ffffff;
+  --color-surface: #111;
+  --color-surface-raised: #000;
+  --color-text: #fff;
   --color-text-rgb: 255, 255, 255;
-  --color-text-secondary: #ffffff;
-  --color-border: #ffffff;
-  --color-border-strong: #ffffff;
-  --color-primary: #ffff00;
+  --color-text-secondary: #fff;
+  --color-border: #fff;
+  --color-border-strong: #fff;
+  --color-primary: #ff0;
   --color-primary-rgb: 255, 255, 0;
-  --color-on-primary: #000000;
-  --color-success: #00ff00;
+  --color-on-primary: #000;
+  --color-success: #0f0;
   --color-warning: #ffb000;
   --color-error: #ff4d4d;
 }
