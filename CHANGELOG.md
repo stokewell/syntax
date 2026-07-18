@@ -2,6 +2,32 @@
 
 All notable changes to Syntax are documented here.
 
+## 1.2.0 — Component Lab
+
+### Added
+
+- A dedicated `/lab/` proving ground separate from the polished overview.
+- Restored responsive-image demonstrations using the original geese, dolphins, and sandy-bottom assets.
+- Full Custom Card, Toggle Switch, Tabs Container, and Responsive Image state coverage.
+- Standard button, alert, card, image-card, accordion, and modal examples.
+- Live blog, portfolio, magazine, and dashboard layout demonstrations.
+- Heading, inline element, list, definition-list, multilingual, RTL, long-heading, justified-copy, and nested-list typography tests.
+- Fade, slide, pulse, shake, sequence, stagger, typewriter, letter-spacing, luxury-reveal, and scroll-triggered motion demonstrations.
+- Component Lab Playwright and axe-core coverage.
+- `docs/COMPONENT_LAB.md` defining the lab-to-framework scope boundary.
+
+### Changed
+
+- Restored Merriweather + Work Sans as the Scholarly font pairing.
+- Restored Vollkorn + Noto Sans as the Bookish font pairing.
+- Expanded quality gates to lint and format the Component Lab.
+- Bumped distribution banners and package metadata to 1.2.0.
+
+### Scope
+
+- `lab/lab.css` and `lab/lab.js` are demonstration-only and remain outside `dist/`.
+- Reusable behavior continues to live in the framework source and is exercised through public APIs.
+
 ## 1.1.0 — Stabilization
 
 ### Changed
