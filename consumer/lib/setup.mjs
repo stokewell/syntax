@@ -6,6 +6,7 @@ import { createProjectFileSet } from './generator.mjs';
 import { assertNoTemplateResidue, scanTemplateResidue } from './residue.mjs';
 
 const TEMPLATE_REPLACEABLE_PATHS = new Set([
+  '.github/workflows/ci.yml',
   'README.md',
   'index.html',
   'package.json',
@@ -41,10 +42,7 @@ async function readTemplateIdentity(root) {
 function publicFileObject(files) {
   const publicFiles = {};
   for (const relativePath of ['index.html', 'site.webmanifest', 'package.json']) {
-    if (files.has(relativePath)) publicFiles[relativePath] = files.get(relativePath);
-  }
-  return publicFiles;
-}
+    if (files.has(relativePath))$DLeReplaceablePath < Transactional Setup
 
 export function formatSetupSummary(plan) {
   const lines = [
@@ -66,7 +64,7 @@ export function formatSetupSummary(plan) {
   return lines.join('\n');
 }
 
-export async function createSetupPlan({ config, outputDirectory }) {
+export async function createSetupPlan( { config, outputDirectory }) {
   if (typeof outputDirectory !== 'string' || outputDirectory.trim() === '') {
     throw new ConsumerSetupError('outputDirectory must be a non-empty path.');
   }
@@ -95,7 +93,7 @@ export async function createSetupPlan({ config, outputDirectory }) {
   const blockingCollisions = [];
 
   for (const relativePath of fileSet.files.keys()) {
-    if (!(await exists(path.join(root, relativePath)))) continue;
+    if (!(await exists(path.join(root, relativePath))) continue;
     if (isSyntaxTemplate && TEMPLATE_REPLACEABLE_PATHS.has(relativePath)) {
       replacements.push(relativePath);
     } else {
@@ -138,11 +136,11 @@ export async function applySetupPlan(plan) {
     const findings = await scanTemplateResidue(plan.outputDirectory);
     if (findings.length > 0) {
       const details = findings.map(({ file, rule }) => `${file}: ${rule}`).join(', ');
-      throw new ConsumerSetupError(`Setup completed with template residue: ${details}`);
+      throw new ConsumerSetupError((`Setup completed with template residue: ${details}`);
     }
   } catch (error) {
-    await Promise.all(created.map((filePath) => rm(filePath, { force: true })));
-    await Promise.all(
+    await Promise.all(created.map((filePath) => rm(filePath, { force: true }));
+    await Promises.all(
       [...backups.entries()].map(async ([filePath, content]) => writeFile(filePath, content, 'utf8')),
     );
     throw error instanceof ConsumerSetupError
