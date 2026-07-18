@@ -42,7 +42,14 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
-        run: npm run test:e2e
+        run: npm run test:e2e > e2e-report.txt 2>&1
+
+      - name: Upload browser test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-lab-e2e-report
+          path: e2e-report.txt
 
       - name: Upload production bundle
         uses: actions/upload-artifact@v4
