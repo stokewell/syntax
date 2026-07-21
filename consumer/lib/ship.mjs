@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer';
+
 import { scanPublicContent } from './residue.mjs';
 
 export class ConsumerShipError extends Error {
