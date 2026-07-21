@@ -219,7 +219,8 @@ export const appRecipe = Object.freeze({
   id: 'app',
   version: 1,
   label: 'App',
-  description: 'A semantic application shell with navigation, summary metrics, a task table, and empty-state coverage.',
+  description:
+    'A semantic application shell with navigation, summary metrics, a task table, and empty-state coverage.',
   visualDirections: Object.freeze(['product', 'technical', 'minimal', 'retro-interface']),
   compatibleFeatures: Object.freeze(['theme']),
   validateConfig: ({ config }) => readAppData(config),

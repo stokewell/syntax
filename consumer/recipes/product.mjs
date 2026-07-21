@@ -216,7 +216,8 @@ export const productRecipe = Object.freeze({
   id: 'product',
   version: 1,
   label: 'Product',
-  description: 'A persuasive product page with a focused promise, feature proof, process, and closing action.',
+  description:
+    'A persuasive product page with a focused promise, feature proof, process, and closing action.',
   visualDirections: Object.freeze([
     'product',
     'technical',
