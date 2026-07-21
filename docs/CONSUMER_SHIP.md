@@ -1,6 +1,6 @@
 # Consumer Mode Ship preparation
 
-Ship mode is the private-v1 release boundary for a generated Syntax project. It validates production readiness and prepares release files without introducing a runtime dependency on Consumer Mode.
+Ship mode is the private-v1 release boundary for a generated Syntax project. It validates production readiness and prepares release files without introducing a runtime dependency on Consumer Mode. After this workflow is proven, framework development pauses for real-project testing.
 
 ## Preview first
 
