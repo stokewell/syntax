@@ -26,6 +26,8 @@ export {
   createSetupPlan,
   formatSetupSummary,
 } from './lib/setup.mjs';
+export { ConsumerShipError, createShipPlan, formatShipPlan } from './lib/ship.mjs';
+export { applyShipPlan, createFilesystemShipPlan, readShipProject } from './lib/ship-files.mjs';
 export {
   PUBLIC_VISUAL_DIRECTIONS,
   getVisualDirection,
@@ -33,9 +35,11 @@ export {
 } from './directions/index.mjs';
 export {
   PUBLIC_RECIPE_IDS,
+  appRecipe,
   blankRecipe,
   getRecipe,
   listRecipes,
   portfolioRecipe,
+  productRecipe,
 } from './recipes/index.mjs';
 export { getSetupRecipe, listSetupRecipes } from './recipes/setup.mjs';

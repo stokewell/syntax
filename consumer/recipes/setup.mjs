@@ -7,6 +7,7 @@ import {
   renderProjectDialog,
 } from '../lib/features.mjs';
 import { createProjectToolingFiles } from '../lib/project-files.mjs';
+import { createShipToolingFiles } from '../lib/ship-project-files.mjs';
 import { appRecipe } from './app.mjs';
 import { blankRecipe } from './blank.mjs';
 import { portfolioRecipe } from './portfolio.mjs';
@@ -151,16 +152,27 @@ function transformConsumerTest(content) {
   );
 }
 
+function addShipScript(content) {
+  const packageJson = JSON.parse(content);
+  packageJson.scripts['prepare:ship'] = 'node scripts/prepare-ship.mjs';
+  return JSON.stringify(packageJson);
+}
+
 function setupToolingDefinitions(config) {
-  return createProjectToolingFiles(config).map((definition) => {
+  const files = createProjectToolingFiles(config).map((definition) => {
     if (definition.path === '.github/workflows/consumer-ci.yml') {
       return { ...definition, path: '.github/workflows/ci.yml' };
     }
     if (definition.path === 'tests/consumer.spec.js') {
       return wrapDefinition(definition, transformConsumerTest);
     }
+    if (definition.path === 'package.json') {
+      return wrapDefinition(definition, addShipScript);
+    }
     return definition;
   });
+  files.push(...createShipToolingFiles());
+  return files;
 }
 
 function createSetupRecipe(baseRecipe) {
