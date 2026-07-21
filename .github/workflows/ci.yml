@@ -23,15 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
 
-      - name: Capture JavaScript lint output
-        run: npm run lint:js > ship-lint.txt 2>&1 || true
-
-      - name: Upload JavaScript lint output
-        uses: actions/upload-artifact@v4
-        with:
-          name: ship-lint
-          path: ship-lint.txt
-
       - name: Lint JavaScript
         run: npm run lint:js
 
