@@ -51,7 +51,7 @@ The committed foundation fixture continues to prove exact deterministic output:
 npm run consumer:fixtures
 ```
 
-Public recipe previews are generated on demand:
+Public recipe previews are generated on demand for all four recipe types:
 
 ```bash
 npm run consumer:previews
