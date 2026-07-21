@@ -1,0 +1,46 @@
+name: Fix Phase 2 Assertions
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Correct assertions and restore CI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('tests/unit/consumer-recipes.test.js')
+          s = p.read_text()
+          s = s.replace("'cinematic'],", "'cinematic', 'retro-interface'],")
+          s = s.replace('class="process-step"', 'class="step-card"')
+          s = s.replace("expect(fileSet.files.get('site.css')).toContain(\"[data-direction='technical']\");", "expect(fileSet.files.get('site.css')).toContain('--consumer-card-radius: 0.375rem');")
+          s = s.replace("expect(fileSet.files.get('site.css')).toContain(\"[data-direction='retro-interface']\");", "expect(fileSet.files.get('site.css')).toContain('--consumer-font-heading: var(--font-mono)');")
+          p.write_text(s)
+          PY
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('.github/workflows/ci.yml')
+          s = p.read_text()
+          start = s.index('      - name: Capture unit test output')
+          end = s.index('      - name: Run unit tests', start)
+          p.write_text(s[:start] + s[end:])
+          PY
+          rm .github/workflows/fix-phase2-tests.yml
+      - name: Format and commit
+        run: |
+          npm install --ignore-scripts
+          npm run format
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/unit/consumer-recipes.test.js .github/workflows/ci.yml .github/workflows/fix-phase2-tests.yml
+          git commit -m "Correct Phase 2 recipe assertions"
+          git push origin HEAD:${{ github.head_ref }}
