@@ -14,7 +14,7 @@ function copySource(source, destination, transform = (content) => content) {
 export function createShipToolingFiles() {
   return [
     copySource('scripts/prepare-ship.mjs', 'scripts/prepare-ship.mjs', (content) =>
-      content.replaceAll("../consumer/lib/", './syntax-ship/'),
+      content.replaceAll('../consumer/lib/', './syntax-ship/'),
     ),
     copySource('consumer/lib/ship.mjs', 'scripts/syntax-ship/ship.mjs'),
     copySource('consumer/lib/ship-files.mjs', 'scripts/syntax-ship/ship-files.mjs'),
