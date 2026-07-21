@@ -4,7 +4,13 @@ import path from 'node:path';
 import { resolveInside } from './path-safety.mjs';
 import { ConsumerShipError, createShipPlan } from './ship.mjs';
 
-const IGNORED_DIRECTORIES = new Set(['.git', 'node_modules', 'dist', 'test-results', 'playwright-report']);
+const IGNORED_DIRECTORIES = new Set([
+  '.git',
+  'node_modules',
+  'dist',
+  'test-results',
+  'playwright-report',
+]);
 
 async function walk(directory, root, files) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -60,7 +66,9 @@ export async function applyShipPlan({ root, plan, clean = false }) {
 
   const transactionRoot = path.join(root, '.syntax-ship-transaction');
   if (await pathExists(transactionRoot)) {
-    throw new ConsumerShipError('A previous Ship transaction directory still exists. Remove it after reviewing its contents.');
+    throw new ConsumerShipError(
+      'A previous Ship transaction directory still exists. Remove it after reviewing its contents.',
+    );
   }
 
   const writes = new Map([...plan.proposedFiles, ...plan.deploymentOutputs]);

@@ -11,7 +11,8 @@ const temporaryDirectories = [];
 
 function config(overrides = {}) {
   return {
-    $schema: 'https://raw.githubusercontent.com/stokewell/syntax/main/consumer/schema/syntax-project.schema.json',
+    $schema:
+      'https://raw.githubusercontent.com/stokewell/syntax/main/consumer/schema/syntax-project.schema.json',
     schemaVersion: 1,
     syntaxVersion: '1.2.0',
     project: {
@@ -64,7 +65,9 @@ async function createProjectDirectory() {
 
 afterEach(async () => {
   await Promise.all(
-    temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true, force: true })),
+    temporaryDirectories
+      .splice(0)
+      .map((directory) => rm(directory, { recursive: true, force: true })),
   );
 });
 
@@ -131,8 +134,12 @@ describe('Consumer Mode Ship filesystem transaction', () => {
     const result = await applyShipPlan({ root, plan: state.plan });
 
     expect(result.removed).toEqual([]);
-    expect(JSON.parse(await readFile(path.join(root, 'syntax.project.json'), 'utf8')).mode).toBe('ship');
-    expect(await readFile(path.join(root, 'sitemap.xml'), 'utf8')).toContain('https://shipproof.test/');
+    expect(JSON.parse(await readFile(path.join(root, 'syntax.project.json'), 'utf8')).mode).toBe(
+      'ship',
+    );
+    expect(await readFile(path.join(root, 'sitemap.xml'), 'utf8')).toContain(
+      'https://shipproof.test/',
+    );
     expect(await readFile(path.join(root, 'demo/index.html'), 'utf8')).toContain('Prototype');
   });
 

@@ -18,7 +18,9 @@ function parseArguments(argv) {
     else throw new ConsumerShipError(`Unknown prepare:ship option: ${argument}`);
   }
   if (options.clean && !options.write) {
-    throw new ConsumerShipError('--clean requires --write because cleanup is never performed during preview.');
+    throw new ConsumerShipError(
+      '--clean requires --write because cleanup is never performed during preview.',
+    );
   }
   return options;
 }
@@ -46,16 +48,20 @@ The default command is preview-only and never changes files.
 async function confirmWrite(options, summary) {
   if (options.yes) return true;
   if (!process.stdin.isTTY) {
-    throw new ConsumerShipError('Use --yes to approve Ship preparation in a noninteractive environment.');
+    throw new ConsumerShipError(
+      'Use --yes to approve Ship preparation in a noninteractive environment.',
+    );
   }
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
     console.log(`\n${summary}\n`);
-    const answer = (await rl.question(
-      options.clean
-        ? 'Write release files and remove the listed prototype-only paths? (y/N): '
-        : 'Write the proposed release files? (y/N): ',
-    ))
+    const answer = (
+      await rl.question(
+        options.clean
+          ? 'Write release files and remove the listed prototype-only paths? (y/N): '
+          : 'Write the proposed release files? (y/N): ',
+      )
+    )
       .trim()
       .toLowerCase();
     return answer === 'y' || answer === 'yes';

@@ -176,9 +176,9 @@ function releaseFiles(config, manifest, files) {
 }
 
 function uniqueSortedFindings(findings) {
-  return [...new Map(findings.map((finding) => [`${finding.file}:${finding.rule}`, finding])).values()].sort(
-    (left, right) => `${left.file}:${left.rule}`.localeCompare(`${right.file}:${right.rule}`),
-  );
+  return [
+    ...new Map(findings.map((finding) => [`${finding.file}:${finding.rule}`, finding])).values(),
+  ].sort((left, right) => `${left.file}:${left.rule}`.localeCompare(`${right.file}:${right.rule}`));
 }
 
 export function createShipPlan({ config, files }) {
@@ -187,7 +187,8 @@ export function createShipPlan({ config, files }) {
   const webManifest = readJson(normalizedFiles, 'site.webmanifest');
   const blocking = [];
 
-  if (!config?.project?.canonicalUrl) blocking.push({ file: 'syntax.project.json', rule: 'missing-canonical-url' });
+  if (!config?.project?.canonicalUrl)
+    blocking.push({ file: 'syntax.project.json', rule: 'missing-canonical-url' });
   if (!config?.project?.name || !config?.project?.description || !config?.project?.author) {
     blocking.push({ file: 'syntax.project.json', rule: 'missing-project-metadata' });
   }

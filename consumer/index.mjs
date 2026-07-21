@@ -27,11 +27,7 @@ export {
   formatSetupSummary,
 } from './lib/setup.mjs';
 export { ConsumerShipError, createShipPlan, formatShipPlan } from './lib/ship.mjs';
-export {
-  applyShipPlan,
-  createFilesystemShipPlan,
-  readShipProject,
-} from './lib/ship-files.mjs';
+export { applyShipPlan, createFilesystemShipPlan, readShipProject } from './lib/ship-files.mjs';
 export {
   PUBLIC_VISUAL_DIRECTIONS,
   getVisualDirection,
