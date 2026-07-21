@@ -6,14 +6,8 @@ const RULES = Object.freeze([
   ['demo-redirect', ['./demo/', 'demo/index.html']],
   ['syntax-showcase-title', ['Syntax — Typography', 'Syntax - Typography', 'Syntax — Showcase']],
   ['template-package-name', ['syntax-typography-starter']],
-  [
-    'template-pages-url',
-    [/(?:https?:\/\/)?stokewell\.github\.io\/syntax(?:[/?#"'\s<]|$)/i],
-  ],
-  [
-    'template-repository-url',
-    [/(?:https?:\/\/)?github\.com\/stokewell\/syntax(?:[/?#"'\s<]|$)/i],
-  ],
+  ['template-pages-url', [/(?:https?:\/\/)?stokewell\.github\.io\/syntax(?:[/?#"'\s<]|$)/i]],
+  ['template-repository-url', [/(?:https?:\/\/)?github\.com\/stokewell\/syntax(?:[/?#"'\s<]|$)/i]],
   ['placeholder-domain', ['https://example.com/', 'http://example.com/']],
   ['placeholder-copy', ['Your Name', 'Project Name', 'TODO: replace', 'Lorem ipsum']],
 ]);
