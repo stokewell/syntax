@@ -96,7 +96,7 @@ describe('public Consumer Mode recipes', () => {
     expect(countOccurrences(html, /class="feature-card"/g)).toBe(3);
     expect(countOccurrences(html, /class="step-card"/g)).toBe(3);
     expect(countOccurrences(html, />Start a feedback loop</g)).toBeGreaterThanOrEqual(2);
-    expect(fileSet.files.get('site.css')).toContain('--consumer-card-radius: 0.375rem');
+    expect(fileSet.files.get('site.css')).toContain('--consumer-card-radius: var(--radius-sm)');
   });
 
   it('generates an App shell with navigation, metrics, tasks, and an empty state', async () => {
