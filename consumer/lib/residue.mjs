@@ -15,6 +15,7 @@ const RULES = Object.freeze([
 export function scanPublicContent(files) {
   const findings = [];
   for (const [relativePath, content] of Object.entries(files)) {
+    if (!PUBLIC_FILES.includes(relativePath)) continue;
     for (const [rule, needles] of RULES) {
       if (needles.some((needle) => content.includes(needle)))
         findings.push({ file: relativePath, rule });
