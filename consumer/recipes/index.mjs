@@ -1,9 +1,13 @@
+import { appRecipe } from './app.mjs';
 import { blankRecipe } from './blank.mjs';
 import { portfolioRecipe } from './portfolio.mjs';
+import { productRecipe } from './product.mjs';
 
 const recipes = new Map([
   [blankRecipe.id, blankRecipe],
   [portfolioRecipe.id, portfolioRecipe],
+  [productRecipe.id, productRecipe],
+  [appRecipe.id, appRecipe],
 ]);
 
 export const PUBLIC_RECIPE_IDS = Object.freeze([...recipes.keys()]);
@@ -25,4 +29,4 @@ export function listRecipes() {
   }));
 }
 
-export { blankRecipe, portfolioRecipe };
+export { appRecipe, blankRecipe, portfolioRecipe, productRecipe };
