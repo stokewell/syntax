@@ -32,15 +32,6 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
-      - name: Capture unit test output
-        run: npm run test:unit > unit-report.txt 2>&1 || true
-
-      - name: Upload unit test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: phase-2-unit-report
-          path: unit-report.txt
-
       - name: Run unit tests
         run: npm run test:unit
 

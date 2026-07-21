@@ -32,7 +32,14 @@ describe('public Consumer Mode recipes', () => {
       expect.objectContaining({
         id: 'product',
         version: 1,
-        visualDirections: ['product', 'technical', 'playful', 'minimal', 'cinematic'],
+        visualDirections: [
+          'product',
+          'technical',
+          'playful',
+          'minimal',
+          'cinematic',
+          'retro-interface',
+        ],
         compatibleFeatures: ['theme'],
       }),
       expect.objectContaining({
@@ -87,9 +94,9 @@ describe('public Consumer Mode recipes', () => {
     });
     const html = fileSet.files.get('index.html');
     expect(countOccurrences(html, /class="feature-card"/g)).toBe(3);
-    expect(countOccurrences(html, /class="process-step"/g)).toBe(3);
+    expect(countOccurrences(html, /class="step-card"/g)).toBe(3);
     expect(countOccurrences(html, />Start a feedback loop</g)).toBeGreaterThanOrEqual(2);
-    expect(fileSet.files.get('site.css')).toContain("[data-direction='technical']");
+    expect(fileSet.files.get('site.css')).toContain('--consumer-card-radius: 0.375rem');
   });
 
   it('generates an App shell with navigation, metrics, tasks, and an empty state', async () => {
@@ -101,7 +108,7 @@ describe('public Consumer Mode recipes', () => {
     expect(countOccurrences(html, /class="stat-card"/g)).toBe(3);
     expect(countOccurrences(html, /<tr>/g)).toBe(4);
     expect(html).toContain('No unassigned work is waiting in the intake queue.');
-    expect(fileSet.files.get('site.css')).toContain("[data-direction='retro-interface']");
+    expect(fileSet.files.get('site.css')).toContain('--consumer-font-heading: var(--font-mono)');
   });
 
   it('rejects malformed Product and App data', async () => {
