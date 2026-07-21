@@ -2,6 +2,8 @@
 
 Ship mode is the private-v1 release boundary for a generated Syntax project. It validates production readiness and prepares release files without introducing a runtime dependency on Consumer Mode. After this workflow is proven, framework development pauses for real-project testing.
 
+Generated consumer projects include the development-only Ship command and its small supporting modules, so the workflow remains available after the project leaves the Syntax repository.
+
 ## Preview first
 
 ```bash
