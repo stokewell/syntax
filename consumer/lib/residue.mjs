@@ -6,19 +6,24 @@ const RULES = Object.freeze([
   ['demo-redirect', ['./demo/', 'demo/index.html']],
   ['syntax-showcase-title', ['Syntax — Typography', 'Syntax - Typography', 'Syntax — Showcase']],
   ['template-package-name', ['syntax-typography-starter']],
-  ['template-pages-url', ['stokewell.github.io/syntax']],
-  ['template-repository-url', ['github.com/stokewell/syntax']],
+  ['template-pages-url', [/(?:https?:\/\/)?stokewell\.github\.io\/syntax(?:[/?#"'\s<]|$)/i]],
+  ['template-repository-url', [/(?:https?:\/\/)?github\.com\/stokewell\/syntax(?:[/?#"'\s<]|$)/i]],
   ['placeholder-domain', ['https://example.com/', 'http://example.com/']],
   ['placeholder-copy', ['Your Name', 'Project Name', 'TODO: replace', 'Lorem ipsum']],
 ]);
+
+function matchesNeedle(content, needle) {
+  return typeof needle === 'string' ? content.includes(needle) : needle.test(content);
+}
 
 export function scanPublicContent(files) {
   const findings = [];
   for (const [relativePath, content] of Object.entries(files)) {
     if (!PUBLIC_FILES.includes(relativePath)) continue;
     for (const [rule, needles] of RULES) {
-      if (needles.some((needle) => content.includes(needle)))
+      if (needles.some((needle) => matchesNeedle(content, needle))) {
         findings.push({ file: relativePath, rule });
+      }
     }
   }
   return findings.sort((left, right) =>
