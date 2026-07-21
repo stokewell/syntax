@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { scanPublicContent } from './residue.mjs';
 
 export class ConsumerShipError extends Error {
@@ -66,19 +64,85 @@ function inspectPlaceholders(files) {
   return findings;
 }
 
-function deploymentFiles(config) {
-  if (config.deployment === 'github-pages-actions') {
-    return ['.github/workflows/pages.yml'];
-  }
-  if (config.deployment === 'github-pages-root') return ['.nojekyll'];
-  return [];
+function renderPagesWorkflow() {
+  return `name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: \${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
+`;
 }
 
-function releaseFiles(config, manifest) {
+function deploymentOutputs(config) {
+  if (config.deployment === 'github-pages-actions') {
+    return new Map([['.github/workflows/pages.yml', renderPagesWorkflow()]]);
+  }
+  if (config.deployment === 'github-pages-root') return new Map([['.nojekyll', '']]);
+  return new Map();
+}
+
+function releaseFiles(config, manifest, files) {
   const base = canonicalBase(config.project.canonicalUrl);
   const host = new URL(base).hostname;
   const customDomain = !host.endsWith('.github.io') ? host : null;
-  const files = new Map([
+  const syntaxCssBytes = Buffer.byteLength(files.get('syntax.css') ?? '', 'utf8');
+  const projectCssBytes = Buffer.byteLength(files.get('site.css') ?? '', 'utf8');
+  const projectJsBytes = Buffer.byteLength(files.get('site.js') ?? '', 'utf8');
+  const shippedManifest = {
+    ...manifest,
+    mode: 'ship',
+    generated: {
+      ...manifest.generated,
+      files: sortStrings(
+        new Set([
+          ...(manifest.generated?.files ?? []),
+          'RELEASE_CHECKLIST.md',
+          'release-report.json',
+          'robots.txt',
+          'sitemap.xml',
+          'structured-data.json',
+          ...(customDomain ? ['CNAME'] : []),
+        ]),
+      ),
+    },
+  };
+  const report = {
+    syntaxVersion: config.syntaxVersion,
+    recipe: config.recipe.id,
+    visualDirection: config.visualDirection,
+    selectedFeatures: [...config.features],
+    deployment: config.deployment,
+    canonicalUrl: base,
+    sizes: { syntaxCssBytes, projectCssBytes, projectJsBytes },
+  };
+
+  const release = new Map([
+    ['syntax.project.json', `${JSON.stringify(shippedManifest, null, 2)}\n`],
     [
       'sitemap.xml',
       `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${base}</loc></url>\n</urlset>\n`,
@@ -99,13 +163,20 @@ function releaseFiles(config, manifest) {
         2,
       )}\n`,
     ],
+    ['release-report.json', `${JSON.stringify(report, null, 2)}\n`],
     [
       'RELEASE_CHECKLIST.md',
-      `# ${config.project.name} release checklist\n\n- [ ] Review production copy and links\n- [ ] Confirm desktop, mobile, keyboard, dark, and reduced-motion checks\n- [ ] Confirm canonical URL: ${base}\n- [ ] Confirm deployment mode: ${config.deployment}\n- [ ] Review framework CSS size: ${Buffer.byteLength(manifest.files?.['syntax.css'] ?? '', 'utf8')} bytes\n- [ ] Publish and verify the live URL\n`,
+      `# ${config.project.name} release checklist\n\n- [ ] Review production copy and links\n- [ ] Confirm desktop, mobile, keyboard, dark, and reduced-motion checks\n- [ ] Confirm canonical URL: ${base}\n- [ ] Confirm deployment mode: ${config.deployment}\n- [ ] Review Syntax CSS size: ${syntaxCssBytes} bytes\n- [ ] Review project CSS size: ${projectCssBytes} bytes\n- [ ] Review project JavaScript size: ${projectJsBytes} bytes\n- [ ] Publish and verify the live URL\n`,
     ],
   ]);
-  if (customDomain) files.set('CNAME', `${customDomain}\n`);
-  return files;
+  if (customDomain) release.set('CNAME', `${customDomain}\n`);
+  return release;
+}
+
+function uniqueSortedFindings(findings) {
+  return [...new Map(findings.map((finding) => [`${finding.file}:${finding.rule}`, finding])).values()].sort(
+    (left, right) => `${left.file}:${left.rule}`.localeCompare(`${right.file}:${right.rule}`),
+  );
 }
 
 export function createShipPlan({ config, files }) {
@@ -132,20 +203,19 @@ export function createShipPlan({ config, files }) {
   if (webManifest.name !== config.project.name) {
     blocking.push({ file: 'site.webmanifest', rule: 'manifest-name-mismatch' });
   }
-  if (manifest.mode === 'ship') {
-    blocking.push({ file: 'syntax.project.json', rule: 'already-in-ship-mode' });
-  }
 
-  const proposedFiles = blocking.length === 0 ? releaseFiles(config, { ...manifest, files: Object.fromEntries(normalizedFiles) }) : new Map();
+  const normalizedBlocking = uniqueSortedFindings(blocking);
+  const proposedFiles =
+    normalizedBlocking.length === 0 ? releaseFiles(config, manifest, normalizedFiles) : new Map();
   return Object.freeze({
-    blocking: Object.freeze(
-      [...new Map(blocking.map((finding) => [`${finding.file}:${finding.rule}`, finding])).values()].sort(
-        (left, right) => `${left.file}:${left.rule}`.localeCompare(`${right.file}:${right.rule}`),
+    blocking: Object.freeze(normalizedBlocking),
+    proposedFiles,
+    deploymentOutputs: normalizedBlocking.length === 0 ? deploymentOutputs(config) : new Map(),
+    removals: Object.freeze(
+      ['demo/', 'lab/'].filter((directory) =>
+        [...normalizedFiles.keys()].some((file) => file.startsWith(directory)),
       ),
     ),
-    proposedFiles,
-    deploymentFiles: Object.freeze(sortStrings(deploymentFiles(config))),
-    removals: Object.freeze(['demo/', 'lab/'].filter((directory) => [...normalizedFiles.keys()].some((file) => file.startsWith(directory)))),
   });
 }
 
@@ -157,8 +227,9 @@ export function formatShipPlan(plan) {
   } else {
     lines.push('Proposed release files:');
     for (const file of plan.proposedFiles.keys()) lines.push(`- ${file}`);
+    for (const file of plan.deploymentOutputs.keys()) lines.push(`- ${file}`);
     if (plan.removals.length > 0) {
-      lines.push('Prototype-only paths eligible for removal:');
+      lines.push('Prototype-only paths eligible for optional removal:');
       for (const file of plan.removals) lines.push(`- ${file}`);
     }
   }
