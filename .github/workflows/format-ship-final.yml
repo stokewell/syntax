@@ -1,0 +1,27 @@
+name: Format Ship Final
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --ignore-scripts
+      - run: npx prettier --write consumer/lib/ship-project-files.mjs consumer/recipes/setup.mjs scripts/verify-consumer-setup.mjs docs/CONSUMER_SHIP.md
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add consumer/lib/ship-project-files.mjs consumer/recipes/setup.mjs scripts/verify-consumer-setup.mjs docs/CONSUMER_SHIP.md
+          git commit -m "Format generated Ship tooling integration" || exit 0
+          git push origin HEAD:${{ github.head_ref }}
