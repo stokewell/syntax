@@ -22,8 +22,12 @@ import {
 
 - `blank` v1
 - `portfolio` v1
+- `product` v1
+- `app` v1
 
-Both support the `editorial` and `product` visual directions. Setup can add theme preference, mobile navigation, responsive-image enhancement, and native dialog behavior without loading unselected modules.
+The public direction set now includes Editorial, Product, Technical, Playful, Minimal, Cinematic, and Retro Interface. Each recipe declares only the directions and optional features it supports.
+
+Setup can add theme preference, mobile navigation, responsive-image enhancement, and native dialog behavior without loading unselected modules.
 
 See [`docs/CONSUMER_RECIPES.md`](../docs/CONSUMER_RECIPES.md) for recipe contracts and preview instructions.
 
@@ -47,7 +51,7 @@ The committed foundation fixture continues to prove exact deterministic output:
 npm run consumer:fixtures
 ```
 
-Public recipe previews are generated on demand:
+Public recipe previews are generated on demand for all four recipe types:
 
 ```bash
 npm run consumer:previews

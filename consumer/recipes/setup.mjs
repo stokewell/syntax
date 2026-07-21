@@ -7,8 +7,10 @@ import {
   renderProjectDialog,
 } from '../lib/features.mjs';
 import { createProjectToolingFiles } from '../lib/project-files.mjs';
+import { appRecipe } from './app.mjs';
 import { blankRecipe } from './blank.mjs';
 import { portfolioRecipe } from './portfolio.mjs';
+import { productRecipe } from './product.mjs';
 import { escapeHtml } from './shared.mjs';
 
 const SETUP_FEATURES = Object.freeze(['theme', 'mobile-navigation', 'responsive-image', 'dialog']);
@@ -47,7 +49,7 @@ function addNavigation(html, config) {
 function addDialogAction(html, config) {
   if (!config.features.includes('dialog')) return html;
   return html.replace(
-    /(<div class="(?:blank|portfolio)-hero__actions">[\s\S]*?)(<\/div>)/,
+    /(<div class="(?:blank|portfolio|product)-hero__actions">[\s\S]*?)(<\/div>)/,
     `$1${renderDialogAction(config)}$2`,
   );
 }
@@ -206,6 +208,8 @@ function createSetupRecipe(baseRecipe) {
 const setupRecipes = Object.freeze({
   blank: createSetupRecipe(blankRecipe),
   portfolio: createSetupRecipe(portfolioRecipe),
+  product: createSetupRecipe(productRecipe),
+  app: createSetupRecipe(appRecipe),
 });
 
 export function getSetupRecipe(id) {

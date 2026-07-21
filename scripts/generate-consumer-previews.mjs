@@ -11,6 +11,8 @@ const configurations = [
   'blank-product',
   'portfolio-editorial',
   'portfolio-product',
+  'product-technical',
+  'app-retro-interface',
 ];
 const syntaxTokenPattern =
   /--(?:color-primary|color-primary-rgb|color-on-primary|font-heading|font-body|radius-[a-z]+|shadow-[a-z]+)\s*:/g;
