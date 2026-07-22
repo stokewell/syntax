@@ -11,7 +11,10 @@ for (const path of ['/guide/']) {
         name: 'Build a small website without first becoming a framework engineer.',
       }),
     ).toBeVisible();
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /beginner-friendly/i);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      /beginner-friendly/i,
+    );
     await expect(page.getByRole('navigation', { name: 'Guide navigation' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Start the walkthrough' })).toHaveAttribute(
       'href',

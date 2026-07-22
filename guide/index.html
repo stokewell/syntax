@@ -1,236 +1,389 @@
 <!doctype html>
 <html lang="en" data-theme-preference="system">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Syntax Field Guide — Build your first site</title>
-  <meta name="description" content="A beginner-friendly field guide to creating, testing, editing, and publishing a small website with Syntax." />
-  <meta name="author" content="Stokewell" />
-  <link rel="canonical" href="https://stokewell.github.io/syntax/guide/" />
-  <link rel="icon" href="../favicon.ico" />
-  <link rel="manifest" href="../site.webmanifest" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
-  <script>
-    (() => {
-      try {
-        const preference = localStorage.getItem('syntax-theme-preference') || 'system';
-        const resolved = preference === 'system'
-          ? matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-          : preference;
-        document.documentElement.dataset.themePreference = preference;
-        document.documentElement.dataset.theme = resolved;
-      } catch {
-        document.documentElement.dataset.theme = 'light';
-      }
-    })();
-  </script>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/layouts.css" />
-  <link rel="stylesheet" href="./guide.css" />
-</head>
-<body id="top">
-  <a class="skip-to-content" href="#main-content">Skip to content</a>
-  <header class="guide-header">
-    <div class="guide-shell guide-header__inner">
-      <a class="guide-brand" href="../demo/">Syn<span>tax</span></a>
-      <nav class="guide-nav" aria-label="Guide navigation">
-        <a href="#workflow">Workflow</a>
-        <a href="#commands">Commands</a>
-        <a href="#troubleshooting">Troubleshooting</a>
-        <a href="https://github.com/stokewell/syntax">GitHub</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main-content" tabindex="-1">
-    <section class="guide-hero" aria-labelledby="page-title">
-      <div class="guide-shell guide-hero__grid">
-        <div>
-          <p class="guide-kicker">A beginner’s field guide</p>
-          <h1 id="page-title">Build a small website without first becoming a framework engineer.</h1>
-          <p class="guide-deck">Syntax gives you a clean, tested starting point for a handcrafted site. This guide explains what it does, when it helps, and every practical step from an empty GitHub repository to a working local site.</p>
-          <div class="guide-actions">
-            <a class="btn" href="#workflow">Start the walkthrough</a>
-            <a class="btn-outline" href="#mental-model">Understand the idea first</a>
-          </div>
-        </div>
-        <aside class="guide-principle">
-          <p class="guide-principle__label">The mental model</p>
-          <p><strong>Syntax is the factory.</strong></p>
-          <p><strong>Your repository is the product.</strong></p>
-          <p>Do not copy the whole factory into every project.</p>
-        </aside>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Syntax Field Guide — Build your first site</title>
+    <meta
+      name="description"
+      content="A beginner-friendly field guide to creating, testing, editing, and publishing a small website with Syntax."
+    />
+    <meta name="author" content="Stokewell" />
+    <link rel="canonical" href="https://stokewell.github.io/syntax/guide/" />
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    />
+    <script>
+      (() => {
+        try {
+          const preference = localStorage.getItem('syntax-theme-preference') || 'system';
+          const resolved =
+            preference === 'system'
+              ? matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
+              : preference;
+          document.documentElement.dataset.themePreference = preference;
+          document.documentElement.dataset.theme = resolved;
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/layouts.css" />
+    <link rel="stylesheet" href="./guide.css" />
+  </head>
+  <body id="top">
+    <a class="skip-to-content" href="#main-content">Skip to content</a>
+    <header class="guide-header">
+      <div class="guide-shell guide-header__inner">
+        <a class="guide-brand" href="../demo/">Syn<span>tax</span></a>
+        <nav class="guide-nav" aria-label="Guide navigation">
+          <a href="#workflow">Workflow</a>
+          <a href="#commands">Commands</a>
+          <a href="#troubleshooting">Troubleshooting</a>
+          <a href="https://github.com/stokewell/syntax">GitHub</a>
+        </nav>
       </div>
-    </section>
+    </header>
 
-    <div class="guide-shell guide-layout">
-      <aside class="guide-toc" aria-label="On this page">
-        <p>On this page</p>
-        <ol>
-          <li><a href="#problem">The problem Syntax solves</a></li>
-          <li><a href="#use-cases">Where it fits</a></li>
-          <li><a href="#mental-model">The two-folder model</a></li>
-          <li><a href="#workflow">First project walkthrough</a></li>
-          <li><a href="#commands">Command reference</a></li>
-          <li><a href="#testing">Testing and previewing</a></li>
-          <li><a href="#git">Saving to GitHub</a></li>
-          <li><a href="#publishing">Publishing</a></li>
-          <li><a href="#troubleshooting">Common problems</a></li>
-        </ol>
-      </aside>
-
-      <article class="guide-article">
-        <section id="problem">
-          <p class="section-number">01</p>
-          <h2>The problem Syntax solves</h2>
-          <p class="lead">Starting a website from nothing sounds simple until the same setup decisions appear again: typography, spacing, mobile behavior, themes, metadata, testing, local previewing, accessibility, and deployment.</p>
-          <p>Syntax handles that repeatable foundation. It generates ordinary HTML, CSS, and optional JavaScript that belong to your project immediately. You still design the site. You simply do not rebuild the plumbing every time.</p>
-          <div class="comparison-grid">
-            <div>
-              <h3>Syntax should handle</h3>
-              <ul><li>A readable responsive foundation</li><li>Project metadata and a manifest</li><li>Selected theme and navigation behavior</li><li>Basic accessibility and browser tests</li><li>Local preview and GitHub Pages preparation</li></ul>
-            </div>
-            <div>
-              <h3>Your project should own</h3>
-              <ul><li>The content and information architecture</li><li>The visual identity and art direction</li><li>Project-specific layouts and interactions</li><li>Images, illustrations, and editorial decisions</li><li>Anything too specific to belong in every site</li></ul>
+    <main id="main-content" tabindex="-1">
+      <section class="guide-hero" aria-labelledby="page-title">
+        <div class="guide-shell guide-hero__grid">
+          <div>
+            <p class="guide-kicker">A beginner’s field guide</p>
+            <h1 id="page-title">
+              Build a small website without first becoming a framework engineer.
+            </h1>
+            <p class="guide-deck">
+              Syntax gives you a clean, tested starting point for a handcrafted site. This guide
+              explains what it does, when it helps, and every practical step from an empty GitHub
+              repository to a working local site.
+            </p>
+            <div class="guide-actions">
+              <a class="btn" href="#workflow">Start the walkthrough</a>
+              <a class="btn-outline" href="#mental-model">Understand the idea first</a>
             </div>
           </div>
-        </section>
+          <aside class="guide-principle">
+            <p class="guide-principle__label">The mental model</p>
+            <p><strong>Syntax is the factory.</strong></p>
+            <p><strong>Your repository is the product.</strong></p>
+            <p>Do not copy the whole factory into every project.</p>
+          </aside>
+        </div>
+      </section>
 
-        <section id="use-cases">
-          <p class="section-number">02</p>
-          <h2>Where Syntax fits</h2>
-          <p>Syntax is most useful for focused sites that should be polished without becoming technically heavy.</p>
-          <div class="use-case-grid">
-            <article><h3>Content site</h3><p>An article, guide, reference collection, or small publication.</p></article>
-            <article><h3>Portfolio</h3><p>A personal or studio site with selected work and a clear contact path.</p></article>
-            <article><h3>Product page</h3><p>A landing page for an app, tool, service, experiment, or early product.</p></article>
-            <article><h3>Small interactive project</h3><p>A calculator, game, visualization, or utility that needs a dependable shell.</p></article>
-          </div>
-          <div class="note"><strong>Start from scratch instead</strong> when the project is truly disposable, is only a few lines of HTML, or already requires a specific application framework for a concrete reason.</div>
-        </section>
+      <div class="guide-shell guide-layout">
+        <aside class="guide-toc" aria-label="On this page">
+          <p>On this page</p>
+          <ol>
+            <li><a href="#problem">The problem Syntax solves</a></li>
+            <li><a href="#use-cases">Where it fits</a></li>
+            <li><a href="#mental-model">The two-folder model</a></li>
+            <li><a href="#workflow">First project walkthrough</a></li>
+            <li><a href="#commands">Command reference</a></li>
+            <li><a href="#testing">Testing and previewing</a></li>
+            <li><a href="#git">Saving to GitHub</a></li>
+            <li><a href="#publishing">Publishing</a></li>
+            <li><a href="#troubleshooting">Common problems</a></li>
+          </ol>
+        </aside>
 
-        <section id="mental-model">
-          <p class="section-number">03</p>
-          <h2>The two-folder model</h2>
-          <p>The current private workflow uses two neighboring folders. One contains Syntax itself. The other is your actual site.</p>
-          <pre><code>~/Projects/
+        <article class="guide-article">
+          <section id="problem">
+            <p class="section-number">01</p>
+            <h2>The problem Syntax solves</h2>
+            <p class="lead">
+              Starting a website from nothing sounds simple until the same setup decisions appear
+              again: typography, spacing, mobile behavior, themes, metadata, testing, local
+              previewing, accessibility, and deployment.
+            </p>
+            <p>
+              Syntax handles that repeatable foundation. It generates ordinary HTML, CSS, and
+              optional JavaScript that belong to your project immediately. You still design the
+              site. You simply do not rebuild the plumbing every time.
+            </p>
+            <div class="comparison-grid">
+              <div>
+                <h3>Syntax should handle</h3>
+                <ul>
+                  <li>A readable responsive foundation</li>
+                  <li>Project metadata and a manifest</li>
+                  <li>Selected theme and navigation behavior</li>
+                  <li>Basic accessibility and browser tests</li>
+                  <li>Local preview and GitHub Pages preparation</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Your project should own</h3>
+                <ul>
+                  <li>The content and information architecture</li>
+                  <li>The visual identity and art direction</li>
+                  <li>Project-specific layouts and interactions</li>
+                  <li>Images, illustrations, and editorial decisions</li>
+                  <li>Anything too specific to belong in every site</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="use-cases">
+            <p class="section-number">02</p>
+            <h2>Where Syntax fits</h2>
+            <p>
+              Syntax is most useful for focused sites that should be polished without becoming
+              technically heavy.
+            </p>
+            <div class="use-case-grid">
+              <article>
+                <h3>Content site</h3>
+                <p>An article, guide, reference collection, or small publication.</p>
+              </article>
+              <article>
+                <h3>Portfolio</h3>
+                <p>A personal or studio site with selected work and a clear contact path.</p>
+              </article>
+              <article>
+                <h3>Product page</h3>
+                <p>A landing page for an app, tool, service, experiment, or early product.</p>
+              </article>
+              <article>
+                <h3>Small interactive project</h3>
+                <p>A calculator, game, visualization, or utility that needs a dependable shell.</p>
+              </article>
+            </div>
+            <div class="note">
+              <strong>Start from scratch instead</strong> when the project is truly disposable, is
+              only a few lines of HTML, or already requires a specific application framework for a
+              concrete reason.
+            </div>
+          </section>
+
+          <section id="mental-model">
+            <p class="section-number">03</p>
+            <h2>The two-folder model</h2>
+            <p>
+              The current private workflow uses two neighboring folders. One contains Syntax itself.
+              The other is your actual site.
+            </p>
+            <pre><code>~/Projects/
 ├── syntax/   ← generator and framework workshop
 └── olive/    ← your clean website</code></pre>
-          <p>You run setup from <code>syntax</code> and tell it to write into the empty project folder. After generation, nearly all everyday work happens in your project folder.</p>
-          <div class="warning"><strong>Do not use “Use this template” for a clean consumer project.</strong> It copies the full Syntax workshop—Component Lab, internal tests, recipes, tooling, and documentation. Create an empty repository instead.</div>
-        </section>
+            <p>
+              You run setup from <code>syntax</code> and tell it to write into the empty project
+              folder. After generation, nearly all everyday work happens in your project folder.
+            </p>
+            <div class="warning">
+              <strong>Do not use “Use this template” for a clean consumer project.</strong> It
+              copies the full Syntax workshop—Component Lab, internal tests, recipes, tooling, and
+              documentation. Create an empty repository instead.
+            </div>
+          </section>
 
-        <section id="workflow">
-          <p class="section-number">04</p>
-          <h2>Your first project, step by step</h2>
-          <h3>1. Create an empty GitHub repository</h3>
-          <p>Create it without a README, license, <code>.gitignore</code>, or repository template.</p>
-          <h3>2. Create a projects folder</h3>
-          <pre><code>mkdir -p ~/Projects
+          <section id="workflow">
+            <p class="section-number">04</p>
+            <h2>Your first project, step by step</h2>
+            <h3>1. Create an empty GitHub repository</h3>
+            <p>
+              Create it without a README, license, <code>.gitignore</code>, or repository template.
+            </p>
+            <h3>2. Create a projects folder</h3>
+            <pre><code>mkdir -p ~/Projects
 cd ~/Projects</code></pre>
-          <h3>3. Clone Syntax and your empty repository</h3>
-          <pre><code>git clone https://github.com/stokewell/syntax.git
+            <h3>3. Clone Syntax and your empty repository</h3>
+            <pre><code>git clone https://github.com/stokewell/syntax.git
 git clone https://github.com/YOUR-USERNAME/YOUR-PROJECT.git</code></pre>
-          <p>A warning that the new repository is empty is expected.</p>
-          <h3>4. Install the Syntax generator</h3>
-          <pre><code>cd ~/Projects/syntax
+            <p>A warning that the new repository is empty is expected.</p>
+            <h3>4. Install the Syntax generator</h3>
+            <pre><code>cd ~/Projects/syntax
 npm install</code></pre>
-          <h3>5. Generate your project</h3>
-          <pre><code>npm run setup -- --output ../YOUR-PROJECT</code></pre>
-          <p>The two dots mean “go up one folder.” This works because the two folders sit beside each other.</p>
-          <h3>6. Answer the setup questions</h3>
-          <p>Press Enter to accept the value in parentheses. Enter recipe IDs in lowercase exactly as shown.</p>
-          <div class="prompt-example">
-            <p><span>Project name:</span> Olive</p>
-            <p><span>Recipe [blank/portfolio] (blank):</span> blank</p>
-            <p><span>Visual direction [editorial/product] (editorial):</span> editorial</p>
-            <p><span>Canonical URL or “not yet”:</span> not yet</p>
-            <p><span>Deployment [none/github-pages-root] (github-pages-root):</span> press Enter</p>
-          </div>
-          <p>A button destination must be a URL, path, filename, or page fragment. Use <code>#ornamental</code>, not <code>Ornamental</code>.</p>
-          <h3>7. Enter the generated project</h3>
-          <pre><code>cd ../YOUR-PROJECT
+            <h3>5. Generate your project</h3>
+            <pre><code>npm run setup -- --output ../YOUR-PROJECT</code></pre>
+            <p>
+              The two dots mean “go up one folder.” This works because the two folders sit beside
+              each other.
+            </p>
+            <h3>6. Answer the setup questions</h3>
+            <p>
+              Press Enter to accept the value in parentheses. Enter recipe IDs in lowercase exactly
+              as shown.
+            </p>
+            <div class="prompt-example">
+              <p><span>Project name:</span> Olive</p>
+              <p><span>Recipe [blank/portfolio] (blank):</span> blank</p>
+              <p><span>Visual direction [editorial/product] (editorial):</span> editorial</p>
+              <p><span>Canonical URL or “not yet”:</span> not yet</p>
+              <p>
+                <span>Deployment [none/github-pages-root] (github-pages-root):</span> press Enter
+              </p>
+            </div>
+            <p>
+              A button destination must be a URL, path, filename, or page fragment. Use
+              <code>#ornamental</code>, not <code>Ornamental</code>.
+            </p>
+            <h3>7. Enter the generated project</h3>
+            <pre><code>cd ../YOUR-PROJECT
 ls -la</code></pre>
-          <h3>8. Install project development tools</h3>
-          <pre><code>npm install
+            <h3>8. Install project development tools</h3>
+            <pre><code>npm install
 npx playwright install chromium</code></pre>
-          <h3>9. Test and preview</h3>
-          <pre><code>npm test
+            <h3>9. Test and preview</h3>
+            <pre><code>npm test
 npm run serve</code></pre>
-          <p>Open <code>http://localhost:4173/</code> unless Terminal reports another address.</p>
-        </section>
+            <p>Open <code>http://localhost:4173/</code> unless Terminal reports another address.</p>
+          </section>
 
-        <section id="commands">
-          <p class="section-number">05</p>
-          <h2>Terminal commands without the mystery</h2>
-          <dl class="command-list">
-            <div><dt><code>pwd</code></dt><dd>Shows which folder Terminal is currently in.</dd></div>
-            <div><dt><code>cd ~/Projects/olive</code></dt><dd>Moves directly to a known folder from anywhere.</dd></div>
-            <div><dt><code>cd ..</code></dt><dd>Moves up one folder.</dd></div>
-            <div><dt><code>ls -la</code></dt><dd>Lists files, including hidden files such as <code>.git</code>.</dd></div>
-            <div><dt><code>Control + C</code></dt><dd>Stops a local server in the current Terminal window.</dd></div>
-          </dl>
-          <div class="note">The <code>%</code> or <code>$</code> before commands is the Terminal prompt. Do not type it.</div>
-        </section>
+          <section id="commands">
+            <p class="section-number">05</p>
+            <h2>Terminal commands without the mystery</h2>
+            <dl class="command-list">
+              <div>
+                <dt><code>pwd</code></dt>
+                <dd>Shows which folder Terminal is currently in.</dd>
+              </div>
+              <div>
+                <dt><code>cd ~/Projects/olive</code></dt>
+                <dd>Moves directly to a known folder from anywhere.</dd>
+              </div>
+              <div>
+                <dt><code>cd ..</code></dt>
+                <dd>Moves up one folder.</dd>
+              </div>
+              <div>
+                <dt><code>ls -la</code></dt>
+                <dd>Lists files, including hidden files such as <code>.git</code>.</dd>
+              </div>
+              <div>
+                <dt><code>Control + C</code></dt>
+                <dd>Stops a local server in the current Terminal window.</dd>
+              </div>
+            </dl>
+            <div class="note">
+              The <code>%</code> or <code>$</code> before commands is the Terminal prompt. Do not
+              type it.
+            </div>
+          </section>
 
-        <section id="testing">
-          <p class="section-number">06</p>
-          <h2>Testing and previewing</h2>
-          <p><code>npm test</code> starts a temporary server and checks metadata, links, mobile overflow, keyboard behavior, selected features, and major accessibility violations.</p>
-          <p><code>npm run serve</code> starts a server that stays open for manual inspection.</p>
-          <h3>Using another port</h3>
-          <pre><code>npx http-server . -p 4174 -c-1</code></pre>
-          <p>Then visit <code>http://localhost:4174/</code>. Tests may still expect their configured port, so stop a conflicting server before running <code>npm test</code> or update both configurations together.</p>
-        </section>
+          <section id="testing">
+            <p class="section-number">06</p>
+            <h2>Testing and previewing</h2>
+            <p>
+              <code>npm test</code> starts a temporary server and checks metadata, links, mobile
+              overflow, keyboard behavior, selected features, and major accessibility violations.
+            </p>
+            <p><code>npm run serve</code> starts a server that stays open for manual inspection.</p>
+            <h3>Using another port</h3>
+            <pre><code>npx http-server . -p 4174 -c-1</code></pre>
+            <p>
+              Then visit <code>http://localhost:4174/</code>. Tests may still expect their
+              configured port, so stop a conflicting server before running <code>npm test</code> or
+              update both configurations together.
+            </p>
+          </section>
 
-        <section id="git">
-          <p class="section-number">07</p>
-          <h2>Saving the baseline to GitHub</h2>
-          <pre><code>git add .
+          <section id="git">
+            <p class="section-number">07</p>
+            <h2>Saving the baseline to GitHub</h2>
+            <pre><code>git add .
 git commit -m "Initialize project with Syntax"
 git push origin main</code></pre>
-          <ul><li><code>git add .</code> stages the files.</li><li><code>git commit</code> creates a local snapshot.</li><li><code>git push</code> uploads it to GitHub.</li></ul>
-        </section>
+            <ul>
+              <li><code>git add .</code> stages the files.</li>
+              <li><code>git commit</code> creates a local snapshot.</li>
+              <li><code>git push</code> uploads it to GitHub.</li>
+            </ul>
+          </section>
 
-        <section id="publishing">
-          <p class="section-number">08</p>
-          <h2>Publishing with GitHub Pages</h2>
-          <ol><li>Push the project to GitHub.</li><li>Open <strong>Settings → Pages</strong>.</li><li>Choose <strong>Deploy from a branch</strong>.</li><li>Select <strong>main</strong> and <strong>/(root)</strong>.</li><li>Save and wait for deployment.</li></ol>
-          <pre><code>https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/</code></pre>
-          <p>When the site is nearly ready, preview release checks:</p>
-          <pre><code>npm run prepare:ship</code></pre>
-          <p>After reviewing the report:</p>
-          <pre><code>npm run prepare:ship -- --write</code></pre>
-        </section>
+          <section id="publishing">
+            <p class="section-number">08</p>
+            <h2>Publishing with GitHub Pages</h2>
+            <ol>
+              <li>Push the project to GitHub.</li>
+              <li>Open <strong>Settings → Pages</strong>.</li>
+              <li>Choose <strong>Deploy from a branch</strong>.</li>
+              <li>Select <strong>main</strong> and <strong>/(root)</strong>.</li>
+              <li>Save and wait for deployment.</li>
+            </ol>
+            <pre><code>https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/</code></pre>
+            <p>When the site is nearly ready, preview release checks:</p>
+            <pre><code>npm run prepare:ship</code></pre>
+            <p>After reviewing the report:</p>
+            <pre><code>npm run prepare:ship -- --write</code></pre>
+          </section>
 
-        <section id="troubleshooting">
-          <p class="section-number">09</p>
-          <h2>Common problems we already stepped on</h2>
-          <div class="trouble-list">
-            <details><summary>“Recipe must be blank or portfolio”</summary><p>Enter the lowercase ID: <code>blank</code>, not <code>Blank</code>.</p></details>
-            <details><summary>“Destination must be a valid URL, path, or fragment”</summary><p>Use <code>#ornamental</code>, <code>article.html</code>, <code>/about/</code>, or a full URL.</p></details>
-            <details><summary>Tests load the wrong website</summary><p>Another server may already use the port. Stop it with Control + C, or find it with:</p><pre><code>lsof -nP -iTCP:4173 -sTCP:LISTEN</code></pre></details>
-            <details><summary><code>EADDRINUSE</code></summary><p>The port is occupied. Stop the old process or preview on another port.</p></details>
-            <details><summary><code>cd ../olive</code> says the folder does not exist</summary><p>Relative paths depend on your current folder. Run <code>pwd</code>, then use <code>cd ~/Projects/olive</code>.</p></details>
-            <details><summary>There is a <code>.DS_Store</code> file</summary><p>It is a macOS Finder file. Remove it and add <code>.DS_Store</code> to <code>.gitignore</code>.</p></details>
-          </div>
-        </section>
+          <section id="troubleshooting">
+            <p class="section-number">09</p>
+            <h2>Common problems we already stepped on</h2>
+            <div class="trouble-list">
+              <details>
+                <summary>“Recipe must be blank or portfolio”</summary>
+                <p>Enter the lowercase ID: <code>blank</code>, not <code>Blank</code>.</p>
+              </details>
+              <details>
+                <summary>“Destination must be a valid URL, path, or fragment”</summary>
+                <p>
+                  Use <code>#ornamental</code>, <code>article.html</code>, <code>/about/</code>, or
+                  a full URL.
+                </p>
+              </details>
+              <details>
+                <summary>Tests load the wrong website</summary>
+                <p>
+                  Another server may already use the port. Stop it with Control + C, or find it
+                  with:
+                </p>
+                <pre><code>lsof -nP -iTCP:4173 -sTCP:LISTEN</code></pre>
+              </details>
+              <details>
+                <summary><code>EADDRINUSE</code></summary>
+                <p>The port is occupied. Stop the old process or preview on another port.</p>
+              </details>
+              <details>
+                <summary><code>cd ../olive</code> says the folder does not exist</summary>
+                <p>
+                  Relative paths depend on your current folder. Run <code>pwd</code>, then use
+                  <code>cd ~/Projects/olive</code>.
+                </p>
+              </details>
+              <details>
+                <summary>There is a <code>.DS_Store</code> file</summary>
+                <p>
+                  It is a macOS Finder file. Remove it and add <code>.DS_Store</code> to
+                  <code>.gitignore</code>.
+                </p>
+              </details>
+            </div>
+          </section>
 
-        <section class="guide-finish">
-          <p class="section-number">10</p>
-          <h2>What happens after setup?</h2>
-          <p>Work inside your generated project. Replace the starter content. Edit <code>index.html</code>, <code>site.css</code>, <code>site.js</code>, and your assets. Keep what helps. Delete or override what does not serve the real site.</p>
-          <blockquote>Syntax is successful when the finished site feels completely like your project—and you barely notice the starter underneath it.</blockquote>
-        </section>
-      </article>
-    </div>
-  </main>
+          <section class="guide-finish">
+            <p class="section-number">10</p>
+            <h2>What happens after setup?</h2>
+            <p>
+              Work inside your generated project. Replace the starter content. Edit
+              <code>index.html</code>, <code>site.css</code>, <code>site.js</code>, and your assets.
+              Keep what helps. Delete or override what does not serve the real site.
+            </p>
+            <blockquote>
+              Syntax is successful when the finished site feels completely like your project—and you
+              barely notice the starter underneath it.
+            </blockquote>
+          </section>
+        </article>
+      </div>
+    </main>
 
-  <footer class="guide-footer">
-    <div class="guide-shell"><p><strong>Syntax Field Guide</strong></p><p>Built from real first-project friction, not imagined onboarding.</p></div>
-  </footer>
-</body>
+    <footer class="guide-footer">
+      <div class="guide-shell">
+        <p><strong>Syntax Field Guide</strong></p>
+        <p>Built from real first-project friction, not imagined onboarding.</p>
+      </div>
+    </footer>
+  </body>
 </html>
