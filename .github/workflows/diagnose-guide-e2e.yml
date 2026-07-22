@@ -1,0 +1,35 @@
+name: Diagnose guide browser tests
+
+on:
+  push:
+    branches: [docs/beginner-field-guide]
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/beginner-field-guide
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Run browser tests with captured output
+        run: |
+          set +e
+          npm run test:e2e 2>&1 | tee guide-e2e.log
+          status=${PIPESTATUS[0]}
+          echo "exit_status=$status" >> "$GITHUB_ENV"
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guide-e2e-log
+          path: guide-e2e.log
+      - name: Preserve failure state
+        run: exit "$exit_status"
