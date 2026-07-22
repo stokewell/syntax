@@ -1,10 +1,38 @@
 # Syntax
 
-[Overview](https://stokewell.github.io/syntax/) · [Component Lab](https://stokewell.github.io/syntax/lab/) · [Use this template](https://github.com/stokewell/syntax/generate) · [Report an issue](https://github.com/stokewell/syntax/issues)
+[Overview](https://stokewell.github.io/syntax/demo/) · [First-time field guide](https://stokewell.github.io/syntax/guide/) · [Component Lab](https://stokewell.github.io/syntax/lab/) · [Report an issue](https://github.com/stokewell/syntax/issues)
 
 Syntax is a **typography-first website starter and lightweight design system for handcrafted content sites**. It provides expressive type, practical layout primitives, accessible components, explicit theming, and zero runtime dependencies.
 
 Syntax grew from the earlier [Base](https://github.com/stokewell/base) project. The framework keeps a dependable production core while the dedicated Component Lab provides an exhaustive public proving ground for the broader supported surface.
+
+## Start here
+
+New users should begin with the **[Syntax Field Guide](https://stokewell.github.io/syntax/guide/)**. It explains the complete workflow in beginner-friendly terms, including Terminal commands, setup answers, testing, GitHub, publishing, and common errors.
+
+> **Do not use the full Syntax repository as your website template.** Syntax is currently the generator. Create an empty project repository and generate a clean consumer project into it.
+
+The private-v1 workflow is:
+
+```bash
+mkdir -p ~/Projects
+cd ~/Projects
+git clone https://github.com/stokewell/syntax.git
+git clone https://github.com/YOUR-USERNAME/YOUR-PROJECT.git
+cd syntax
+npm install
+npm run setup -- --output ../YOUR-PROJECT
+```
+
+After setup succeeds, work inside the generated project rather than inside Syntax:
+
+```bash
+cd ../YOUR-PROJECT
+npm install
+npx playwright install chromium
+npm test
+npm run serve
+```
 
 ## What is in core
 
@@ -19,24 +47,21 @@ Syntax grew from the earlier [Base](https://github.com/stokewell/base) project. 
 - Keyboard behavior and resilient focus management
 - A build that produces `dist/syntax.css` and `dist/syntax.js`
 
-## Overview and Component Lab
+## Public surfaces
 
-The public surfaces have separate jobs:
-
+- [`/guide/`](https://stokewell.github.io/syntax/guide/) is the first-time user field guide.
 - [`/demo/`](https://stokewell.github.io/syntax/demo/) is the polished product overview and quick-start showcase.
 - [`/lab/`](https://stokewell.github.io/syntax/lab/) is the exhaustive component, layout, media, typography, accessibility, and motion test surface.
 
-The lab consumes the same public framework files users receive. Its own `lab/lab.css` and `lab/lab.js` are demonstration-only and are never included in the production bundle. See [docs/COMPONENT_LAB.md](docs/COMPONENT_LAB.md) for the coverage contract.
+The guide and demo use Syntax’s public foundation with page-owned composition styles. The Component Lab consumes the same public framework files users receive. Lab-only CSS and JavaScript are never included in the production bundle. See [docs/COMPONENT_LAB.md](docs/COMPONENT_LAB.md) for the coverage contract.
 
 ## Optional modules
 
 The CSS foundation does not require JavaScript. Font previews, custom elements, navigation behavior, dialogs, and animation utilities can be loaded only when a project needs them. Syntax remains a starter and design system rather than an application framework.
 
-## Quick start
+## Framework development
 
-### Use the repository as a template
-
-Select **Use this template** on GitHub, then clone your new repository.
+The commands below are for developing Syntax itself, not for creating a consumer website.
 
 ### Install development tools
 
@@ -58,7 +83,7 @@ The production bundle is generated in `dist/`:
 <script src="dist/syntax.js" defer></script>
 ```
 
-During development, the modular source files can be loaded directly:
+During framework development, the modular source files can be loaded directly:
 
 ```html
 <link rel="stylesheet" href="css/style.css" />
@@ -90,6 +115,9 @@ syntax/
 │   ├── components/
 │   ├── utilities/
 │   └── main.js
+├── guide/
+│   ├── index.html
+│   └── guide.css
 ├── demo/
 │   ├── index.html
 │   └── demo.css
@@ -97,11 +125,10 @@ syntax/
 │   ├── index.html
 │   ├── lab.css
 │   └── lab.js
-├── scripts/build.mjs
+├── consumer/
+├── scripts/
 ├── tests/
 └── docs/
-    ├── STYLE_GUIDE.md
-    └── COMPONENT_LAB.md
 ```
 
 ## Design tokens
@@ -214,7 +241,7 @@ Every animation honors `prefers-reduced-motion` by default.
 ## Quality checks
 
 - ESLint for framework, lab, build, and test JavaScript
-- Stylelint for canonical and lab CSS
+- Stylelint for canonical, demo, lab, guide, and consumer CSS
 - Prettier formatting checks
 - Vitest unit tests
 - Playwright desktop and mobile smoke tests
@@ -230,7 +257,7 @@ Syntax targets current evergreen browsers. Progressive enhancement is preferred:
 
 ## Status
 
-The current release is **v1.2 — Component Lab**. It restores the full demonstrable framework surface without adding lab-only code to the production bundle.
+Syntax private v1 includes Consumer Mode setup, four project recipes, coordinated visual directions, optional features, consumer tests, and Ship preparation. Real-project dogfooding now guides further development.
 
 ## License
 
