@@ -1,0 +1,21 @@
+{
+  "$schema": "../consumer/schema/syntax-project.schema.json",
+  "syntaxVersion": "1.2.0",
+  "mode": "ship",
+  "recipe": "blank",
+  "visualDirection": "editorial",
+  "accentColor": "#596247",
+  "features": [],
+  "deployment": "github-pages-root",
+  "project": {
+    "name": "Syntax Field Guide",
+    "description": "A beginner-friendly guide to creating, testing, editing, and publishing a small website with Syntax.",
+    "author": "Stokewell",
+    "canonicalUrl": "https://stokewell.github.io/syntax/guide/",
+    "repositoryUrl": "https://github.com/stokewell/syntax"
+  },
+  "generated": {
+    "recipeVersion": 1,
+    "createdAt": "2026-07-21"
+  }
+}
