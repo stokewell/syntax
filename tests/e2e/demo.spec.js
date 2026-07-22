@@ -20,7 +20,10 @@ test.beforeEach(async ({ page }) => {
 test('loads the canonical Syntax showcase', async ({ page }) => {
   await expect(page).toHaveTitle(/Syntax/);
   await expect(page.getByRole('heading', { level: 1, name: 'Syntax' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Use this template' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Read the field guide' })).toHaveAttribute(
+    'href',
+    '../guide/',
+  );
 });
 
 test('tabs work with keyboard navigation', async ({ page }) => {
